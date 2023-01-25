@@ -1,5 +1,6 @@
 
 import './App.css';
+import NavigationBar from './navigationBar';
 
 import MyTag from './components-tom/MyTag/MyTag.js';
 import MakeCommentComponent from "/Users/tuteredurie/WorkSafeGroup/client/src/MakeCommentCOmponent.jsx";
@@ -13,6 +14,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <NavigationBar />
         <a>
           Learn React tom-adding-text-to-test
           test guangkun
