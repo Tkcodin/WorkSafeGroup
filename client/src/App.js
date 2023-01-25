@@ -1,5 +1,6 @@
-import logo from './logo.svg';
+
 import './App.css';
+
 import MyTag from './components-tom/MyTag/MyTag.js';
 import MakeCommentComponent from "/Users/tuteredurie/WorkSafeGroup/client/src/MakeCommentCOmponent.jsx";
 
@@ -28,6 +29,7 @@ function App() {
 
     </div>
   );
+
 }
 
 export default App;
