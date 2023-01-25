@@ -1,8 +1,8 @@
 
 import './App.css';
-
+import logo from './logo.svg'
 import MyTag from './components-tom/MyTag/MyTag.js';
-import MakeCommentComponent from "/Users/tuteredurie/WorkSafeGroup/client/src/MakeCommentCOmponent.jsx";
+import MakeCommentComponent from "./MakeCommentCOmponent.jsx";
 
 function App() {
   return (
