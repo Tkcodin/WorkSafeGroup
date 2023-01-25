@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import MyTag from './components-tom/MyTag/MyTag.js';
-
+import MakeCommentComponent from "/Users/tuteredurie/WorkSafeGroup/client/src/MakeCommentCOmponent.jsx";
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <MyTag text="heights" colour="blue"/>
           <MyTag text="Air Toxins" colour="purple"/>
         </a>
+        <MakeCommentComponent> </MakeCommentComponent>
       </header>
 
       
