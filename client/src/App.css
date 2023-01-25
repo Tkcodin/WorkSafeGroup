@@ -28,6 +28,36 @@
   color: #61dafb;
 }
 
+#commentInput, #postCommentButton {
+  border: none;
+  border-radius: 10px;
+  height: 30px;
+}
+
+#commentInput {
+  width: 300px;
+  margin-right: 15px;
+  background-color: #F0F0F0;
+}
+
+#postCommentButton {
+  width: 50px;
+}
+
+#commentBox {
+  padding: 5px;
+  background-color: white;
+  
+}
+
+#userIcon {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

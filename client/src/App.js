@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import MakeCommentComponent from "/Users/tuteredurie/WorkSafeGroup/client/src/MakeCommentCOmponent.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           test !!!!!!
 
         </a>
+        <MakeCommentComponent> </MakeCommentComponent>
       </header>
     </div>
   );
