@@ -1,8 +1,10 @@
 
 import './App.css';
 
+import logo from './logo.svg'
+import NavigationBar from './navigationBar';
 import MyTag from './components-tom/MyTag/MyTag.js';
-import MakeCommentComponent from "/Users/tuteredurie/WorkSafeGroup/client/src/MakeCommentCOmponent.jsx";
+import MakeCommentComponent from "./MakeCommentCOmponent.jsx";
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <NavigationBar />
         <a>
           Learn React tom-adding-text-to-test
           test guangkun
