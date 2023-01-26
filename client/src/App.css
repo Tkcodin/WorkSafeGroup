@@ -13,6 +13,16 @@
   left: calc(var(--width) - 20px);
 }
 
+.MyTextBox{
+  width: 80vw;
+  font-size: 25px;
+}
+
+.MyTextBoxContainer{
+  display: flex;
+  flex-direction: column;
+}
+
 .MyTag{
   font-size: 15px;
   border-radius: 15px;
