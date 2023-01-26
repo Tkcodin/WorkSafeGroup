@@ -7,6 +7,7 @@ export default class ControlPanel extends React.Component {
         
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeComment = this.onChangeComment.bind(this);
+        this.onPost = this.onPost.bind(this);
 
         this.state = {
             username: '',
@@ -41,6 +42,10 @@ export default class ControlPanel extends React.Component {
         }
 
         console.log(post);
+        
+        this.setState({
+            comment: ''
+        })
     }
 
     
@@ -48,16 +53,15 @@ export default class ControlPanel extends React.Component {
     render () {
         return (
             <div id="commentBox">
-                {/* <div id = "userIcon">
-
-                </div> */}
-
-                <img src={user} alt="Icon" id='userIcon' />
-                <input type="text" placeholder='Write a comment...' id='commentInput'
-                value={this.state.comment}
-                onChange={this.onChangeComment}
-                />
-                <button type='submit' id='postCommentButton'>Post</button>
+                <form onSubmit={this.onPost}>
+                    <img src={user} alt="Icon" id='userIcon' />
+                    <input type="text" placeholder='Write a comment...' id='commentInput'
+                    value={this.state.comment}
+                    onChange={this.onChangeComment}
+                    />
+                    <button type='submit' id='postCommentButton'>Post</button>
+                </form>
+                
             </div>
         );
     }
