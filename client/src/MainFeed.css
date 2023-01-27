@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    background-color: rgb(183, 208, 153);
+    flex-direction: column;
+  }
+  
+  .searchContainer {
+    width: 96.7%;
+    height: 40px;
+    margin: 10px;
+    background-color: #93d5e6;
+    border-color: #ccc;
+    position: relative;
+  }
+  
+  .searchInput {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
+
+  .scrollView {
+    width: 98%;
+    flex: 1;
+    background-color: rgb(183, 208, 153);
+    padding: 10px;
+  }
+  
+  .card {
+    width: 98%;
+    height: auto;
+    background-color: rgb(218, 229, 164);
+    margin-bottom: 10px;
+    padding: 10px;
+  }
