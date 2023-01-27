@@ -5,17 +5,25 @@ import Story from './Story/Story';
 const MainFeed = () => {
   const [searchText, setSearchText] = useState('');
   const [cards, setCards] = useState([
-    {id:1}, 
-    {id:2},
-    {id:3},
-    {id:4}, 
-    {id:5},
-    {id:6},
-    {id:7},
-    {id:8}, 
-    {id:9},
-    {id:10},
+    {id:1, name: "Car", description: "This is the description of Car"}, 
+    {id:2, name: "Apple", description: "This is the description of ..."},
+    {id:3, name: "...", description: "This is the description of Table"},
+    {id:4, name: "Pen", description: "This is the description of Pen"},
+    {id:5, name: "Driver", description: "This is the description of Driver"},
+    {id:6, name: "Pizza", description: "This is the description of Pizza"},
+    {id:7, name: "Computer", description: "This is the description of Computer"},
+    {id:8, name: "Ice", description: "This is the description of Ice"},
+    {id:9, name: "Test", description: "This is the description of Test"},
+    {id:10, name: "Burger", description: "This is the description of Burger"},
   ]);
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  }
+
+  const filteredCards = cards.filter(card => {
+    return card.name.toLowerCase().includes(searchText.toLowerCase()) || card.description.toLowerCase().includes(searchText.toLowerCase());
+  });
 
   return (
     <div className='container'>
@@ -23,25 +31,19 @@ const MainFeed = () => {
         <input
           className='searchInput'
           value={searchText}
-          onChange={(e)=>setSearchText(e.target.value)}
+          onChange={handleSearch}
           placeholder="Search..."
         />
       </div>
       <div className='scrollView'>
-        {cards.map((card, index) => (
-          <div key={index} className='card'>
-            {card.id === 1 && <Story Storyname="Car" Description="This is the description of Car" />}
-            {card.id === 2 && <Story Storyname="Apple" Description="This is the description of ..." />}
-            {card.id === 3 && <Story Storyname="Table" Description="This is the description of Table" />}
-            {card.id === 4 && <Story Storyname="Pen" Description="This is the description of Pen" />}
-            {card.id === 5 && <Story Storyname="Driver" Description="This is the description of Driver" />}
-            {card.id === 6 && <Story Storyname="Pizza" Description="This is the description of Pizza" />}
-            {card.id === 7 && <Story Storyname="Computer" Description="This is the description of Computer" />}
-            {card.id === 8 && <Story Storyname="Ice" Description="This is the description of Ice" />}
-            {card.id === 9 && <Story Storyname="Test" Description="This is the description of Test" />}
-            {card.id === 10 && <Story Storyname="Burger" Description="This is the description of Burger" />}
-          </div>
-        ))}
+        {filteredCards.length > 0 ?
+          filteredCards.map((card, index) => (
+            <div key={index} className='card'>
+              <Story Storyname={card.name} Description={card.description} />
+            </div>
+          )) : 
+          <div>No stories found</div>
+        }
       </div>
     </div>
   );
