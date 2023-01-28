@@ -106,6 +106,7 @@
 
 #PostStoryButton {
   margin-top: 50px;
+  margin-bottom: 100px;
 }
 
 #multiSelectDiv {
@@ -128,5 +129,9 @@
   font-weight: 600;
   font-family:Arial, Helvetica, sans-serif;
   text-decoration: underline;
+}
+
+#imageLabel{
+  margin-top: 50px;
 }
 

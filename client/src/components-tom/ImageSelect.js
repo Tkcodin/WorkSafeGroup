@@ -4,14 +4,14 @@ const ImageSelect = (props) => {
 
     const [selectedFile, setSelectedFile] = useState(null);
 
-    function selectFile(event) {
-        setSelectedFile(event.target.files[0]);
-    }
+    // function selectFile(event) {
+    //     setSelectedFile(event.target.files[0]);
+    // }
 
     return (
         <div>
-        <input type="file" onChange={selectFile} />
-        {selectedFile && <img src={URL.createObjectURL(selectedFile)} alt="Selected Image" className="chosenImg"/>}
+        <input type="file" onChange={props.onChange} />
+        {props.value && <img src={URL.createObjectURL(props.value)} alt="Selected Image" className="chosenImg"/>}
         </div>
     );
 
