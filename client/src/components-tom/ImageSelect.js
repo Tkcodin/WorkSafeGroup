@@ -11,7 +11,7 @@ const ImageSelect = (props) => {
     return (
         <div>
         <input type="file" onChange={selectFile} />
-        {selectedFile && <img src={URL.createObjectURL(selectedFile)} alt="Selected Image" class="chosenImg"/>}
+        {selectedFile && <img src={URL.createObjectURL(selectedFile)} alt="Selected Image" className="chosenImg"/>}
         </div>
     );
 
