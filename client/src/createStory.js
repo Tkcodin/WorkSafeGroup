@@ -6,6 +6,7 @@ import NavigationBar from './navigationBar';
 import React, { Component } from "react";
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
+import ImageSelect from './components-tom/ImageSelect.js';
 
 //npm i react-select!!!!!!!!!
 
@@ -43,6 +44,7 @@ export default class  CreateStory extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onPost = this.onPost.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onChangeImage = this.onChangeImage.bind(this);
 
     this.state = {
       user: null,
@@ -50,12 +52,12 @@ export default class  CreateStory extends Component {
       title:'',
       description: '',
       text:'',
-      tags:[]
+      image: null
     };
   }
 
   handleChange (selected) { //used for dropdown menu selection
-    const NumberTags = this.state.tags.length;
+    // const NumberTags = this.state.tags.length;
     this.setState({
       optionSelected: selected //options selected keeps a list of all items
     });
@@ -83,6 +85,13 @@ onChangeText (e) {
   })
 }
 
+onChangeImage (e) {
+  // console.log(URL.createObjectURL(e.target.files[0]))
+  this.setState ({
+    image: e.target.files[0]
+  })
+}
+
 onPost(e) {
   e.preventDefault();
   const tagsSelected = []
@@ -96,6 +105,7 @@ onPost(e) {
       description: this.state.description,
       text: this.state.text,
       tags: tagsSelected,
+      image: this.state.image
   }
 
   console.log(post);
@@ -130,8 +140,22 @@ onPost(e) {
           <MyTextBox prompt="Enter story content here: " height="200px" inst="Story text..."
           value={this.state.text}
           onChange={this.onChangeText}/>
+          
+          <div id='TitleInputDiv'> 
+            <label id='imageLabel'>
+              Choose an image: 
+              <ImageSelect 
+              value={this.state.image}
+              onChange={this.onChangeImage}
+              selectedFile = {this.state.image}
+              />
+            </label>
+          </div>
+          
+          
       
   {/*     
+
           <MyTag text="violence2" colour="green"/>
           <MyTag text="heights" colour="blue"/>
           <MyTag text="Air Toxins" colour="purple"/> */}
