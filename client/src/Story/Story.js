@@ -8,16 +8,22 @@ import MyTag from '../components-tom/MyTag/MyTag';
 export default class Story extends React.Component{
     render(){
         
-        const tags = [];
+        const tags = new Array();
+        let count = 0;
         //PUT MYTAGS INTO MYTAGCONTAINER
         const readTags  = (s) =>{
+            if(s.length>0){
             console.log("s for split: " + s)
            let infos = s.split("-");
            for (let i = 0; i<infos.length; i = i+2){
             let c = infos[i].toString();
             let t = infos[i+1].toString();
+            
+            // tags.push({id: {count}, tag: <MyTag colour={c} text={t}/>});
             tags.push(<MyTag colour={c} text={t}/>);
-           }
+            count++;
+            }   
+        }
         }
 
         return(
