@@ -2,52 +2,17 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const corsOptions = {
-    origin: '*', // replace with the client's domain
+    origin: '*', 
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
   }
   app.use(cors(corsOptions));
 const mongoose = require("mongoose")
-const profileRoutes=require('./routers/profile')
+
 // app.use(cors());
 app.use(express.json());
 require("dotenv").config({ path: "./config.env" });
+
 const port = process.env.PORT || 5001;
-
-app.use('/',profileRoutes)
-
-if(!mongoose.modelNames().includes('content')){
-const feedschema = mongoose.Schema({
-    Author:{
-        type: String,
-        required: true
-    },
-    Title:{
-        type: String,
-        required: true
-    },
-    Description:{
-        type: String,
-        required: true
-    },
-    Content:{
-        type: String,
-        required: true
-    },
-    Date:{
-        type: String,
-        required: true
-    },
-    tags:{
-        type: [String],
-        required: true
-
-    }
-});
-const content = mongoose.model('content',feedschema);
-}
-
-    const content = mongoose.model('content');
-
 
 
 
@@ -64,27 +29,157 @@ mongoose
     });
 
 
+//Create a schema for user if it doesnt exist
+if(!mongoose.modelNames().includes('users')){
+    const userschema = createUserSchema(mongoose);
+    const users = mongoose.model('users',userschema);
+}
+    const users = mongoose.model('users');
 
- app.get('/content',(req,res)=>{
-    content.find({}, (err, content) => {
-        if (err) {
-          res.status(500).send(err);
-        } else {
-          res.status(200).json(content);
-        }
- });
- });
- app.post('/savecontent',(req,res)=>{
-    let newcontent = new content(req.body);
-    newcontent.save((err,newcontent)=>{
-        if(err){
-            res.status(500).send(err);
-        }
-        else{
-            res.status(201).json(newcontent);
-        }
+//Create a schema for content feed if it doesnt exist
+if(!mongoose.modelNames().includes('content')){
+    const feedschema = createContentSchema(mongoose);
+    const content = mongoose.model('content',feedschema);
+}
 
+    const content = mongoose.model('content');
+
+//Schema for comments
+if(!mongoose.modelNames().includes('comments')){
+    const commentschema = createCommentSchema(mongoose);
+    const comment = mongoose.model('comments',commentschema);
+}
+//Loading the model in comment const
+const comment = mongoose.model('comments');
+
+if(!mongoose.modelNames().includes('tags')){
+    const tagsschema = createTagsSchema(mongoose);
+    const tags = mongoose.model('tags',tagsschema);
+}
+const tags = mongoose.model('tags');
+
+
+
+module.exports= {users,content,comment,tags};
+const profileRoutes=require('./routers/profile')
+
+app.use('/',profileRoutes)
+
+
+//Functions to create Schema for DB models.
+
+function createUserSchema(mongoose){
+    const userschema = mongoose.Schema({
+        Username:{
+            type:String,
+            required:true
+        },
+        FirstName:{
+            type:String,
+            required:true
+        },
+        LastName:{
+            type:String,
+            required:true
+        },
+        Role:{
+            type:String,
+            required:true
+        },
+        Interests:{
+            type:[String],
+            required:true
+        },
+        tags: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'tags'
+        }],
+        createdContent: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'content'
+          }],
+        
+        createdComments:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'comment'
+        }]
+
+        
     });
 
- })
-module.exports=content;
+    return userschema;
+}
+
+function createContentSchema(mongoose){
+    const feedschema = mongoose.Schema({
+        Author:{
+            type: String,
+            required: true
+        },
+        Title:{
+            type: String,
+            required: true
+        },
+        Description:{
+            type: String,
+            required: true
+        },
+        Content:{
+            type: String,
+            required: true
+        },
+        Date:{
+            type: Date,
+            required: true
+        },
+        Image:{
+            type:String
+        },
+        tags:{
+            type: [String],
+            required: true
+    
+        },
+        Comments:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'comment'
+        }]
+    });
+    return feedschema;
+}
+
+function createCommentSchema(mongoose){
+    const commentschema = mongoose.Schema({
+        User:{
+            type:String,
+            required:true
+        },
+        Date:{
+            type: Date,
+            required:true
+        },
+        Text:{
+            type:String,
+            required:true
+        },
+        Content:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'content'
+        },
+        // Replies:[commentschema]
+
+        
+    });
+    commentschema.add({Replies:[commentschema]});
+    return commentschema;
+}
+
+function createTagsSchema(mongoose){
+    const createtagschema = mongoose.Schema({
+        Name:{
+            type:[String],
+            required:true
+        }
+    });
+    return createtagschema;
+}
