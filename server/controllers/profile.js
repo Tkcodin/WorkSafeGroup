@@ -26,19 +26,22 @@ const getContent= (req,res)=>{
 };
 
 const newContent= (req,res)=>{
+    
     const newcontent = new content({
-        Author: req.body.author,
-        Title: req.body.title,
-        Description: req.body.description,
-        Content: req.body.content,
-        Date: req.body.date,
-        Image: req.file.path,
-        Tags: req.body.tags,
+        Author: req.body.Author,
+        Title: req.body.Title,
+        Description: req.body.Description,
+        Content: req.body.Content,
+        Date: req.body.Date,
+        Image:req.file.path,
+        Tags: req.body.Tags
     });
     newcontent.save().then(result=>{
         res.status(200).json(result);
     }).catch(err=>{
-        res.status(500).send(err);
+        res.status(500).json(err);
+        console.log(req.body);
+        console.log('abc'+err);
     })
     // newcontent.save((err,newcontent)=>{
     //     if(err){

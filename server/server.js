@@ -29,6 +29,7 @@ mongoose
     });
 
 
+
 //Create a schema for user if it doesnt exist
 if(!mongoose.modelNames().includes('users')){
     const userschema = createUserSchema(mongoose);
@@ -64,7 +65,7 @@ module.exports= {users,content,comment,tags};
 const profileRoutes=require('./routers/profile')
 
 app.use('/',profileRoutes)
-
+app.use('/uploads',express.static('uploads'));
 
 //Functions to create Schema for DB models.
 
@@ -129,7 +130,7 @@ function createContentSchema(mongoose){
             required: true
         },
         Date:{
-            type: Date,
+            type: String,
             required: true
         },
         Image:{
