@@ -12,7 +12,7 @@ import axios from 'axios';
 //npm i react-select!!!!!!!!!
 
  const options = [
-    {value:"TAG A", label : "TAG A"},
+    {value:"blue-violence", label : "violence"},
     {value:"TAG B", label : "TAG B"},
     {value:"TAG C", label : "TAG C"},
     {value:"TAG D", label : "TAG D"},
@@ -95,9 +95,11 @@ onChangeImage (e) {
 
 onPost(e) {
   e.preventDefault();
-  const tagsSelected = []
+  // const tagsSelected = []
+  var tagsSelected="";
   this.state.optionSelected.forEach(element => {
-    tagsSelected.push(element.value);
+    // tagsSelected.push(element.value);
+    tagsSelected= tagsSelected+element.value+"-";
   });
   const post = {
     user: this.state.user,
@@ -128,8 +130,12 @@ console.log(post);
   axios.post('http://localhost:3000/newcontent', formdata,config)
             .then((res) => {
                 console.log(res.data)
+                
+                //if res code is 500, error. TODO: Write code to display to user
+                //if res code is 200 , success.TODO: Write code to display to user
             }).catch((error) => {
                 console.log(error)
+
             });
 
 
