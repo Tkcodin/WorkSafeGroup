@@ -8,8 +8,13 @@ const MyTextBox = (props) => {
     return(
         <div class="MyTextBoxContainer">
             <label>{props.prompt}</label>
-            <textarea class="MyTextBox" placeholder={props.inst} style={{height: props.height}} value={value} onChange = {e =>
-            setValue(e.target.value)}/>
+            <textarea class="MyTextBox" placeholder={props.inst} style={{height: props.height}} 
+            // value={value} onChange = {e =>
+            // setValue(e.target.value)}
+            value = {props.value}
+            onChange = {props.onChange}
+            
+            />
         </div>
     );
 

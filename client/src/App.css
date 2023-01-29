@@ -14,13 +14,16 @@
 }
 
 .MyTextBox{
-  width: 80vw;
+  width: 60vw;
   font-size: 25px;
+  margin-left: 300px;
+  margin-top: 10px;
 }
 
 .MyTextBoxContainer{
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
 }
 
 .MyTag{
@@ -98,3 +101,37 @@
     transform: rotate(360deg);
   }
 }
+
+/***CREATE STORY PAGE *****/
+
+#PostStoryButton {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+#multiSelectDiv {
+  width: 500px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+#TitleInputDiv {
+  margin-top: 50px;
+}
+
+#titleInput{
+  width: 400px;
+}
+
+#createStoryHeader {
+  margin-top: 50px;
+  font-size: xx-large;
+  font-weight: 600;
+  font-family:Arial, Helvetica, sans-serif;
+  text-decoration: underline;
+}
+
+#imageLabel{
+  margin-top: 50px;
+}
+
