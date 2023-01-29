@@ -1,0 +1,21 @@
+.navbar{
+    width: 100vw;
+    height: 6vh;
+    background-color: salmon;
+    display: flex;
+    flex-direction: horizontal;
+    margin: auto;
+}
+
+.navbarElement{
+   
+    height: 3vh;
+    background-color: lightgrey;
+    padding: 1vh;
+    width: 10vw;
+    margin: auto;
+}
+
+.nben{
+    
+}

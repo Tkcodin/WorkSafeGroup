@@ -7,6 +7,7 @@ import React, { Component } from "react";
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
 import ImageSelect from './components-tom/ImageSelect.js';
+import axios from 'axios';
 
 //npm i react-select!!!!!!!!!
 
@@ -47,7 +48,7 @@ export default class  CreateStory extends Component {
     this.onChangeImage = this.onChangeImage.bind(this);
 
     this.state = {
-      user: null,
+      user: 'testuser',
       optionSelected: null,
       title:'',
       description: '',
@@ -98,17 +99,40 @@ onPost(e) {
   this.state.optionSelected.forEach(element => {
     tagsSelected.push(element.value);
   });
-
   const post = {
-      user: this.state.user,
-      title: this.state.title,
-      description: this.state.description,
-      text: this.state.text,
-      tags: tagsSelected,
-      image: this.state.image
-  }
+    user: this.state.user,
+    title: this.state.title,
+    description: this.state.description,
+    text: this.state.text,
+    tags: tagsSelected,
+    image: this.state.image
+}
 
-  console.log(post);
+console.log(post);
+
+  const formdata = new FormData();
+  formdata.append('Author',this.state.user);
+  formdata.append('Title', this.state.title);
+  formdata.append('Description',this.state.description);
+  formdata.append('Content',this.state.text);
+  formdata.append('Date','22/01/2021');
+   formdata.append('Image',this.state.image);
+  formdata.append('Tags',tagsSelected);
+
+  const config = {
+    headers: {
+        'content-type': 'multipart/form-data'
+    }
+}
+
+  axios.post('http://localhost:3000/newcontent', formdata,config)
+            .then((res) => {
+                console.log(res.data)
+            }).catch((error) => {
+                console.log(error)
+            });
+
+
 }
 
   render () {
