@@ -10,14 +10,14 @@ const mongoose = require("mongoose")
 
 // app.use(cors());
 app.use(express.json());
-require("dotenv").config({ path: "./config.env" });
+require("dotenv").config({ path: "./config.env" }); // load environment variables from "config.env" using the "dotenv" library.
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5001; // set the value of port to "PORT" which is stored in "config.env", or if that's not defined, to the default value of 5001.
 
 
 
 mongoose
-    .connect(process.env.ATLAS_URI, {
+    .connect(process.env.ATLAS_URI, { // ATLAS_URI is stored in "config.env"
         useNewUrlParser: true,
         useUnifiedTopology: true,
 

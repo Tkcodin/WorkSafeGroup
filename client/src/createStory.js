@@ -13,11 +13,11 @@ import axios from 'axios';
 
  const options = [
     {value:"blue-violence", label : "violence"},
-    {value:"TAG B", label : "TAG B"},
-    {value:"TAG C", label : "TAG C"},
-    {value:"TAG D", label : "TAG D"},
-    {value:"TAG E", label : "TAG E"},
-    {value:"TAG F", label : "TAG F"}
+    {value:"red-heights", label : "heights"},
+    {value:"green-agriculture", label : "agriculture"},
+    {value:"yellow-sickness", label : "sickness"},
+    {value:"purple-poison", label : "poison"},
+    {value:"silver-dragons", label : "dragons"}
   ];
 
 

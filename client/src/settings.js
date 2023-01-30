@@ -50,8 +50,14 @@ const Settings = () => {
     }, []);
 
     const populateForm = () =>{
+      
       let tags = localStorage.getItem("myTags");
       console.log(tags);
+      if(tags===null || tags==='{"":""}'){
+        console.log("bad tags returning empty form");
+        return;
+      }
+      
        if(tags.includes("v")){
          setCBVChecked(true);
        }

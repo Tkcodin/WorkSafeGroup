@@ -61,9 +61,6 @@ const StoryContent = () => {
             <span>{Date}</span>
           </div>
           <p className="StoryContentDesc">
-            {Description}
-            <br />
-            <br />
             {Content}
           </p>
           Tags: {Tags}
