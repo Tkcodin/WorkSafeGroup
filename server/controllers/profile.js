@@ -19,7 +19,7 @@ const getProfile=(req,res,next)=>{
 res.json({message: "get profile data"});
 }
 
-
+// retrieve all the content documents stored in the MongoDB database
 const getContent= (req,res)=>{
     content.find({}, (err, content) => {
         if (err) {
@@ -30,9 +30,9 @@ const getContent= (req,res)=>{
         }
  });
 };
-
+// create a new "content" document in a MongoDB database using Mongoose
 const newContent= (req,res)=>{
-    
+    // take in the body of the request (req.body) which contains information. These values are then assigned to a new "content" object which is created using the Mongoose "content" model. 
     const newcontent = new content({
         Author: req.body.Author,
         Title: req.body.Title,
@@ -42,11 +42,11 @@ const newContent= (req,res)=>{
         Image:path.normalize(req.file.path),
         tags: req.body.Tags
     });
-    newcontent.save().then(result=>{
+    newcontent.save().then(result=>{  // Save the newContent object to the database
         res.status(200).json(result);
         
-    }).catch(err=>{
-        res.status(500).json(err);
+    }).catch(err=>{ 
+        res.status(500).json(err); // If an error occurs, a 500 status code is returned along with an error message in a JSON response.
         console.log(req.body);
         console.log('abc'+err);
     })
@@ -83,7 +83,7 @@ const newContent= (req,res)=>{
  }
 
  const getUser= (req,res)=>{
-    users.find({Username:req.body},(err,Content)=>{
+    users.find({Username:req.body},(err,Content)=>{ // a MongoDB query to search for a document in the "users" collection based on the value of the "Username" field, which must match the value of "req.body".
         if(err){
             res.status(500).send(err);
         }
