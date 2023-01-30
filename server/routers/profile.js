@@ -35,6 +35,7 @@ router.post('/newcomment',profileController.newComment)
 router.get('/getcomments',profileController.getComment)
 router.post('/newuser',profileController.newUser)
 router.get('/getuser',profileController.getUser)
+ router.get('/getmycontent/:id', profileController.getMyContent)
 
 
 //5th step

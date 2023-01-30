@@ -1,31 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import MyTag from './components-tom/MyTag/MyTag';
 import './MainFeed.css';
 import Story from './Story/Story'; 
 import NavigationBar from './navigationBar';
+import axios from 'axios';
 
 const MainFeed = () => {
   const [searchText, setSearchText] = useState('');
-  const [cards, setCards] = useState([
-    {id:1, name: "Car", description: "This is the description of Car", tagInfo: "red-testtag-blue-testtag2"}, 
-    {id:2, name: "Apple", description: "This is the description of ...", tagInfo: "green-testtag44-silver-test2tag2"},
-    {id:3, name: "...", description: "This is the description of Table", tagInfo: "red-testtag-blue-testtag2"},
-    {id:4, name: "Pen", description: "This is the description of Pen", tagInfo: "red-testtag-blue-testtag2"},
-    {id:5, name: "Driver", description: "This is the description of Driver", tagInfo: "red-testtag-blue-testtag2"},
-    {id:6, name: "Pizza", description: "This is the description of Pizza", tagInfo: "red-testtag-blue-testtag2"},
-    {id:7, name: "Computer", description: "This is the description of Computer", tagInfo: "red-testtag-blue-testtag2"},
-    {id:8, name: "Ice", description: "This is the description of Ice", tagInfo: "red-testtag-blue-testtag2"},
-    {id:9, name: "Test", description: "This is the description of Test", tagInfo: "red-testtag-blue-testtag2"},
-    {id:10, name: "Burger", description: "This is the description of Burger", tagInfo: "red-testtag-blue-testtag2"},
-  ]);
+
+  const [cards, setCards] = useState([]);
+  
+  useEffect(() => {
+    axios.get('http://localhost:3000/getcontent')
+    .then(response => {setCards(response.data); console.log(cards)})
+    .catch(error => console.log(error));
+  });
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
   }
 
   const filteredCards = cards.filter(card => {
-    return card.name.toLowerCase().includes(searchText.toLowerCase()) || card.description.toLowerCase().includes(searchText.toLowerCase());
+    return card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase());
   });
+
+  const handleCardClick = (cardName) => {
+    // code to open a new page with the story name as the page name
+    // window.location.href = `/readstory`+;
+  }
 
   return (
     <div className='container'>
@@ -38,11 +40,12 @@ const MainFeed = () => {
           placeholder="Search..."
         />
       </div>
+
       <div className='scrollView'>
         {filteredCards.length > 0 ?
           filteredCards.map((card, index) => (
-            <div key={index} className='card'>
-              <Story Storyname={card.name} Description={card.description} tagInfo={card.tagInfo}/>
+            <div key = {index} className='card'>
+              <Story Storyname={card.Author} Description={card.Description} tagInfo={card.tags} objectid = {card._id}/>
             </div>
           )) : 
           <div>No stories found</div>

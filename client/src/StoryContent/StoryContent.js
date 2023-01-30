@@ -1,36 +1,75 @@
-import React,{Component} from 'react';
+import React,{Component,useState,useEffect} from 'react';
+import { renderMatches, useParams } from 'react-router-dom';
 import './StoryContent.css';
 import lake from './lake.jpg';
+import axios from 'axios';
 
 
-export default function StoryContent() {
+const StoryContent = () => {
+  const  objectId  = useParams();
+  const [Author, setAuthor] = useState('');
+  const [Title, setTitle] = useState('');
+  const [Description, setDescription] = useState('');
+  const [Content, setContent] = useState('');
+  const [Image, setImage] = useState('');
+  const[Tags,setTags] = useState('');
+  const[Date,setDate]=useState('');
+
+  
+    useEffect(() => {
+      const id = objectId;
+      axios.get('http://localhost:3000/getmycontent/'+objectId.id)
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        
+        setAuthor(data.Author);
+        setTitle(data.Title);
+        setDescription(data.Description);
+        setContent(data.Content);
+        setImage(data.Image);
+        setTags(data.tags);
+        setDate(data.Date);
+        
+
+        })
+      
+      .catch(error => {console.log(error);console.log(objectId.id)});
+    });
+   
     return (
+      
+
+
       <div className="StoryContent">
         <div className="StoryContentWrapper">
           <img
             className="StoryContentImg"
-            src={lake}
-            alt="lake"
+            src={"http://localhost:3000/"+Image}
+            alt="image"
           />
           <h1 className="StoryContentTitle">
-            Amy's Story
+           {Title}
           </h1>
           <div className="StoryContentInfo">
             <span>
               Author:
               <b className="StoryContentAuthor">
-              
+              {Author}
               </b>
             </span>
-            <span>1 hour ago</span>
+            <span>{Date}</span>
           </div>
           <p className="StoryContentDesc">
-         Hello
+         {Description}
             <br />
             <br />
-            World
+            {Content}
           </p>
+          Tags: {Tags}
         </div>
       </div>
     );
   }
+
+  export default StoryContent;
