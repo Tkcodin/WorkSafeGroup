@@ -49,7 +49,6 @@ export default class Story extends React.Component{
                
                 
                 {/* <img src={R} className = "img" alt="Story.img"/> */}
-                <ImageSelect />
             </div>
             
 
