@@ -45,7 +45,7 @@ const MainFeed = () => {
         {filteredCards.length > 0 ?
           filteredCards.map((card, index) => (
             <div key = {index} className='card'>
-              <Story Storyname={card.Author} Description={card.Description} tagInfo={card.tags} objectid = {card._id}/>
+              <Story Storyname={card.Title} Description={card.Description} tagInfo={card.tags} objectid = {card._id} Author = {card.Author}/>
             </div>
           )) : 
           <div>No stories found</div>
