@@ -3,7 +3,8 @@ import { renderMatches, useParams } from 'react-router-dom';
 import './StoryContent.css';
 import lake from './lake.jpg';
 import axios from 'axios';
-
+import NavigationBar from '../navigationBar';
+import Comment from '../Comment/Comment.js'
 
 const StoryContent = () => {
   const  objectId  = useParams();
@@ -40,35 +41,34 @@ const StoryContent = () => {
     return (
       
 
+      <><NavigationBar /><div className="StoryContent">
 
-      <div className="StoryContent">
         <div className="StoryContentWrapper">
           <img
             className="StoryContentImg"
-            src={"http://localhost:3000/"+Image}
-            alt="image"
-          />
+            src={"http://localhost:3000/" + Image}
+            alt="image" />
           <h1 className="StoryContentTitle">
-           {Title}
+            {Title}
           </h1>
           <div className="StoryContentInfo">
             <span>
               Author:
               <b className="StoryContentAuthor">
-              {Author}
+                {Author}
               </b>
             </span>
             <span>{Date}</span>
           </div>
           <p className="StoryContentDesc">
-         {Description}
+            {Description}
             <br />
             <br />
             {Content}
           </p>
           Tags: {Tags}
         </div>
-      </div>
+      </div><Comment/></>
     );
   }
 
