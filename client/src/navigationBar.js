@@ -22,6 +22,11 @@ const NavigationBar = () => {
           <Link to="/MainFeed">My Feed</Link>
         </nav>
       </div>
+      <div className="navbarElement">
+        <nav className="nben">
+          <Link to="/Settings">Settings</Link>
+        </nav>
+      </div>
     </div>
   );
 };
