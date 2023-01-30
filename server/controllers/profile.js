@@ -2,6 +2,7 @@ const content = require('../server.js').content;
 const comment = require('../server.js').comment;
 const tags = require('../server.js').tags;
 const users = require('../server.js').users
+const path = require('path');
 
 
 // newProfile function for post profile data
@@ -33,8 +34,8 @@ const newContent= (req,res)=>{
         Description: req.body.Description,
         Content: req.body.Content,
         Date: req.body.Date,
-        Image:req.file.path,
-        Tags: req.body.Tags
+        Image:path.normalize(req.file.path),
+        tags: req.body.Tags
     });
     newcontent.save().then(result=>{
         res.status(200).json(result);
