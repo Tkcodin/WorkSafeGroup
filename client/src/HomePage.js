@@ -15,23 +15,8 @@ export const Home = () => {
             <img src={logo} className="App-logo" alt="logo" />
             
             <p>
-              Edit <code>src/App.js</code> and save to reload.
+              This will be the login page.
             </p>
-
-            <a>
-              Learn React tom-adding-text-to-test
-              test guangkun
-              test again. test again!!!!!
-              test !!!!!! <br></br>
-              toots test 
-              <MyTag text="violence2" colour="green"/>
-              <MyTag text="heights" colour="blue"/>
-              <MyTag text="Air Toxins" colour="purple"/>
-            </a>
-            <MakeCommentComponent> </MakeCommentComponent>
-    
-            <MyTextBox prompt="type here: " height="50px" inst="Enter text Here"/>
-            <MyTextBox prompt="type here2: " height="200px" inst="Enter text Here2"/>
     
           </header>
 

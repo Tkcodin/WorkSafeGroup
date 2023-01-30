@@ -2,7 +2,11 @@ const content = require('../server.js').content;
 const comment = require('../server.js').comment;
 const tags = require('../server.js').tags;
 const users = require('../server.js').users
+const e = require('express');
 const path = require('path');
+const { ObjectId } = require('mongodb');
+const { Server } = require('http');
+
 
 
 // newProfile function for post profile data
@@ -21,6 +25,7 @@ const getContent= (req,res)=>{
         if (err) {
           res.status(500).send(err);
         } else {
+        
           res.status(200).json(content);
         }
  });
@@ -56,6 +61,26 @@ const newContent= (req,res)=>{
     // });
 
  };
+
+ const getMyContent = (req,res)=>{
+      const objectid = req.params;
+      
+        
+     
+
+    content.findOne({_id:ObjectId(objectid)},(err,Content)=>{
+        if(err){
+        console.log(objectid);
+           console.log('abc'+err);
+            res.status(500).send(err);
+        }
+        else{
+            res.status(200).send(Content);
+        }
+    });
+
+   
+ }
 
  const getUser= (req,res)=>{
     users.find({Username:req.body},(err,Content)=>{ // a MongoDB query to search for a document in the "users" collection based on the value of the "Username" field, which must match the value of "req.body".
@@ -111,4 +136,4 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment};
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent};
