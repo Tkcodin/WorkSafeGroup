@@ -61,6 +61,8 @@ const tags = mongoose.model('tags');
 
 
 
+
+
 module.exports= {users,content,comment,tags};
 const profileRoutes=require('./routers/profile')
 
@@ -137,7 +139,7 @@ function createContentSchema(mongoose){
             type:String
         },
         tags:{
-            type: [String],
+            type: String,
             required: true
     
         },
