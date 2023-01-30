@@ -130,11 +130,17 @@ console.log(post);
   axios.post('http://localhost:3000/newcontent', formdata,config)
             .then((res) => {
                 console.log(res.data)
-                
+                if (res.status === 500) {
+                  alert('Sorry, there was an erorr posting your story');
+                } else if (res.status === 200) {
+                  alert('Success! Your story has been posted.');
+                  window.location = '/MainFeed';
+                }
                 //if res code is 500, error. TODO: Write code to display to user
                 //if res code is 200 , success.TODO: Write code to display to user
             }).catch((error) => {
                 console.log(error)
+                alert("The following error has occured" + error);
 
             });
 
