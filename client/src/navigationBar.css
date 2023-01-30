@@ -1,7 +1,7 @@
 .navbar{
     width: 100vw;
     height: 6vh;
-    background-color: salmon;
+    background-color: lightgrey;
     display: flex;
     flex-direction: horizontal;
     margin: auto;
