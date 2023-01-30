@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MyTag from './components-tom/MyTag/MyTag';
 import './MainFeed.css';
 import Story from './Story/Story'; 
+import NavigationBar from './navigationBar';
 
 const MainFeed = () => {
   const [searchText, setSearchText] = useState('');
@@ -28,6 +29,7 @@ const MainFeed = () => {
 
   return (
     <div className='container'>
+      <NavigationBar />
       <div className='searchContainer'>
         <input
           className='searchInput'
