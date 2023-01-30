@@ -15,6 +15,7 @@ export default class Story extends React.Component{
         let count = 0;
         //PUT MYTAGS INTO MYTAGCONTAINER
         const readTags  = (s) =>{
+            s = s.substring(0, s.length - 1);
             if(s.length>0){
             console.log("s for split: " + s)
            let infos = s.split("-");
@@ -40,6 +41,8 @@ export default class Story extends React.Component{
         return(
             
             console.log(this.props.tagInfo),
+            
+
             readTags(this.props.tagInfo),
             <div className='Storydiv' onClick={() => handleCardClick(this.props.objectid)}>
 
