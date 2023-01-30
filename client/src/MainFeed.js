@@ -21,7 +21,7 @@ const MainFeed = () => {
   }
 
   const filteredCards = cards.filter(card => {
-    return card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase());
+    return card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.Title.toLowerCase().includes(searchText.toLowerCase());
   });
 
   const handleCardClick = (cardName) => {
