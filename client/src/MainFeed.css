@@ -33,7 +33,7 @@
   .card {
     width: 98%;
     height: auto;
-    background-color: rgb(218, 229, 164);
     margin-bottom: 10px;
-    padding: 10px;
+    /*padding: 10px;*/
+    border: 2px solid rgb(7, 7, 7);
   }
