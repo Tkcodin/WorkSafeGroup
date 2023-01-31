@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const MainFeed = () => {
   const [searchText, setSearchText] = useState('');
-
+  const [onlyMyTags, setOnlyMyTags] = useState(false);
   const [cards, setCards] = useState([]);
   
   useEffect(() => {
@@ -16,12 +16,44 @@ const MainFeed = () => {
     .catch(error => console.log(error));
   });
 
+  function tagClick() {
+    setOnlyMyTags(!onlyMyTags);
+  }
+
   const handleSearch = (e) => {
+    e.preventDefault();
     setSearchText(e.target.value);
   }
 
+  // function tagAlert(){
+  //   window.confirm('You have no tags saved. Edit tags now');
+  //   window.location = '/Settings';
+  // }
+
+  //careful changing this!!!
   const filteredCards = cards.filter(card => {
-    return card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase());
+
+      let tags = localStorage.getItem("myTags");
+      console.log(tags);
+      if(tags===null || tags==='{"":""}' || !onlyMyTags){
+        console.log("bad tags returning empty form");
+        return card.Title.toLowerCase().includes(searchText.toLowerCase()) ||card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase());
+      }
+      else if(tags.includes('v') && tags.includes('h')&& onlyMyTags){
+        return (card.tags.toLowerCase().includes('violence') || card.tags.toLowerCase().includes('heights')) && (card.Title.toLowerCase().includes(searchText.toLowerCase()) || card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase()));
+      }
+      else if(tags.includes('v') && onlyMyTags){
+        return card.tags.toLowerCase().includes('violence') && (card.Title.toLowerCase().includes(searchText.toLowerCase()) || card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase()));
+      }
+      else if(tags.includes('h') && onlyMyTags){
+        return card.tags.toLowerCase().includes('heights') && (card.Title.toLowerCase().includes(searchText.toLowerCase()) || card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase()));
+      }
+      // else{
+      //   alert('You have no tags saved. Edit tags now');
+      //   window.location = '/Settings';
+      //   // tagAlert();
+      // }
+
   });
 
   const handleCardClick = (cardName) => {
@@ -33,6 +65,7 @@ const MainFeed = () => {
     <div className='container'>
       <NavigationBar />
       <div className='searchContainer'>
+        <button onClick={(e)=>tagClick(e)}>Only My Tags</button>
         <input
           className='searchInput'
           value={searchText}
@@ -45,7 +78,7 @@ const MainFeed = () => {
         {filteredCards.length > 0 ?
           filteredCards.map((card, index) => (
             <div key = {index} className='card'>
-              <Story Storyname={card.Author} Description={card.Description} tagInfo={card.tags} objectid = {card._id}/>
+              <Story Storyname={card.Title} Description={card.Description} tagInfo={card.tags} objectid = {card._id} Author = {card.Author}/>
             </div>
           )) : 
           <div>No stories found</div>
