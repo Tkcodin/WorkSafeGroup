@@ -1,5 +1,5 @@
 const multer = require('multer');
-const path = require('path');
+const path = require('path'); // a Node.js built-in module for working with file and directory paths
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads/');
