@@ -7,6 +7,7 @@ import { Home } from './HomePage.js'
 import Settings from './settings.js'
 
 import StoryContent from './StoryContent/StoryContent.js';
+import ProfileComponent from './profilecomponent/profileComponent';
 
 
 
@@ -21,6 +22,8 @@ function App() {
       <Route path='/Settings' element={<Settings />}></Route>
 
       <Route path='/StoryContent/:id' element ={<StoryContent/>}></Route>
+
+      <Route path='/profileComponent' element = {<ProfileComponent/>}></Route>
 
     </Routes>
 

@@ -17,7 +17,7 @@ export default class Story extends React.Component{
         const readTags  = (s) =>{
             s = s.substring(0, s.length - 1);
             if(s.length>0){
-            console.log("s for split: " + s)
+            // console.log("s for split: " + s)
            let infos = s.split("-");
            for (let i = 0; i<infos.length; i = i+2){
             let c = infos[i];
@@ -40,7 +40,7 @@ export default class Story extends React.Component{
 
         return(
             
-            console.log(this.props.tagInfo),
+            // console.log(this.props.tagInfo),
             
 
             readTags(this.props.tagInfo),
