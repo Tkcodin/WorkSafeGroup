@@ -102,6 +102,11 @@
   }
 }
 
+#imageSelected {
+  width: 300px;
+  height: 200px;
+} 
+
 /***CREATE STORY PAGE *****/
 
 #PostStoryButton {
@@ -134,4 +139,10 @@
 #imageLabel{
   margin-top: 50px;
 }
+
+#createAccModal{
+  display: none;
+}
+
+
 

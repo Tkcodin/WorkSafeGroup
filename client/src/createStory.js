@@ -140,7 +140,7 @@ console.log(post);
                 //if res code is 200 , success.TODO: Write code to display to user
             }).catch((error) => {
                 console.log(error)
-                alert("The following error has occured" + error);
+                alert("The following error has occured: " + error);
 
             });
 
