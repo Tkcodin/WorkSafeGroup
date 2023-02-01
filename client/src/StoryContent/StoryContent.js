@@ -15,8 +15,8 @@ const StoryContent = () => {
   const [Image, setImage] = useState('');
   const[Tags,setTags] = useState('');
   const[Date,setDate]=useState('');
-  const [likes, setLikes] = useState(0);  // new
-  const [liked, setLiked] = useState(false); // new
+  const [likes, setLikes] = useState(0);  
+  const [liked, setLiked] = useState(false); 
   
     useEffect(() => {
       const id = objectId;
@@ -32,26 +32,28 @@ const StoryContent = () => {
         setImage(data.Image);
         setTags(data.tags);
         setDate(data.Date);
-        setLikes(data.likes); // new
-
         })
       
       .catch(error => {console.log(error);console.log(objectId.id)});
     });
    
-    // new
+    
     const handleLike = () => {
-      setLiked(!liked);
       if (liked) {
-        setLikes(likes - 1);
-      } else {
-        setLikes(likes + 1);
-      }
-      axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
-        likes: likes
+        setLiked(false);
+        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+        likes: -1
       })
         .then(res => console.log(res.data))
         .catch(error => console.log(error));
+      } else {
+        setLiked(true);
+        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+        likes: 1
+      })
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error));
+      }
     };
 
     return (
@@ -75,19 +77,20 @@ const StoryContent = () => {
               </b>
             </span>
             <span>{Date}</span>
-            <span> // new
-              <i
-                className={`fa fa-heart${liked ? '' : '-o'}`}
-                onClick={handleLike}
-              />
-              {likes}
-            </span>
           </div>
           <p className="StoryContentDesc">
             {Content}
           </p>
           Tags: {Tags}
         </div>
+            <div>
+              <button
+                className="like-button"
+                onClick={handleLike}
+              >
+              {liked ? "I like it!" : "Like it?"}
+              </button>
+            </div>
       </div><Comment/></>
     );
   }
