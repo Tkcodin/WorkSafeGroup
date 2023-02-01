@@ -26,19 +26,11 @@ input[type=text], input[type=password] {
 	border-radius: 5px;
   }
 
-  #backToHomePage {
-	text-decoration: none;
-  }
-
   #create {
 	background-color: #4255ff;
 	color: white;
 	padding: 5px 10px;
 	border-radius: 5px;
-  }
-
-  #welcome {
-	font-family: 'Space Grotesk',sans-serif;
   }
   
   button:hover {
@@ -78,21 +70,6 @@ input[type=text], input[type=password] {
 	background-color: white;
 	margin: 2% auto 20% auto;
 	width: 40%;
-  }
-  
-  .close {
-	position: absolute;
-	right: 20px;
-	top: 0;
-	color: #000;
-	font-size: 40px;
-	font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-	color: red;
-	cursor: pointer;
   }
   
   .animate {
