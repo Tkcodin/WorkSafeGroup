@@ -47,11 +47,6 @@ mongoose
     const tags = mongoose.model('tags',tagsschema);
 
 
-
-
-
-
-
 module.exports= {users,content,comment,tags};
 const profileRoutes=require('./routers/profile')
 
