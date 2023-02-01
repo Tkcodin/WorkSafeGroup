@@ -3,6 +3,7 @@ import './signUp.css';
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
 import ImageSelect from './components-tom/ImageSelect.js';
+import axios from 'axios';
 
 
 
@@ -149,13 +150,15 @@ export default class SignUp extends React.Component {
         console.log(post);
 
         // const formdata = new FormData();
-        // formdata.append('Author',this.state.user);
-        // formdata.append('Title', this.state.title);
-        // formdata.append('Description',this.state.description);
-        // formdata.append('Content',this.state.text);
-        // formdata.append('Date','22/01/2021');
-        // formdata.append('Image',this.state.image);
+        // formdata.append('First Name',this.state.firstName);
+        // formdata.append('Last Name', this.state.lastName);
+        // formdata.append('Password',this.state.password);
+        // formdata.append('Email',this.state.email);
+        // formdata.append('Role',this.state.role);
+        // formdata.append('Employer',this.state.employer);
         // formdata.append('Tags',tagsSelected);
+        // formdata.append('About',this.state.about);
+        // formdata.append('Image',this.state.image);
 
         // const config = {
         //     headers: {
@@ -163,13 +166,13 @@ export default class SignUp extends React.Component {
         //     }
         // }
 
-        // axios.post('http://localhost:3000/newcontent', formdata,config)
+        // axios.post('http://localhost:3000/newuser', formdata,config)
         //     .then((res) => {
         //         console.log(res.data)
         //         if (res.status === 500) {
-        //             alert('Sorry, there was an erorr posting your story');
+        //             alert('Sorry, there was an erorr creating your account');
         //         } else if (res.status === 200) {
-        //             alert('Success! Your story has been posted.');
+        //             alert('Success! Your account has been created.');
         //             window.location = '/MainFeed';
         //             }
         //             //if res code is 500, error. TODO: Write code to display to user
@@ -179,10 +182,6 @@ export default class SignUp extends React.Component {
         //             alert("The following error has occured: " + error);
         //         });
     }
-
-    onCancel () {
-        
-    } 
 
     render () {
         return (
