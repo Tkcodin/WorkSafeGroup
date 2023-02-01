@@ -30,6 +30,11 @@ const getContent= (req,res)=>{
         }
  });
 };
+
+// for posting likes to a story content.
+const LikeContent = (req,res)=>{
+
+}
 // create a new "content" document in a MongoDB database using Mongoose
 const newContent= (req,res)=>{
     // take in the body of the request (req.body) which contains information. These values are then assigned to a new "content" object which is created using the Mongoose "content" model. 
@@ -41,6 +46,7 @@ const newContent= (req,res)=>{
         Date: req.body.Date,
         Image:path.normalize(req.file.path),
         tags: req.body.Tags
+        
     });
     newcontent.save().then(result=>{  // Save the newContent object to the database
         res.status(200).json(result);
@@ -136,4 +142,4 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent};
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent,LikeContent};

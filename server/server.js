@@ -130,7 +130,11 @@ function createContentSchema(mongoose){
         Comments:[{
             type: mongoose.Schema.Types.ObjectId,
             ref:'comment'
-        }]
+        }],
+        Likes:{
+            type: Number,
+            default: 0
+        }
     });
     return feedschema;
 }
