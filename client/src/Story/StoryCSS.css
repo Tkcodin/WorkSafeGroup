@@ -35,6 +35,12 @@
 }
 
 
+
+.img {
+  width: 300px;
+  height: 200px;
+}
+
 //MAIN
 .container {
     display: flex;
