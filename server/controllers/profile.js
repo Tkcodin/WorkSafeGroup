@@ -16,7 +16,7 @@ const newProfile = (req, res, next) => {
 // newProfile function to get profile data
 
 const getProfile=(req,res,next)=>{
-res.json({message: "get profile data"});
+    res.json({message: "get profile data"});
 }
 
 // retrieve all the content documents stored in the MongoDB database

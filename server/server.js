@@ -30,34 +30,23 @@ mongoose
 
 
 
-//Create a schema for user if it doesnt exist
-if(!mongoose.modelNames().includes('users')){
+
+
     const userschema = createUserSchema(mongoose);
     const users = mongoose.model('users',userschema);
-}
-    const users = mongoose.model('users');
 
-//Create a schema for content feed if it doesnt exist
-if(!mongoose.modelNames().includes('content')){
+
     const feedschema = createContentSchema(mongoose);
     const content = mongoose.model('content',feedschema);
-}
 
-    const content = mongoose.model('content');
 
-//Schema for comments
-if(!mongoose.modelNames().includes('comments')){
     const commentschema = createCommentSchema(mongoose);
     const comment = mongoose.model('comments',commentschema);
-}
-//Loading the model in comment const
-const comment = mongoose.model('comments');
 
-if(!mongoose.modelNames().includes('tags')){
     const tagsschema = createTagsSchema(mongoose);
     const tags = mongoose.model('tags',tagsschema);
-}
-const tags = mongoose.model('tags');
+
+
 
 
 
@@ -87,16 +76,16 @@ function createUserSchema(mongoose){
         },
         Role:{
             type:String,
-            required:true
+            
+        },
+        Employer:{
+            type:String,
+            
         },
         Interests:{
-            type:[String],
-            required:true
-        },
-        tags: [{
             type: mongoose.Schema.Types.ObjectId,
             ref:'tags'
-        }],
+        },
         createdContent: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'content'
