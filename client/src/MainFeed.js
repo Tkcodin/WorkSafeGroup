@@ -4,6 +4,7 @@ import './MainFeed.css';
 import Story from './Story/Story'; 
 import NavigationBar from './navigationBar';
 import axios from 'axios';
+import SignUp from './signUp';
 
 const MainFeed = () => {
   const [searchText, setSearchText] = useState('');
@@ -12,7 +13,9 @@ const MainFeed = () => {
   
   useEffect(() => {
     axios.get('http://localhost:3000/getcontent')
-    .then(response => {setCards(response.data); console.log(cards)})
+    .then(response => {setCards(response.data); 
+      // console.log(cards)
+    })
     .catch(error => console.log(error));
   });
 
@@ -34,9 +37,9 @@ const MainFeed = () => {
   const filteredCards = cards.filter(card => {
 
       let tags = localStorage.getItem("myTags");
-      console.log(tags);
+      // console.log(tags);
       if(tags===null || tags==='{"":""}' || !onlyMyTags){
-        console.log("bad tags returning empty form");
+        // console.log("bad tags returning empty form");
         return card.Title.toLowerCase().includes(searchText.toLowerCase()) ||card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase());
       }
       else if(tags.includes('v') && tags.includes('h')&& onlyMyTags){
@@ -62,6 +65,7 @@ const MainFeed = () => {
   }
 
   return (
+    <>
     <div className='container'>
       <NavigationBar />
       <div className='searchContainer'>
@@ -73,7 +77,6 @@ const MainFeed = () => {
           placeholder="Search..."
         />
       </div>
-
       <div className='scrollView'>
         {filteredCards.length > 0 ?
           filteredCards.map((card, index) => (
@@ -85,6 +88,10 @@ const MainFeed = () => {
         }
       </div>
     </div>
+    
+    
+    
+    </>
   );
 };
 
