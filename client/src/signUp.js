@@ -3,6 +3,7 @@ import './signUp.css';
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
 import ImageSelect from './components-tom/ImageSelect.js';
+import axios from 'axios';
 
 
 
@@ -45,6 +46,9 @@ export default class SignUp extends React.Component {
         this.onChangeAbout = this.onChangeAbout.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
         this.onPost = this.onPost.bind(this);
+        this.onChangeEmailPrivate = this.onChangeEmailPrivate.bind(this);
+        this.onChangeRolePrivate = this.onChangeRolePrivate.bind(this);
+        this.onChangeEmployerPrivate = this.onChangeEmployerPrivate.bind(this);
         
         this.state = {
             firstName: '',
@@ -55,7 +59,10 @@ export default class SignUp extends React.Component {
             employer:'',
             optionSelected: null,
             about:'',
-            image: null
+            image: null,
+            emailPrivate: false,
+            rolePrivate:false,
+            employerPrivate:false
         };  
     }
 
@@ -121,6 +128,47 @@ export default class SignUp extends React.Component {
         })
       }
 
+      onChangeEmailPrivate() {
+        if (this.state.emailPrivate === false)
+        {
+          this.setState ({
+            emailPrivate: true
+          })   
+        } else {
+          this.setState ({
+            emailPrivate: false
+          }) 
+        }      
+      }
+
+      onChangeRolePrivate() {
+        if (this.state.rolePrivate === false)
+        {
+          this.setState ({
+            rolePrivate: true
+          })   
+        } else {
+          this.setState ({
+            rolePrivate: false
+          }) 
+        }      
+      }
+
+      onChangeEmployerPrivate() {
+        if (this.state.employerPrivate === false)
+        {
+          this.setState ({
+            employerPrivate: true
+          })   
+        } else {
+          this.setState ({
+            employerPrivate: false
+          }) 
+        }      
+      }
+
+
+
     closeSignUp () {
         this.props.modal.style.display = 'none';
       }
@@ -143,19 +191,27 @@ export default class SignUp extends React.Component {
             employer:this.state.employer,
             tags: tagsSelected,
             about: this.state.about,
-            image: this.state.image
+            image: this.state.image,
+            emailPrivate: this.state.emailPrivate,
+            rolePrivate: this.state.rolePrivate,
+            employerPrivate: this.state.employerPrivate
         }
 
         console.log(post);
 
         // const formdata = new FormData();
-        // formdata.append('Author',this.state.user);
-        // formdata.append('Title', this.state.title);
-        // formdata.append('Description',this.state.description);
-        // formdata.append('Content',this.state.text);
-        // formdata.append('Date','22/01/2021');
-        // formdata.append('Image',this.state.image);
+        // formdata.append('First Name',this.state.firstName);
+        // formdata.append('Last Name', this.state.lastName);
+        // formdata.append('Password',this.state.password);
+        // formdata.append('Email',this.state.email);
+        // formdata.append('Role',this.state.role);
+        // formdata.append('Employer',this.state.employer);
         // formdata.append('Tags',tagsSelected);
+        // formdata.append('About',this.state.about);
+        // formdata.append('Image',this.state.image);
+        // formdata.append('EmailPrivate',this.state.emailPrivate);
+        // formdata.append('RolePrivate',this.state.rolePrivate);
+        // formdata.append('EmployerPrivate',this.state.employerPrivate);
 
         // const config = {
         //     headers: {
@@ -163,13 +219,13 @@ export default class SignUp extends React.Component {
         //     }
         // }
 
-        // axios.post('http://localhost:3000/newcontent', formdata,config)
+        // axios.post('http://localhost:3000/newuser', formdata,config)
         //     .then((res) => {
         //         console.log(res.data)
         //         if (res.status === 500) {
-        //             alert('Sorry, there was an erorr posting your story');
+        //             alert('Sorry, there was an erorr creating your account');
         //         } else if (res.status === 200) {
-        //             alert('Success! Your story has been posted.');
+        //             alert('Success! Your account has been created.');
         //             window.location = '/MainFeed';
         //             }
         //             //if res code is 500, error. TODO: Write code to display to user
@@ -180,10 +236,6 @@ export default class SignUp extends React.Component {
         //         });
     }
 
-    onCancel () {
-        
-    } 
-
     render () {
         return (
             <div id="createAccModal" class="modal">
@@ -191,6 +243,7 @@ export default class SignUp extends React.Component {
                     <div class = 'container'>
                         <h1>Create an account</h1>
                         <br></br>
+                        
                         <label><b>First Name</b></label>
                         <input type="text" placeholder="Enter First name" 
                         value={this.state.firstName}
@@ -203,25 +256,51 @@ export default class SignUp extends React.Component {
                         onChange={this.onChangeLastName}
                         ></input>
 
-                        <label><b>Email Address</b></label>
-                        <input type="text" placeholder="Enter Email Address"
-                        value={this.state.email}
-                        onChange={this.onChangeEmail}></input>
-                        
                         <label><b>Password</b></label>
                         <input type="password" placeholder="Enter Password"
                         value={this.state.password}
                         onChange={this.onChangePassword}></input>
 
-                        <label><b>Role</b></label>
-                        <input type="text" placeholder="Enter your current role"
-                        value={this.state.role}
-                        onChange={this.onChangeRole}></input>
+                        <label><b>Email Address</b></label>
+                        <div  className='checkBoxContainer'>  
+                          <input type="text" placeholder="Enter Email Address"
+                          value={this.state.email}
+                          onChange={this.onChangeEmail}></input>
+                          <div className='checkBoxContainer2'>
+                            <p className='keepPrivate'> <b>Keep private?</b> </p>
+                            <input type="checkbox" className='checkbox'
+                            value={(this.state.emailPrivate)}
+                            onChange={this.onChangeEmailPrivate}/>
+                          </div>
+                        </div>
+                        
+                         <label><b>Role</b></label>
+                        <div  className='checkBoxContainer'>                  
+                          <input type="text" placeholder="Enter your current role"
+                          value={this.state.role}
+                          onChange={this.onChangeRole}></input>
+                          <div className='checkBoxContainer2'>
+                            <p className='keepPrivate'> <b>Keep private?</b> </p>
+                            <input type="checkbox" className='checkbox'
+                            value={(this.state.rolePrivate)}
+                            onChange={this.onChangeRolePrivate}/>
+                          </div>
+                           
+                        </div>
+                        
 
                         <label><b>Employer</b></label>
-                        <input type="text" placeholder="Enter Employer"
-                        value={this.state.employer}
-                        onChange={this.onChangeEmployer}></input>
+                          <div  className='checkBoxContainer'>  
+                          <input type="text" placeholder="Enter Employer"
+                          value={this.state.employer}
+                          onChange={this.onChangeEmployer}></input>
+                          <div className='checkBoxContainer2'>
+                            <p className='keepPrivate'> <b>Keep private?</b> </p>
+                            <input type="checkbox" className='checkbox'
+                            value={(this.state.employerPrivate)}
+                            onChange={this.onChangeEmployerPrivate}/>
+                          </div>
+                        </div>
 
                         <label><b>Interests/Tags</b></label>
                         <div id='multiSelectDiv2'>
