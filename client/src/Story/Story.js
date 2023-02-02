@@ -4,15 +4,35 @@ import './StoryCSS.css';
 import ImageSelect from '../components-tom/ImageSelect.js';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
-
+import axios from 'axios';
 
 
 export default class Story extends React.Component{
     
+    constructor(props) {
+        super(props);
+        this.state = {
+          likes: 0,
+        };
+      }
+
+      componentDidMount() {
+        axios.get('http://localhost:3000/getMyLikes/'+this.props.objectid)
+          .then(res => {
+            this.setState({
+              likes: res.data.Likes,
+            }, () => {
+              console.log('Likes: ', this.state.likes);
+            });
+          })
+          .catch(error => console.log('ABC: ',error));
+      }
+
     render(){
        
         const tags = new Array();
         let count = 0;
+
         //PUT MYTAGS INTO MYTAGCONTAINER
         const readTags  = (s) =>{
             s = s.substring(0, s.length - 1);
@@ -51,6 +71,7 @@ export default class Story extends React.Component{
                 <h3 className="description">{this.props.Description}</h3>
                 <h3 className="author">{this.props.Author}</h3>
                 <img src={this.props.Image} className = "img" alt="Story.img"/>
+                <h3 className="likes">Likes: {this.state.likes}</h3>
                 {/* <img src={R} className = "img" alt="Story.img"/> */}
             </div>
             

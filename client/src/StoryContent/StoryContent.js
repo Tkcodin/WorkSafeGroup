@@ -15,9 +15,18 @@ const StoryContent = () => {
   const [Image, setImage] = useState('');
   const[Tags,setTags] = useState('');
   const[Date,setDate]=useState('');
-
+  const [likes, setLikes] = useState(0);  
+  //const [liked, setLiked] = useState(false); 
+  const [liked, setLiked] = useState(
+    localStorage.getItem(`liked-${objectId.id}`) === 'true'
+  );
   
+  useEffect(() => {
+    localStorage.setItem(`liked-${objectId.id}`, liked);
+  }, [liked]);
+
     useEffect(() => {
+      
       const id = objectId;
       axios.get('http://localhost:3000/getmycontent/'+objectId.id)
       .then(response => {
@@ -31,13 +40,30 @@ const StoryContent = () => {
         setImage(data.Image);
         setTags(data.tags);
         setDate(data.Date);
-        
-
         })
       
       .catch(error => {console.log(error);console.log(objectId.id)});
     });
    
+    
+    const handleLike = () => {
+      if (liked) {
+        setLiked(false);
+        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+        likes: -1
+      })
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error));
+      } else {
+        setLiked(true);
+        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+        likes: 1
+      })
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error));
+      }
+    };
+
     return (
       
 
@@ -65,6 +91,14 @@ const StoryContent = () => {
           </p>
           Tags: {Tags}
         </div>
+            <div>
+              <button
+                className="like-button"
+                onClick={handleLike}
+              >
+              {liked ? "I like it!" : "Like it?"}
+              </button>
+            </div>
       </div><Comment/></>
     );
   }
