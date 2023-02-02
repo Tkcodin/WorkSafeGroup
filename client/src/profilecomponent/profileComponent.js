@@ -15,6 +15,7 @@ const ProfileComponent =()=>{
     const [Role, setRole] = useState('Safety Expert');
     const [Employer, setEmployer] = useState('Worksafe NZ Limited');
     const [About, setAbout] = useState('I am a safety expert at worksafe limited. I am passionate about safety and spend my free time answering any questions you might have');
+    //Is it going to be an array or a string from the DB?
     const [Interests, setInterests] = useState('Violence, Poison');
 
 
