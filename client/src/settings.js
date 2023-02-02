@@ -25,6 +25,16 @@ const Settings = () => {
         // updateSettings();
     }
 
+    const logOut = (event) => {
+      event.preventDefault();
+      const confirmLI2 = localStorage.getItem("loggedIn");
+      console.log(confirmLI2);
+      localStorage.clear();
+      const confirmLI = localStorage.getItem("loggedIn");
+      console.log(confirmLI);
+      window.location = '/';
+    }
+
     const doChange = (event) => {
       event.preventDefault();
       // if(!submitting)
@@ -88,7 +98,7 @@ const Settings = () => {
                 
                 {/*takes two presses idk why tho!*/}
                 <button onClick={(e)=>doChange(e)}> submit </button>
-                 
+                <button onClick={(e)=>logOut(e)}>logOut</button>
             </form>            
         </div>
     );

@@ -1,0 +1,46 @@
+#logInBox{
+    margin: auto;
+    width: 60vw;
+    height: 60vh;
+    background-color: burlywood;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.logInInput{
+    margin: auto;
+    text-align: center;
+    width: 30vw;
+    height: 40px;
+}
+
+.logInLabel{
+    text-align: center;
+    margin: auto;
+    /* flex: 1; */
+    padding: 10;
+    width: 50vw;
+    height: 40px;
+}
+
+.logInBar{
+    text-align: center;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    background-color:aquamarine;
+    width: 50vw;
+    height: 40px;
+    /* flex: 1; */
+    padding: 10;
+}
+
+.logInButton{
+    margin: auto;
+    width: 30vw;
+    height: 40px;
+    /* flex: 1; */
+    padding: 10;
+}
+
