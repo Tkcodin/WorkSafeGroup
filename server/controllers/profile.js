@@ -16,7 +16,7 @@ const newProfile = (req, res, next) => {
 // newProfile function to get profile data
 
 const getProfile=(req,res,next)=>{
-res.json({message: "get profile data"});
+    res.json({message: "get profile data"});
 }
 
 // retrieve all the content documents stored in the MongoDB database
@@ -30,6 +30,53 @@ const getContent= (req,res)=>{
         }
  });
 };
+
+// for posting likes to a story content.
+
+// const updatelikes = (req,res)=>{
+//   const id = req.params.id;
+//   const updatedLikes = req.body.likes;
+//   content.findByIdAndUpdate(id, { $set: { Likes: updatedLikes } }, { new: true }, (error, updatedContent) => {
+//     if (error) {
+//       return res.status(400).send({
+//         success: false,
+//         message: 'Error updating content.'
+//       });
+//     }
+//     return res.status(200).send({
+//       success: true,
+//       message: 'Content updated successfully.',
+//       updatedContent
+//     });
+//   });
+// }
+
+const updatelikes = (req,res)=>{
+    const id = req.params.id;
+    const updatedLikes = req.body.likes;
+    content.findById(id, (error, foundContent) => {
+    if (error) {
+    return res.status(400).send({
+    success: false,
+    message: 'Error finding content.'
+    });
+    }
+    content.findByIdAndUpdate(id, { $set: { Likes: foundContent.Likes + updatedLikes } }, { new: true }, (error, updatedContent) => {
+    if (error) {
+    return res.status(400).send({
+    success: false,
+    message: 'Error updating content.'
+    });
+    }
+    return res.status(200).send({
+    success: true,
+    message: 'Content updated successfully.',
+    updatedContent
+    });
+    });
+    });
+    }
+
 // create a new "content" document in a MongoDB database using Mongoose
 const newContent= (req,res)=>{
     // take in the body of the request (req.body) which contains information. These values are then assigned to a new "content" object which is created using the Mongoose "content" model. 
@@ -41,6 +88,7 @@ const newContent= (req,res)=>{
         Date: req.body.Date,
         Image:path.normalize(req.file.path),
         tags: req.body.Tags
+        
     });
     newcontent.save().then(result=>{  // Save the newContent object to the database
         res.status(200).json(result);
@@ -61,6 +109,21 @@ const newContent= (req,res)=>{
     // });
 
  };
+
+ const getMyLikes = (req,res)=>{
+  const objectid = req.params;
+  content.findOne({_id:ObjectId(objectid)},(err,Content)=>{
+      if(err){
+      console.log(objectid);
+         console.log('abc'+err);
+          res.status(500).send(err);
+      }
+      else{
+          res.status(200).send(Content);
+      }
+  });
+
+}
 
  const getMyContent = (req,res)=>{
       const objectid = req.params;
@@ -136,4 +199,4 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent};
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent,updatelikes,getMyLikes};

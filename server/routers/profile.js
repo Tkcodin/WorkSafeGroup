@@ -1,5 +1,5 @@
 const multer = require('multer');
-const path = require('path');
+const path = require('path'); // a Node.js built-in module for working with file and directory paths
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads/');
@@ -36,6 +36,8 @@ router.get('/getcomments',profileController.getComment)
 router.post('/newuser',profileController.newUser)
 router.get('/getuser',profileController.getUser)
  router.get('/getmycontent/:id', profileController.getMyContent)
+ router.post('/updatelikes/:id',profileController.updatelikes)
+ router.get('/getMyLikes/:id',profileController.getMyLikes)
 
 
 //5th step

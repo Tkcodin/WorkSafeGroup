@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ImageSelect = (props) => {
+const ImageSelect2 = (props) => {
 
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -11,10 +11,10 @@ const ImageSelect = (props) => {
     return (
         <div>
         <input type="file" onChange={props.onChange} />
-        {props.value && <img src={URL.createObjectURL(props.value)} alt="Selected Image" className="chosenImg" id='imageSelected'/>}
+        
         </div>
     );
 
 }
 
-export default ImageSelect;
+export default ImageSelect2;

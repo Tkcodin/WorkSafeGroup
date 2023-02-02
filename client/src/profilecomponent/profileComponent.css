@@ -1,0 +1,41 @@
+.profileimage{
+   display: block;
+   margin: auto;
+   text-align: center;
+   width: 50%;
+}
+.profilepic{
+    
+    width: 20vw;
+    height: 20vh;
+    margin-top: 10px;
+   
+    /* margin-left: 20vw; */
+}
+.Author{
+   
+    font-family: Arial, Helvetica, sans-serif;
+
+    margin-top: 2px;
+    /* margin-left: 20vw; */
+   
+
+    /* float: inline-end; */
+}
+.changeAuthor{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 2px;
+}
+.details{
+    font-family: Arial, Helvetica, sans-serif;
+    /* margin-top: 5vh; */
+    /* margin-left: 20vw !important;  */
+    /* margin-right: auto; */
+}
+.About{
+    font-family: Arial, Helvetica, sans-serif;
+    /* margin-left: 20vw; */
+    /* width: 20vw; */
+    word-wrap: break-word;
+       
+}

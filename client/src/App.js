@@ -7,6 +7,8 @@ import { Home } from './HomePage.js'
 import Settings from './settings.js'
 
 import StoryContent from './StoryContent/StoryContent.js';
+import ProfileComponent from './profilecomponent/profileComponent';
+import EditProfileComponent from './profilecomponent/editprofileComponent';
 
 import LogIn from './logIn.js';
 
@@ -21,6 +23,9 @@ function App() {
       <Route path='/Settings' element={<Settings />}></Route>
 
       <Route path='/StoryContent/:id' element ={<StoryContent/>}></Route>
+      {/* //The components will have "/:id" in the end once we are getting object id from other components. - Sapan */}
+      <Route path='/profileComponent' element = {<ProfileComponent/>}></Route>
+      <Route path='/editprofileComponent' element={<EditProfileComponent/>}></Route>
 
       <Route path='/LogIn' element= {<LogIn/>}></Route>
 
