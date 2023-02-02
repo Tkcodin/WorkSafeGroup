@@ -37,6 +37,7 @@ router.post('/newuser',profileController.newUser)
 router.get('/getuser',profileController.getUser)
  router.get('/getmycontent/:id', profileController.getMyContent)
  router.post('/updatelikes/:id',profileController.updatelikes)
+ router.get('/getMyLikes/:id',profileController.getMyLikes)
 
 
 //5th step

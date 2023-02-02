@@ -33,6 +33,19 @@
     margin-left: 5px;
   }
   
+  .like-button{
+    margin-left: 580px;
+    height: 40px;
+  width: 80px;
+  background-color:#E67E22;
+  color: white;
+  font-size: 1.05rem;
+  margin-top: 10px;
+  border-radius: 15px;
+  border-style: none;
+  cursor: pointer;
+  }
+
   .StoryContentDesc {
     color: #666;
     font-size: 18px;

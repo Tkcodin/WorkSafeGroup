@@ -16,9 +16,17 @@ const StoryContent = () => {
   const[Tags,setTags] = useState('');
   const[Date,setDate]=useState('');
   const [likes, setLikes] = useState(0);  
-  const [liked, setLiked] = useState(false); 
+  //const [liked, setLiked] = useState(false); 
+  const [liked, setLiked] = useState(
+    localStorage.getItem(`liked-${objectId.id}`) === 'true'
+  );
   
+  useEffect(() => {
+    localStorage.setItem(`liked-${objectId.id}`, liked);
+  }, [liked]);
+
     useEffect(() => {
+      
       const id = objectId;
       axios.get('http://localhost:3000/getmycontent/'+objectId.id)
       .then(response => {

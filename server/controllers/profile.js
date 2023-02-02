@@ -110,6 +110,21 @@ const newContent= (req,res)=>{
 
  };
 
+ const getMyLikes = (req,res)=>{
+  const objectid = req.params;
+  content.findOne({_id:ObjectId(objectid)},(err,Content)=>{
+      if(err){
+      console.log(objectid);
+         console.log('abc'+err);
+          res.status(500).send(err);
+      }
+      else{
+          res.status(200).send(Content);
+      }
+  });
+
+}
+
  const getMyContent = (req,res)=>{
       const objectid = req.params;
       
@@ -184,4 +199,4 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent,updatelikes};
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent,updatelikes,getMyLikes};
