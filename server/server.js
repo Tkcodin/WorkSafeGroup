@@ -57,10 +57,7 @@ app.use('/uploads',express.static('uploads'));
 
 function createUserSchema(mongoose){
     const userschema = mongoose.Schema({
-        Username:{
-            type:String,
-            required:true
-        },
+
         FirstName:{
             type:String,
             required:true
@@ -69,30 +66,57 @@ function createUserSchema(mongoose){
             type:String,
             required:true
         },
-        Role:{
+        Password:{
             type:String,
-            
+            required:true
+        },
+        Email:{
+            type:String,
+            required:true,
+            unique:true,
+            index:true
+        },
+        Role:{
+            type:String,    
         },
         Employer:{
-            type:String,
-            
+            type:String,   
         },
-        Interests:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref:'tags'
+        Tags:{
+            type: String,
         },
-        createdContent: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'content'
-          }],
+        About:{
+            type: String
+        },
+        Image:{
+            type:String
+        },
+        EmailPrivate:{
+            type:Boolean
+        },
+        RolePrivate:{
+            type:Boolean
+        },
+        EmployerPrivate:{
+            type:Boolean
+        }
+        // createdContent: [{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'content'
+        //   }],
         
-        createdComments:[{
-            type: mongoose.Schema.Types.ObjectId,
-            ref:'comment'
-        }]
+        // createdComments:[{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref:'comment'
+        // }]
 
         
     });
+    //below code helps to ensure that email is unque --> need to add message to page
+    userschema.path('Email').validate(async (Email) => {
+        const emailCount = await mongoose.models.users.countDocuments({ Email})
+        return !emailCount
+    }, 'Email already exists');
 
     return userschema;
 }
