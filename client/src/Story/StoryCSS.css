@@ -7,9 +7,17 @@
 } */
 
 .Storydiv{
-    background-color: white;
+    background-color: rgb(253, 253, 253);
     /* width: 80vw; */
     /* border-radius: 5%; */
+}
+
+.Storydiv.Question {
+  background-color: rgb(131, 212, 218);
+}
+
+.Storydiv.Story {
+  background-color: rgb(227, 216, 150);
 }
 
 .likes-and-comments-container {
@@ -18,8 +26,8 @@
   align-items: center;
 }
 
-.likes {
-  margin-left: 600px;
+.category{
+  margin-left: 500px;
 }
 
 .chosenImg{
