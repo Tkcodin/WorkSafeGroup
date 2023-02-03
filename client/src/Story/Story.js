@@ -13,6 +13,7 @@ export default class Story extends React.Component{
         super(props);
         this.state = {
           likes: 0,
+          comments: -1
         };
       }
 
@@ -21,8 +22,10 @@ export default class Story extends React.Component{
           .then(res => {
             this.setState({
               likes: res.data.Likes,
+              comments: res.data.Comments.length
             }, () => {
               console.log('Likes: ', this.state.likes);
+              console.log('Comments: ', this.state.comments);
             });
           })
           .catch(error => console.log('ABC: ',error));
@@ -71,7 +74,10 @@ export default class Story extends React.Component{
                 <h3 className="description">{this.props.Description}</h3>
                 <h3 className="author">{this.props.Author}</h3>
                 <img src={this.props.Image} className = "img" alt="Story.img"/>
-                <h3 className="likes">Likes: {this.state.likes}</h3>
+                <div className="likes-and-comments-container">
+                    <h3 className="likes">Likes: {this.state.likes}</h3>
+                    <h3 className="comments">Comments: {this.state.comments}</h3>
+                </div>
                 {/* <img src={R} className = "img" alt="Story.img"/> */}
             </div>
             

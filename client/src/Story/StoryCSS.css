@@ -12,6 +12,16 @@
     /* border-radius: 5%; */
 }
 
+.likes-and-comments-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.likes {
+  margin-left: 600px;
+}
+
 .chosenImg{
     width: 60vw;
     object-fit: 'cover';
