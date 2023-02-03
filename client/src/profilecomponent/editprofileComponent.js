@@ -5,7 +5,7 @@ import NavigationBar from "../navigationBar";
 import './profileComponent.css';
 import profilepicture from './profilepic.jpg';
 import ImageSelect from '../components-tom/ImageSelect2';
-
+import axios from 'axios';
 
 const EditProfileComponent =()=>{
  //Once we have set up the backend we will use the url params to pass the object id and then use effect hook to grab the user details from DB.
@@ -55,6 +55,27 @@ const EditProfileComponent =()=>{
       //Load existing values from the database 
 
       useEffect(()=>{
+        let userEmail = localStorage.getItem('userEmail');
+        console.log(userEmail);
+  
+        if(userEmail != 'Email' && userEmail != null) {
+          axios.get('http://localhost:3000/getuser/'+userEmail)
+          .then(response => {
+          const data = response.data;
+          console.log(data);
+          console.log(data._id);
+          localStorage.setItem('userID',data._id); //gets the id of current user and sets to local storage variable
+          localStorage.setItem('FirstName',data.FirstName);
+          
+          setFirstName(data.FirstName);
+          setLastName(data.LastName);
+          setRole(data.Role);
+          setAbout(data.About);
+          setInterests(data.Tags);
+          setDisplayImage(data.Image);
+
+          })
+        }
 
       });
 
