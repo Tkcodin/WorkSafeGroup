@@ -128,9 +128,6 @@ const newContent= (req,res)=>{
  const getMyContent = (req,res)=>{
       const objectid = req.params;
       
-        
-     
-
     content.findOne({_id:ObjectId(objectid)},(err,Content)=>{
         if(err){
         console.log(objectid);
@@ -146,7 +143,8 @@ const newContent= (req,res)=>{
  }
 
  const getUser= (req,res)=>{
-    users.find({Username:req.body},(err,Content)=>{ // a MongoDB query to search for a document in the "users" collection based on the value of the "Username" field, which must match the value of "req.body".
+    const email = req.params.email;
+    users.findOne({Email:email},(err,Content)=>{ // a MongoDB query to search for a document in the "users" collection based on the value of the "Username" field, which must match the value of "req.body".
         if(err){
             res.status(500).send(err);
         }
@@ -156,15 +154,41 @@ const newContent= (req,res)=>{
     });
  };
  const newUser=(req,res)=>{
-    let newuser = new users(req.body);
-    newuser.save((err,newuser)=>{
-        if(err){
-            res.status(500).send(err);
-        }
-        else{
-            res.status(200).json(newuser);
-        }
+    // let newuser = new users(req.body);
+    
+    const newuser = new users({
+        FirstName: req.body.FirstName,
+        LastName: req.body.LastName,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Role: req.body.Role,
+        Employer: req.body.Employer,
+        Tags: req.body.Tags,
+        About: req.body.About,
+        Image:path.normalize(req.file.path),
+        EmailPrivate: req.body.EmailPrivate,
+        RolePrivate: req.body.RolePrivate,
+        EmployerPrivate: req.body.EmployerPrivate
     });
+
+
+    newuser.save().then(result=>{  // Save the newContent object to the database
+        res.status(200).json(result);
+        
+    }).catch(err=>{ 
+        res.status(500).json(err); // If an error occurs, a 500 status code is returned along with an error message in a JSON response.
+        console.log(req.body);
+        console.log('abc'+err);
+    })
+
+    // newuser.save((err,newuser)=>{
+    //     if(err){
+    //         res.status(500).send(err);
+    //     }
+    //     else{
+    //         res.status(200).json(newuser);
+    //     }
+    // });
  };
  const getComment=(req,res)=>{
     comment.find({Content:req.body},(err,Content)=>{

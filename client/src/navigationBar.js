@@ -10,11 +10,11 @@ const LoggedIn = () => {
   useEffect(() => {
     const confirmLI = localStorage.getItem("loggedIn");
     if(confirmLI==='y'){
-      console.log("you are logged in");
+      // console.log("you are logged in");
       setLoggedIn(true);
     }
     else{
-      console.log("you are not logged in");
+      // console.log("you are not logged in");
       setLoggedIn(false);
     }
   }, []); 
@@ -32,18 +32,58 @@ const NavigationBar = () => {
 
   var modal = document.getElementById('createAccModal');
   var createAccountButton = document.getElementById('createAccountButton2');
- 
+  
+  const firstName = localStorage.getItem('FirstName');
+  // document.getElementById('welcomeMessage').innerHTML = `Welcome, ${firstName}`;
 
 
   function openSignUp () {
     modal.style.display = 'block';
   }
 
+  function logout () {
+    localStorage.clear();
+  }
+
 //to here I've added both my code and main's hopefully no fuck ups but if there are please check the above section
 
-
+if (localStorage.getItem('userID') != null) {
   return (
-    console.log("logged in: " + amIloggedin),
+    // console.log("logged in: " + amIloggedin),
+    <div className="navbar">
+      <div className="navbarElement">
+        <nav className="nben">
+          <Link to="/">Home</Link>
+        </nav>
+      </div>
+      <div className="navbarElement">
+        <nav className="nben">
+          <Link to="/CreateStory">Create Story</Link>
+        </nav>
+      </div>
+      <div className="navbarElement">
+        <nav className="nben">
+          <Link to="/MainFeed">My Feed</Link>
+        </nav>
+      </div>
+      <div className="navbarElement">
+        <nav className="nben">
+          <p id='welcomeMessage'> {`Welcome, ${firstName}`}</p>
+        </nav>
+      </div>
+      <div className="navbarElement">
+        <nav className="nben">
+          <Link to="/MainFeed"
+            onClick={logout}
+          >Logout</Link>
+        </nav>
+      </div>
+    </div>
+
+  );
+} else {
+  return (
+    // console.log("logged in: " + amIloggedin),
     <div className="navbar">
       <div className="navbarElement">
         <nav className="nben">
@@ -77,11 +117,8 @@ const NavigationBar = () => {
       </div>
     </div>
 
-
-    
-
-
   );
+}
 };
 
 

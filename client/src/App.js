@@ -19,6 +19,7 @@ function App() {
       <Route path='/' element={<Home />}></Route>
       <Route path='/CreateStory' element={<CreateStory />}></Route>
       <Route path='/MainFeed' element={<MainFeed />}></Route>
+      {/* <Route path='/MainFeed/:Email' element={<MainFeed />}></Route> */}
 
       <Route path='/Settings' element={<Settings />}></Route>
 

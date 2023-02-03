@@ -67,9 +67,20 @@ export default class SignUp extends React.Component {
     }
 
     componentDidMount () {
-        this.setState({
-            // username: 'test user'
+      // console.log('did mount called');
+      let userEmail = localStorage.getItem('userEmail');
+      console.log(userEmail);
+
+      if(userEmail != 'Email' && userEmail != null) {
+        axios.get('http://localhost:3000/getuser/'+userEmail)
+        .then(response => {
+        const data = response.data;
+        console.log(data);
+        console.log(data._id);
+        localStorage.setItem('userID',data._id); //gets the id of current user and sets to local storage variable
+        localStorage.setItem('FirstName',data.FirstName);
         })
+      }
     }
 
     handleChange (selected) { //used for dropdown menu selection
@@ -182,7 +193,7 @@ export default class SignUp extends React.Component {
             tagsSelected= tagsSelected+element.value+"-";
         });
 
-        const post = {
+        const user = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             password: this.state.password,
@@ -197,43 +208,46 @@ export default class SignUp extends React.Component {
             employerPrivate: this.state.employerPrivate
         }
 
-        console.log(post);
+        console.log(user);
+        localStorage.setItem('userEmail', this.state.email);
+        console.log(localStorage.getItem('userEmail'));
 
-        // const formdata = new FormData();
-        // formdata.append('First Name',this.state.firstName);
-        // formdata.append('Last Name', this.state.lastName);
-        // formdata.append('Password',this.state.password);
-        // formdata.append('Email',this.state.email);
-        // formdata.append('Role',this.state.role);
-        // formdata.append('Employer',this.state.employer);
-        // formdata.append('Tags',tagsSelected);
-        // formdata.append('About',this.state.about);
-        // formdata.append('Image',this.state.image);
-        // formdata.append('EmailPrivate',this.state.emailPrivate);
-        // formdata.append('RolePrivate',this.state.rolePrivate);
-        // formdata.append('EmployerPrivate',this.state.employerPrivate);
+        const formdata = new FormData();
+        formdata.append('FirstName',this.state.firstName);
+        formdata.append('LastName', this.state.lastName);
+        formdata.append('Password',this.state.password);
+        formdata.append('Email',this.state.email);
+        formdata.append('Role',this.state.role);
+        formdata.append('Employer',this.state.employer);
+        formdata.append('Tags',tagsSelected);
+        formdata.append('About',this.state.about);
+        formdata.append('Image',this.state.image);
+        formdata.append('EmailPrivate',this.state.emailPrivate);
+        formdata.append('RolePrivate',this.state.rolePrivate);
+        formdata.append('EmployerPrivate',this.state.employerPrivate);
 
-        // const config = {
-        //     headers: {
-        //         'content-type': 'multipart/form-data'
-        //     }
-        // }
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
 
-        // axios.post('http://localhost:3000/newuser', formdata,config)
-        //     .then((res) => {
-        //         console.log(res.data)
-        //         if (res.status === 500) {
-        //             alert('Sorry, there was an erorr creating your account');
-        //         } else if (res.status === 200) {
-        //             alert('Success! Your account has been created.');
-        //             window.location = '/MainFeed';
-        //             }
-        //             //if res code is 500, error. TODO: Write code to display to user
-        //             //if res code is 200 , success.TODO: Write code to display to user
-        //         }).catch((error) => {
-        //             console.log(error)
-        //             alert("The following error has occured: " + error);
-        //         });
+        axios.post('http://localhost:3000/newuser', formdata,config)
+            .then((res) => {
+                console.log(res.data)
+                if (res.status === 500) {
+                    alert('Sorry, there was an erorr creating your account');
+                } else if (res.status === 200) {
+                    alert('Success! Your account has been created.');
+                    // window.location = '/MainFeed/'+this.state.email;
+                    window.location = '/MainFeed/';
+                    }
+                    //if res code is 500, error. TODO: Write code to display to user
+                    //if res code is 200 , success.TODO: Write code to display to user
+                }).catch((error) => {
+                    console.log(error)
+                    alert("The following error has occured: " + error);
+                });
     }
 
     render () {
