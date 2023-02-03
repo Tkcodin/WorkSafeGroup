@@ -20,8 +20,27 @@ import axios from 'axios';
     {value:"silver-dragons", label : "dragons"}
   ];
 
+const categoryOptions = [
+  {value:"Question", label:"Question"},
+  {value:"Story", label:"Story"}
+]
 
   const Option = (props) => {
+    return (
+      <div>
+        <components.Option {...props}>
+          <input
+            type="checkbox"
+            checked={props.isSelected}
+            onChange={() => null} //below braces needed?
+          />{" "}
+          <label>{props.label}</label>
+        </components.Option>
+      </div>
+    );
+  };
+
+  const categoryOption = (props) => {
     return (
       <div>
         <components.Option {...props}>
@@ -46,6 +65,7 @@ export default class  CreateStory extends Component {
     this.onPost = this.onPost.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onChangeImage = this.onChangeImage.bind(this);
+    this.onCategorySelect = this.onCategorySelect.bind(this);
 
     this.state = {
       user: 'testuser',
@@ -53,6 +73,7 @@ export default class  CreateStory extends Component {
       title:'',
       description: '',
       text:'',
+      category: null,
       image: null
     };
   }
@@ -66,6 +87,12 @@ export default class  CreateStory extends Component {
 
 componentDidMount () {
   //fill in
+}
+
+onCategorySelect(selected) {
+  this.setState({
+    category: selected
+  });
 }
 
 onChangeTitle (e) {
@@ -101,11 +128,15 @@ onPost(e) {
     // tagsSelected.push(element.value);
     tagsSelected= tagsSelected+element.value+"-";
   });
+
+  var categorySelected=this.state.category.value;
+
   const post = {
     user: this.state.user,
     title: this.state.title,
     description: this.state.description,
     text: this.state.text,
+    category: categorySelected,
     tags: tagsSelected,
     image: this.state.image
 }
@@ -118,6 +149,7 @@ console.log(post);
   formdata.append('Description',this.state.description);
   formdata.append('Content',this.state.text);
   formdata.append('Date','22/01/2021');
+  formdata.append('Category', this.state.category.value);
    formdata.append('Image',this.state.image);
   formdata.append('Tags',tagsSelected);
 
@@ -188,7 +220,7 @@ console.log(post);
             </label>
           </div>
           
-          
+          {/* </span> */}
       
   {/*     
 
@@ -196,6 +228,25 @@ console.log(post);
           <MyTag text="heights" colour="blue"/>
           <MyTag text="Air Toxins" colour="purple"/> */}
       
+
+        <div id='singleSelectDiv'>
+
+          <ReactSelect
+            options={categoryOptions}
+            isMulti={false}
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            placeholder="Select Category"
+            components={{
+              categoryOption
+            }}
+            onChange={this.onCategorySelect}
+            allowSelectAll={false}
+            value={this.state.category}
+          />
+        </div>
+          
+        {/* </span> */}
 
         <div id='multiSelectDiv'>
 
@@ -212,11 +263,7 @@ console.log(post);
             allowSelectAll={true}
             value={this.state.optionSelected}
           />
-        </div>
-          
-        {/* </span> */}
-
-          
+        </div>  
       
           <br></br>
           <button type='submit' id='PostStoryButton'>Post Story</button>

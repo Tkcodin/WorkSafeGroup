@@ -86,6 +86,7 @@ const newContent= (req,res)=>{
         Description: req.body.Description,
         Content: req.body.Content,
         Date: req.body.Date,
+        Category: req.body.Category,
         Image:path.normalize(req.file.path),
         tags: req.body.Tags
         

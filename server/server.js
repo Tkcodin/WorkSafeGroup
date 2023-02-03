@@ -151,6 +151,10 @@ function createContentSchema(mongoose){
             required: true
     
         },
+        Category:{
+            type: String,
+            required: true
+        },
         Comments:[{
             type: mongoose.Schema.Types.ObjectId,
             ref:'comment'
