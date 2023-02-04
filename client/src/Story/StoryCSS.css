@@ -5,6 +5,11 @@
     vertical-align: auto;
  
 } */
+#authorDiv{
+  background-color: azure;
+  display: inline-block;
+  width: fit-content;
+}
 
 .Storydiv{
     background-color: rgb(253, 253, 253);

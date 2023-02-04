@@ -5,12 +5,17 @@ import ImageSelect from '../components-tom/ImageSelect.js';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 
 
 export default class Story extends React.Component{
     
     constructor(props) {
         super(props);
+
+        this.handleAuthorClick = this.handleAuthorClick.bind(this);
+
         this.state = {
           likes: 0,
           comments: -1,
@@ -32,6 +37,14 @@ export default class Story extends React.Component{
             });
           })
           .catch(error => console.log('ABC: ',error));
+      }
+
+      handleAuthorClick (e) {
+        // if (!e) var e = window.event;
+        // e.cancelBubble = true;
+        // if (e.stopPropagation) e.stopPropagation();
+        // window.location = '/profileComponent/'
+        e.stopImmediatePropagation();
       }
 
     render(){
@@ -64,6 +77,8 @@ export default class Story extends React.Component{
 
           }
 
+          
+
         return(
             
             // console.log(this.props.tagInfo),
@@ -75,7 +90,15 @@ export default class Story extends React.Component{
                 <MyTagContainer myTags={tags}/>
                 <h3 className="title">{this.props.Storyname}</h3>
                 <h3 className="description">{this.props.Description}</h3>
-                <h3 className="author">{this.props.Author}</h3>
+
+                <Link to="/profileComponent" onClick={this.handleAuthorClick}>
+                  {/* <div id='authorDiv' onClick={this.handleAuthorClick}>  */}
+                    {/* <h3 className="author">{this.props.Author}
+                    </h3> */}
+                  {/* </div>  */}
+                  {this.props.Author}
+                </Link>
+                <br></br>
                 <img src={this.props.Image} className = "img" alt="Story.img"/>
                 <div className="likes-and-comments-container">
                     <h3 className="category">{this.state.category}</h3>
