@@ -102,7 +102,7 @@ if (localStorage.getItem('userID') != null) {
       </div>
       <div className="navbarElement">
         <nav className="nben">
-          <Link id="linkToChange" to="/Settings">
+          <Link id="linkToChange" to={amIloggedin ? "/Settings" : "/LogIn"}>
             {amIloggedin ? "Settings" : "Log In / Sign Up" }
           </Link>
         </nav>

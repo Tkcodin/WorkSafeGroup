@@ -37,7 +37,7 @@ const LogIn = () => {
             const confirmLI2 = localStorage.getItem("loggedIn");
             console.log(confirmLI2);
             console.log("Logged in");
-            // window.location = '/MainFeed';
+            window.location = '/MainFeed';
         }
         else if(password1 != '' && password2 != '' && userName != ''){
             //communicate this to user
