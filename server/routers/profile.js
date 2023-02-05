@@ -38,7 +38,7 @@ router.get('/getuser/:email',profileController.getUser)
  router.get('/getmycontent/:id', profileController.getMyContent)
  router.post('/updatelikes/:id',profileController.updatelikes)
  router.get('/getMyLikes/:id',profileController.getMyLikes)
-
+ router.get('/getuserWithID/:userID',profileController.getUserWithID)
 
 //5th step
 module.exports=router 

@@ -123,6 +123,9 @@ function createUserSchema(mongoose){
 
 function createContentSchema(mongoose){
     const feedschema = mongoose.Schema({
+        UserID:{
+            type: String,
+        },
         Author:{
             type: String,
             required: true
