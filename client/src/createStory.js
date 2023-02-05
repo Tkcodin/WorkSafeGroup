@@ -74,7 +74,8 @@ export default class  CreateStory extends Component {
       description: '',
       text:'',
       category: null,
-      image: null
+      image: null,
+      userID: localStorage.getItem('userID')
     };
   }
 
@@ -86,7 +87,9 @@ export default class  CreateStory extends Component {
   };
 
 componentDidMount () {
-  //fill in
+  this.setState({
+    user: localStorage.getItem('FirstName')
+  });
 }
 
 onCategorySelect(selected) {
@@ -132,6 +135,7 @@ onPost(e) {
   var categorySelected=this.state.category.value;
 
   const post = {
+    userID: this.state.userID,
     user: this.state.user,
     title: this.state.title,
     description: this.state.description,
@@ -144,6 +148,7 @@ onPost(e) {
 console.log(post);
 
   const formdata = new FormData();
+  formdata.append('UserID',this.state.userID);
   formdata.append('Author',this.state.user);
   formdata.append('Title', this.state.title);
   formdata.append('Description',this.state.description);

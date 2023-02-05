@@ -81,6 +81,7 @@ const updatelikes = (req,res)=>{
 const newContent= (req,res)=>{
     // take in the body of the request (req.body) which contains information. These values are then assigned to a new "content" object which is created using the Mongoose "content" model. 
     const newcontent = new content({
+        UserID: req.body.UserID,
         Author: req.body.Author,
         Title: req.body.Title,
         Description: req.body.Description,
@@ -154,6 +155,21 @@ const newContent= (req,res)=>{
         }
     });
  };
+
+ const getUserWithID= (req,res)=>{
+    const userID = req.params.userID;
+    users.findOne({_id:userID},(err,Content)=>{ // a MongoDB query to search for a document in the "users" collection based on the value of the "Username" field, which must match the value of "req.body".
+        if(err){
+            res.status(500).send(err);
+        }
+        else{
+            res.status(200).json(Content);
+        }
+    });
+ };
+
+
+
  const newUser=(req,res)=>{
     // let newuser = new users(req.body);
     
@@ -224,4 +240,4 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser,newComment,getComment,getMyContent,updatelikes,getMyLikes};
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes};

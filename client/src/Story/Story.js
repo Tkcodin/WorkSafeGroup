@@ -13,7 +13,7 @@ export default class Story extends React.Component{
     
     constructor(props) {
         super(props);
-
+        
         this.handleAuthorClick = this.handleAuthorClick.bind(this);
 
         this.state = {
@@ -71,9 +71,7 @@ export default class Story extends React.Component{
         const handleCardClick = (objectid) => {
             // code to run when the div is clicked
             
-           window.location = '/StoryContent/'+objectid;
-
-
+          window.location = '/StoryContent/'+objectid;
 
           }
 
@@ -91,7 +89,7 @@ export default class Story extends React.Component{
                 <h3 className="title">{this.props.Storyname}</h3>
                 <h3 className="description">{this.props.Description}</h3>
 
-                <Link to="/profileComponent" onClick={this.handleAuthorClick}>
+                <Link to={"/profileComponent/" + this.props.selectedUserID} onClick={this.handleAuthorClick}>
                   {/* <div id='authorDiv' onClick={this.handleAuthorClick}>  */}
                     {/* <h3 className="author">{this.props.Author}
                     </h3> */}

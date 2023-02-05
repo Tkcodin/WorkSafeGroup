@@ -25,7 +25,7 @@ function App() {
 
       <Route path='/StoryContent/:id' element ={<StoryContent/>}></Route>
       {/* //The components will have "/:id" in the end once we are getting object id from other components. - Sapan */}
-      <Route path='/profileComponent' element = {<ProfileComponent/>}></Route>
+      <Route path='/profileComponent/:selectedUserID' element = {<ProfileComponent/>}></Route>
       <Route path='/editprofileComponent' element={<EditProfileComponent/>}></Route>
 
       <Route path='/LogIn' element= {<LogIn/>}></Route>

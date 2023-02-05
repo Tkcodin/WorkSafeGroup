@@ -3,40 +3,70 @@ import React from "react";
 import NavigationBar from "../navigationBar";
 import './profileComponent.css';
 import profilepicture from './profilepic.jpg';
-
+import { useParams } from "react-router";
+import EditProfileComponent from "./editprofileComponent";
+import axios from 'axios';
 
 
 
 const ProfileComponent =()=>{
     //Once we have set up the backend we will use the url params to pass the object id and then use effect hook to grab the user details from DB.
     //const  objectId  = useParams();
-    const [firstname, setFirstName] = useState('sapan');
-    const [lastname, setLastName] = useState('sandesara');
-    const [Role, setRole] = useState('Safety Expert');
-    const [Employer, setEmployer] = useState('Worksafe NZ Limited');
-    const [About, setAbout] = useState('I am a safety expert at worksafe limited. I am passionate about safety and spend my free time answering any questions you might have');
+    const [Image, setImage] = useState('');
+    const selectedUserID = useParams('').selectedUserID;
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
+    const [Role, setRole] = useState('');
+    const [Employer, setEmployer] = useState('');
+    const [About, setAbout] = useState('');
     //Is it going to be an array or a string from the DB?
-    const [Interests, setInterests] = useState('Violence, Poison');
+    const [Interests, setInterests] = useState('');
 
 
     useEffect(()=>{
-
+        // let userID = localStorage.getItem('userID');
+        // console.log(userID);
+  
+        if(selectedUserID != null) {
+          axios.get('http://localhost:3000/getuserWithID/'+selectedUserID)
+          .then(response => {
+          const data = response.data;
+          console.log(data);
+          console.log(data._id);
+          
+          setFirstName(data.FirstName);
+          setLastName(data.LastName);
+          setRole(data.Role);
+          setEmployer(data.Employer)
+          setAbout(data.About);
+          setInterests(data.Tags);
+          setImage(data.Image);
+            })
+        }
     });
 
-    return (
+    if (selectedUserID === localStorage.getItem('userID')) {
+        // console.log('in be edit');
+        return (
+            <EditProfileComponent></EditProfileComponent>
+        );
+    } else {
+        return (
+            <><></><NavigationBar /><div className="profileimage">
+                <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
+                <h1 className="Author">{firstname} {lastname}</h1><br></br>
+                <h2 classname="details">{Role} at {Employer}</h2><br></br>
+                <p className="About">About me: <br></br>{About}</p><br></br>
+                <p classname ="details">Interests: {Interests}</p>
+                </div></>
+    
+    
+    
+    
+        );
+    }
 
-        <><></><NavigationBar /><div className="profileimage">
-            <img className="profilepic" src={profilepicture} alt="profilepic"></img>
-            <h1 className="Author">{firstname} {lastname}</h1><br></br>
-            <h2 classname="details">{Role} at {Employer}</h2><br></br>
-            <p className="About">About me: <br></br>{About}</p><br></br>
-            <p classname ="details">Interests: {Interests}</p>
-            </div></>
-
-
-
-
-    );
+    
 
     
 
