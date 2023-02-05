@@ -5,14 +5,21 @@ import ImageSelect from '../components-tom/ImageSelect.js';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 
 
 export default class Story extends React.Component{
     
     constructor(props) {
         super(props);
+        
+        this.handleAuthorClick = this.handleAuthorClick.bind(this);
+
         this.state = {
           likes: 0,
+          comments: -1,
+          category: ""
         };
       }
 
@@ -21,11 +28,23 @@ export default class Story extends React.Component{
           .then(res => {
             this.setState({
               likes: res.data.Likes,
+              comments: res.data.Comments.length,
+              category: res.data.Category
             }, () => {
               console.log('Likes: ', this.state.likes);
+              console.log('Comments: ', this.state.comments);
+              console.log('Category: ', this.state.category);
             });
           })
           .catch(error => console.log('ABC: ',error));
+      }
+
+      handleAuthorClick (e) {
+        // if (!e) var e = window.event;
+        // e.cancelBubble = true;
+        // if (e.stopPropagation) e.stopPropagation();
+        // window.location = '/profileComponent/'
+        e.stopImmediatePropagation();
       }
 
     render(){
@@ -52,11 +71,11 @@ export default class Story extends React.Component{
         const handleCardClick = (objectid) => {
             // code to run when the div is clicked
             
-           window.location = '/StoryContent/'+objectid;
-
-
+          window.location = '/StoryContent/'+objectid;
 
           }
+
+          
 
         return(
             
@@ -64,14 +83,26 @@ export default class Story extends React.Component{
             
 
             readTags(this.props.tagInfo),
-            <div className='Storydiv' onClick={() => handleCardClick(this.props.objectid)}>
+            <div className={`Storydiv ${this.state.category === 'Question' ? 'Question' : 'Story'}`} onClick={() => handleCardClick(this.props.objectid)}>
 
                 <MyTagContainer myTags={tags}/>
                 <h3 className="title">{this.props.Storyname}</h3>
                 <h3 className="description">{this.props.Description}</h3>
-                <h3 className="author">{this.props.Author}</h3>
+
+                <Link to={"/profileComponent/" + this.props.selectedUserID} onClick={this.handleAuthorClick}>
+                  {/* <div id='authorDiv' onClick={this.handleAuthorClick}>  */}
+                    {/* <h3 className="author">{this.props.Author}
+                    </h3> */}
+                  {/* </div>  */}
+                  {this.props.Author}
+                </Link>
+                <br></br>
                 <img src={this.props.Image} className = "img" alt="Story.img"/>
-                <h3 className="likes">Likes: {this.state.likes}</h3>
+                <div className="likes-and-comments-container">
+                    <h3 className="category">{this.state.category}</h3>
+                    <h3 className="likes">Likes: {this.state.likes}</h3>
+                    <h3 className="comments">Comments: {this.state.comments}</h3>
+                </div>
                 {/* <img src={R} className = "img" alt="Story.img"/> */}
             </div>
             

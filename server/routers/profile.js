@@ -33,12 +33,12 @@ router.post('/newcontent',upload.single('Image'),profileController.newContent)
 router.get('/getcontent',profileController.getContent)
 router.post('/newcomment',profileController.newComment)
 router.get('/getcomments',profileController.getComment)
-router.post('/newuser',profileController.newUser)
-router.get('/getuser',profileController.getUser)
+router.post('/newuser',upload.single('Image'),profileController.newUser)
+router.get('/getuser/:email',profileController.getUser)
  router.get('/getmycontent/:id', profileController.getMyContent)
  router.post('/updatelikes/:id',profileController.updatelikes)
  router.get('/getMyLikes/:id',profileController.getMyLikes)
-
+ router.get('/getuserWithID/:userID',profileController.getUserWithID)
 
 //5th step
 module.exports=router 

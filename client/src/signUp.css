@@ -86,3 +86,27 @@ input[type=text], input[type=password] {
   #cancelContainer {
     background-color:#f1f1f1
   }
+
+  #required {
+	color: #f44336;
+	font-size: 15px;
+  }
+
+  .checkBoxContainer{
+	display: flex;
+	justify-content: flex-start;
+  }
+
+  .checkbox {
+	margin-left: 15px;
+  }
+
+  .checkBoxContainer2{
+	margin-left: 15px;
+	width: auto;
+	font-size: small;
+  }
+
+  .keepPrivate {
+	margin-bottom: 3px;
+  }
