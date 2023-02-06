@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './navigationBar.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SignUp from './signUp';
+import LogIn from './logIn';
 
 
 const LoggedIn = () => {
@@ -29,14 +30,24 @@ const NavigationBar = () => {
 
   const amIloggedin = LoggedIn();
   
-
+  // const modalRef = useRef(null);
+  // const modal2Ref = useRef(null);
   var modal = document.getElementById('createAccModal');
+  var modal2 = document.getElementById('logInModal');
   var createAccountButton = document.getElementById('createAccountButton2');
   
   const firstName = localStorage.getItem('FirstName');
   // document.getElementById('welcomeMessage').innerHTML = `Welcome, ${firstName}`;
 
+  function openLogIn () {
+    modal2.style.display ='block';
+  }
+  
+  function openSettings () {
+    window.location= '/Settings';
+  }
 
+  
   function openSignUp () {
     modal.style.display = 'block';
   }
@@ -51,11 +62,11 @@ if (localStorage.getItem('userID') != null) {
   return (
     // console.log("logged in: " + amIloggedin),
     <div className="navbar">
-      <div className="navbarElement">
+      {/* <div className="navbarElement">
         <nav className="nben">
           <Link to="/">Home</Link>
         </nav>
-      </div>
+      </div> */}
       <div className="navbarElement">
         <nav className="nben">
           <Link to="/CreateStory">Create Story</Link>
@@ -85,11 +96,11 @@ if (localStorage.getItem('userID') != null) {
   return (
     // console.log("logged in: " + amIloggedin),
     <div className="navbar">
-      <div className="navbarElement">
+      {/* <div className="navbarElement">
         <nav className="nben">
           <Link to="/">Home</Link>
         </nav>
-      </div>
+      </div> */}
       <div className="navbarElement">
         <nav className="nben">
           <Link to="/CreateStory">Create Story</Link>
@@ -102,19 +113,22 @@ if (localStorage.getItem('userID') != null) {
       </div>
       <div className="navbarElement">
         <nav className="nben">
-          <Link id="linkToChange" to={amIloggedin ? "/Settings" : "/LogIn"}>
-            {amIloggedin ? "Settings" : "Log In / Sign Up" }
-          </Link>
+          <button id ='loginSettings' 
+            onClick = {() => {amIloggedin ? openSettings() : openLogIn()}}>
+              {amIloggedin ? "Settings" : "Log In / Sign Up"}
+            </button>
+            <LogIn modal={modal2} ></LogIn>
+            <SignUp modal={modal}></SignUp>
         </nav>
       </div>
-      <div className="navbarElement">
+      {/* <div className="navbarElement">
         <nav className="nben">
         <button id = 'createAccountButton'
           onClick = {openSignUp}
         >Create Account</button>
-        <SignUp modal={modal}></SignUp>
+        
         </nav>
-      </div>
+      </div> */}
     </div>
 
   );

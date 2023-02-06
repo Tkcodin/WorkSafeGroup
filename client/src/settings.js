@@ -32,7 +32,7 @@ const Settings = () => {
       localStorage.clear();
       const confirmLI = localStorage.getItem("loggedIn");
       console.log(confirmLI);
-      window.location = '/';
+      window.location = '/MainFeed';
     }
 
     const doChange = (event) => {
