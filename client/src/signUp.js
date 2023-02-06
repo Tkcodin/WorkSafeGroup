@@ -70,7 +70,7 @@ export default class SignUp extends React.Component {
       // console.log('did mount called');
       let userEmail = localStorage.getItem('userEmail');
       console.log(userEmail);
-
+  
       if(userEmail != 'Email' && userEmail != null) {
         axios.get('http://localhost:3000/getuser/'+userEmail)
         .then(response => {

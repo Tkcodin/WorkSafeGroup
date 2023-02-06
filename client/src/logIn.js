@@ -3,6 +3,7 @@ import './logIn.css';
 import './signUp.css';
 import SignUp from './signUp';
 import NavigationBar from './navigationBar';
+import axios from 'axios';
 
 const LogIn = (props) => {
 
@@ -10,6 +11,26 @@ const LogIn = (props) => {
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
     const [infoText, setInfoText] = useState('Log In Or Press Sign Up');
+
+
+    useEffect(()=>{
+        // let userID = localStorage.getItem('userID');
+        // console.log(userID);
+    
+        let userEmail = localStorage.getItem('userEmail');
+        //   console.log(userEmail);
+          
+          if(userEmail != 'Email' && userEmail != null) {
+            axios.get('http://localhost:3000/getuser/'+userEmail)
+            .then(response => {
+            const data = response.data;
+            console.log(data);
+            console.log(data._id);
+            localStorage.setItem('userID',data._id); //gets the id of current user and sets to local storage variable
+            localStorage.setItem('FirstName',data.FirstName);
+            })
+          }
+    });
 
     function closeSignUpNoButton(){
         props.modal.style.display = "none";
@@ -47,6 +68,7 @@ const LogIn = (props) => {
             const confirmLI = localStorage.getItem("loggedIn");
             console.log(confirmLI);
             localStorage.setItem('loggedIn', 'y');
+            localStorage.setItem('userEmail', userName);
             const confirmLI2 = localStorage.getItem("loggedIn");
             console.log(confirmLI2);
             console.log("Logged in");
