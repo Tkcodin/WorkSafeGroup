@@ -79,6 +79,13 @@ if (localStorage.getItem('userID') != null) {
       </div>
       <div className="navbarElement">
         <nav className="nben">
+          <button id ='loginSettings' 
+          onClick = {openSettings}     
+          >Settings</button>
+        </nav>
+      </div>
+      <div className="navbarElement">
+        <nav className="nben">
           <p id='welcomeMessage'> {`Welcome, ${firstName}`}</p>
         </nav>
       </div>
