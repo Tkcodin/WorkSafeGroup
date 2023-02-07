@@ -199,8 +199,11 @@ function createCommentSchema(mongoose){
 function createTagsSchema(mongoose){
     const createtagschema = mongoose.Schema({
         Name:{
-            type:[String],
+            type:String,
             required:true
+        },
+        Group:{
+            type:String
         }
     });
     return createtagschema;
