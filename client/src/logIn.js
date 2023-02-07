@@ -90,7 +90,7 @@ const LogIn = (props) => {
                 console.log("Logged in");
                 closeSignUpNoButton();
                 window.location = "/Mainfeed";
-            } else if (password1 != data.Password) {
+            } else if (password1 != data.Password || password2 != data.Password) {
                 changeIT("Sorry, that username and password combination doesn't exist");
                 console.log("Sorry, that username and password combination doesn't exist");
                 localStorage.clear();
