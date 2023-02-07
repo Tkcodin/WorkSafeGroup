@@ -16,8 +16,8 @@ input[type=text], input[type=password] {
   }
   
 #createAccountButton2,#logout, #backToHomePage{
-	background-color: #4255ff;
-	color: white;
+	background-color: #d6e26e;
+	color: black;
 	padding: 14px 20px;
 	margin: 8px 0;
 	border: none;
@@ -27,8 +27,8 @@ input[type=text], input[type=password] {
   }
 
   #create {
-	background-color: #4255ff;
-	color: white;
+	background-color: #d6e26e;
+	color: black;
 	padding: 5px 10px;
 	border-radius: 5px;
   }
