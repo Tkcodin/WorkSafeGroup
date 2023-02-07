@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import './logIn.css';
-import './signUp.css';
+// import './signUp.css';
 import SignUp from './signUp';
 import NavigationBar from './navigationBar';
 import axios from 'axios';
@@ -91,7 +91,7 @@ const LogIn = (props) => {
                 closeSignUpNoButton();
                 window.location = "/Mainfeed";
             } else if (password1 != data.Password || password2 != data.Password) {
-                changeIT("Sorry, that username and password combination doesn't exist");
+                changeIT("Sorry, that username and password combination does not exist");
                 console.log("Sorry, that username and password combination doesn't exist");
                 localStorage.clear();
             }
@@ -126,32 +126,73 @@ const LogIn = (props) => {
     }
      //         <input type="text" value={inputValue} onChange={handleChange} />
     return (
+        // <div id="logInModal" class="modal">
+        //     <div id="logInBox" >
+        //         <label  className="logInLabel">{infoText}</label>
+        //         <br />
+        //         <div className="logInBar">
+        //             <label className="logInLabel">UserName: </label>
+        //             <input className="logInInput" type="text" value={userName} onChange={changeUN}></input>
+        //         </div>
+        //         <br />
+        //         <div className="logInBar">
+        //             <label className="logInLabel">Password: </label>
+        //             <input className="logInInput" type="text" value={password1} onChange={changePw1}></input>
+        //         </div>
+        //         <br />
+        //         <div className="logInBar">
+        //             <label className="logInLabel">Confirm Password: </label>
+        //             <input className="logInInput" type="text" value={password2} onChange={changePw2}></input>
+        //         </div>
+        //         <br />
+        //         <button className="logInButton" onClick={(e)=>doLogIn(e)}>Log In</button>
+        //         <br />
+        //         <button className="logInButton" onClick={(e)=>goSignUp(e)}>Or - Sign Up</button>
+        //         <br />
+        //         <button className="logInButton" onClick={(e)=>closeSignUp(e)}>Cancel</button>
+        //     </div>
+        // </div>
+
         <div id="logInModal" class="modal">
-            <div id="logInBox" >
-                <label  className="logInLabel">{infoText}</label>
-                <br />
-                <div className="logInBar">
-                    <label className="logInLabel">UserName: </label>
-                    <input className="logInInput" type="text" value={userName} onChange={changeUN}></input>
-                </div>
-                <br />
-                <div className="logInBar">
-                    <label className="logInLabel">Password: </label>
-                    <input className="logInInput" type="text" value={password1} onChange={changePw1}></input>
-                </div>
-                <br />
-                <div className="logInBar">
-                    <label className="logInLabel">Confirm Password: </label>
-                    <input className="logInInput" type="text" value={password2} onChange={changePw2}></input>
-                </div>
-                <br />
-                <button className="logInButton" onClick={(e)=>doLogIn(e)}>Log In</button>
-                <br />
-                <button className="logInButton" onClick={(e)=>goSignUp(e)}>Or - Sign Up</button>
-                <br />
-                <button className="logInButton" onClick={(e)=>closeSignUp(e)}>Cancel</button>
+                <form class="modal-content animate">
+                    <div class = 'container'>
+                        <h1>{infoText}</h1>
+                        <br></br>
+                        
+                        <label><b>Email</b></label>
+                        <input type="text" placeholder="Enter First name" 
+                        value={userName}
+                        onChange={changeUN}
+                        ></input>
+
+                        <label><b>Password</b></label>
+                        <input type="password" placeholder="Enter Last Name"
+                        value={password1}
+                        onChange={changePw1}
+                        ></input>
+
+                        <label><b>Confirm Password</b></label>
+                        <input type="password" placeholder="Enter Password"
+                        value={password2}
+                        onChange={changePw2}></input>
+                        
+                        <button type="submit" id='login'
+                        onClick = {doLogIn}
+                        >Log In</button>
+
+                        <button id='orSignUp'
+                        onClick = {goSignUp}
+                        >Or - Sign Up</button>
+                    </div>
+
+                    <div class="container" id='cancelContainer'>
+                        <button type="button" class="cancelbtn" id='cancelLogin'
+                        onClick = {closeSignUp}
+                        >Cancel</button>
+                    </div>
+                </form>     
             </div>
-        </div>
+
     )
 }
 
