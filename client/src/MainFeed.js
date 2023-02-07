@@ -63,13 +63,14 @@ const MainFeed = () => {
     // code to open a new page with the story name as the page name
     // window.location.href = `/readstory`+;
   }
-
+if (localStorage.getItem('userID') != null) {
   return (
     <>
     <div className='container'>
       <NavigationBar />
+       <button id='myTagsButton' onClick={(e)=>tagClick(e)}>View Only My Tags</button>
       <div className='searchContainer'>
-        <button onClick={(e)=>tagClick(e)}>Only My Tags</button>
+       
         <input
           className='searchInput'
           value={searchText}
@@ -93,6 +94,37 @@ const MainFeed = () => {
     
     </>
   );
+} else {
+  return (
+    <>
+    <div className='container'>
+      <NavigationBar />
+      <div className='searchContainer'>
+        <input
+          className='searchInput'
+          value={searchText}
+          onChange={handleSearch}
+          placeholder="Search..."
+        />
+      </div>
+      <div className='scrollView'>
+        {filteredCards.length > 0 ?
+          filteredCards.map((card, index) => (
+            <div key = {index} className='card'>
+              <Story selectedUserID = {card.UserID} Storyname={card.Title} Category={card.Category} Description={card.Description} tagInfo={card.tags} objectid = {card._id} Author = {card.Author} Image={card.Image} Likes={card.Likes}/>
+            </div>
+          )) : 
+          <div>No stories found</div>
+        }
+      </div>
+    </div>
+    
+    
+    
+    </>
+  );
+}
+  
 };
 
 export default MainFeed;

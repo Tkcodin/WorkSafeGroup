@@ -134,6 +134,12 @@
   margin-top: 50px;
 }
 
+#singleSelectDiv {
+  width: 500px;
+  margin: auto;
+  margin-top: 50px;
+}
+
 #TitleInputDiv {
   margin-top: 50px;
 }

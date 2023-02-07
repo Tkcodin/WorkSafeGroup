@@ -39,3 +39,9 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 }
+
+#myTagsButton {
+  width: 150px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
