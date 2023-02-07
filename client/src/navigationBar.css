@@ -1,10 +1,10 @@
 .navbar{
-    width: 100vw;
+    width: 92.8vw;
     height: 6vh;
     background-color: lightgrey;
     display: flex;
     flex-direction: horizontal;
-    margin: auto;
+    margin: 10px;
 }
 
 .navbarElement{
