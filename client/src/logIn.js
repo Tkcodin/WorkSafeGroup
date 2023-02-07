@@ -17,19 +17,19 @@ const LogIn = (props) => {
         // let userID = localStorage.getItem('userID');
         // console.log(userID);
     
-        let userEmail = localStorage.getItem('userEmail');
-        //   console.log(userEmail);
+        // let userEmail = localStorage.getItem('userEmail');
+        // //   console.log(userEmail);
           
-          if(userEmail != 'Email' && userEmail != null) {
-            axios.get('http://localhost:3000/getuser/'+userEmail)
-            .then(response => {
-            const data = response.data;
-            console.log(data);
-            console.log(data._id);
-            localStorage.setItem('userID',data._id); //gets the id of current user and sets to local storage variable
-            localStorage.setItem('FirstName',data.FirstName);
-            })
-          }
+        //   if(userEmail != 'Email' && userEmail != null) {
+        //     axios.get('http://localhost:3000/getuser/'+userEmail)
+        //     .then(response => {
+        //     const data = response.data;
+        //     console.log(data);
+        //     console.log(data._id);
+        //     localStorage.setItem('userID',data._id); //gets the id of current user and sets to local storage variable
+        //     localStorage.setItem('FirstName',data.FirstName);
+        //     })
+        //   }
     });
 
     function closeSignUpNoButton(){
@@ -59,32 +59,58 @@ const LogIn = (props) => {
     
 
     function doLogIn(e){
-       
-        
-        console.log("doing log in");
+
         e.preventDefault();
-        if(password1 != '' && password2 != '' && userName != '' && password1===password2){
-            //check database here
-            const confirmLI = localStorage.getItem("loggedIn");
-            console.log(confirmLI);
-            localStorage.setItem('loggedIn', 'y');
-            localStorage.setItem('userEmail', userName);
-            const confirmLI2 = localStorage.getItem("loggedIn");
-            console.log(confirmLI2);
-            console.log("Logged in");
-            closeSignUpNoButton();
-            window.location = "/Mainfeed";
-        }
-        else if(password1 != '' && password2 != '' && userName != ''){
-            //communicate this to user
-            changeIT("Passwords must match!");
-            console.log("Passwords must match!");
-        }
-        else{
-            //communicate this to user
-            changeIT("You must complete each field!");
-            console.log("need UN, PW1 & PW2");
-        }
+
+        localStorage.setItem('userEmail', userName);
+        let userEmail = localStorage.getItem('userEmail');
+          
+          if(userEmail != 'Email' && userEmail != null) {
+            axios.get('http://localhost:3000/getuser/'+userEmail)
+            .then(response => {
+            const data = response.data;
+            console.log(data);
+            console.log(data._id);
+          
+
+            console.log("doing log in");
+            // e.preventDefault();
+            if(password1 != '' && password2 != '' && userName != '' && password1===password2 && password1===data.Password){
+                //check database here
+                const confirmLI = localStorage.getItem("loggedIn");
+                console.log(confirmLI);
+                localStorage.setItem('loggedIn', 'y');
+
+                localStorage.setItem('userEmail', userName);
+                localStorage.setItem('userID',data._id); //gets the id of current user and sets to local storage variable
+                localStorage.setItem('FirstName',data.FirstName);
+
+                const confirmLI2 = localStorage.getItem("loggedIn");
+                console.log(confirmLI2);
+                console.log("Logged in");
+                closeSignUpNoButton();
+                window.location = "/Mainfeed";
+            } else if (password1 != data.Password) {
+                changeIT("Sorry, that username and password combination doesn't exist");
+                console.log("Sorry, that username and password combination doesn't exist");
+                localStorage.clear();
+            }
+            else if(password1 != '' && password2 != '' && userName != ''){
+                //communicate this to user
+                changeIT("Passwords must match!");
+                console.log("Passwords must match!");
+                localStorage.clear();
+            }
+            else{
+                //communicate this to user
+                changeIT("You must complete each field!");
+                console.log("need UN, PW1 & PW2");
+                localStorage.clear();
+            }
+
+            })
+          }
+         
     }
 
     function goSignUp(e){
