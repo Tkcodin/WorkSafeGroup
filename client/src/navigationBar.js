@@ -111,12 +111,14 @@ if (localStorage.getItem('userID') != null) {
       </div> */}
       <div className="navbarElement">
         <nav className="nben">
-          <Link to="/CreateStory">Create Story</Link>
+          <Link to="#"
+          onClick = {openLogIn}
+          >Create Story</Link>
         </nav>
       </div>
       <div className="navbarElement">
         <nav className="nben">
-          <Link to="/MainFeed">My Feed</Link>
+          <Link to="/MainFeed">Home Feed</Link>
         </nav>
       </div>
       <div className="navbarElement">
