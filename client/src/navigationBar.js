@@ -122,8 +122,8 @@ if (localStorage.getItem('userID') != null) {
       <div className="navbarElement">
         <nav className="nben">
           <button id ='loginSettings' 
-            onClick = {() => {amIloggedin ? openSettings() : openLogIn()}}>
-              {amIloggedin ? "Settings" : "Log In / Sign Up"}
+            onClick = {openLogIn}>
+              Log In / Sign Up
             </button>
             <LogIn modal={modal2} ></LogIn>
             <SignUp modal={modal}></SignUp>
