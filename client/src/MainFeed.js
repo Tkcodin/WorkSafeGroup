@@ -28,36 +28,62 @@ const MainFeed = () => {
     setSearchText(e.target.value);
   }
 
-  // function tagAlert(){
-  //   window.confirm('You have no tags saved. Edit tags now');
-  //   window.location = '/Settings';
-  // }
+  function orderStoryCards(fc){
+    //fc being filtered & scored cards
+  }
+
+  function scoreCard(card){
+    let score = 0;
+    let cl = card.Likes;
+    let date = card.Date;
+    let dateFormat = new Date(date);
+    let now = Date.now();
+    let tags = card.tags;
+    let matchingTagCount = 0;
+    let myTags = localStorage.getItem("myTags");
+    if(myTags.length>0){
+      let myTagsSplit = myTags.split(" ");
+      for(let s of myTagsSplit){
+        if(tags.includes(s)){
+          matchingTagCount++;
+        }
+      }
+    }
+
+    console.log(cl + " " + dateFormat + " " + now + " " + tags + " " + myTags + " " + matchingTagCount);
+    return score;
+  }
+
+  function assignCardsScores(){
+    //fc being filtered cards
+
+    const filteredScoredCards = filteredCards.map((card, index) => {
+      return [index, card, scoreCard(card)]
+    })
+    return filteredScoredCards;
+  }
 
   //careful changing this!!!
   const filteredCards = cards.filter(card => {
-
       let tags = localStorage.getItem("myTags");
       // console.log(tags);
       if(tags===null || tags==='{"":""}' || !onlyMyTags){
         // console.log("bad tags returning empty form");
         return card.Title.toLowerCase().includes(searchText.toLowerCase()) ||card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase());
       }
-      else if(tags.includes('v') && tags.includes('h')&& onlyMyTags){
+      else if(tags.includes('violence') && tags.includes('heights')&& onlyMyTags){
         return (card.tags.toLowerCase().includes('violence') || card.tags.toLowerCase().includes('heights')) && (card.Title.toLowerCase().includes(searchText.toLowerCase()) || card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase()));
       }
-      else if(tags.includes('v') && onlyMyTags){
+      else if(tags.includes('violence') && onlyMyTags){
         return card.tags.toLowerCase().includes('violence') && (card.Title.toLowerCase().includes(searchText.toLowerCase()) || card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase()));
       }
-      else if(tags.includes('h') && onlyMyTags){
+      else if(tags.includes('heights') && onlyMyTags){
         return card.tags.toLowerCase().includes('heights') && (card.Title.toLowerCase().includes(searchText.toLowerCase()) || card.Author.toLowerCase().includes(searchText.toLowerCase()) || card.Description.toLowerCase().includes(searchText.toLowerCase()) || card.tags.toLowerCase().includes(searchText.toLowerCase()));
       }
-      // else{
-      //   alert('You have no tags saved. Edit tags now');
-      //   window.location = '/Settings';
-      //   // tagAlert();
-      // }
-
   });
+
+
+
 
   const handleCardClick = (cardName) => {
     // code to open a new page with the story name as the page name
@@ -65,6 +91,7 @@ const MainFeed = () => {
   }
 
   return (
+    assignCardsScores(),
     <>
     <div className='container'>
       <NavigationBar />
