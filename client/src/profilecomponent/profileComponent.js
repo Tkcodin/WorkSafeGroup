@@ -8,7 +8,7 @@ import EditProfileComponent from "./editprofileComponent";
 import axios from 'axios';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
-
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 const ProfileComponent =()=>{
@@ -64,7 +64,21 @@ const ProfileComponent =()=>{
     if (selectedUserID === localStorage.getItem('userID')) {
         // console.log('in be edit');
         return (
-            <EditProfileComponent></EditProfileComponent>
+            <><></><NavigationBar /><div className="profileimage">
+            <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
+            <h1 className="Author">{firstname} {lastname}</h1><br></br>
+            <h2 classname="details">{Role} at {Employer}</h2><br></br>
+            <p className="About">About me: <br></br>{About}</p><br></br>
+            <label>My Interests: </label>
+            <div id="tagsInMiddle">
+            <MyTagContainer myTags={tags}/>
+            </div>
+            <br></br>
+            <Link to= '/editProfileComponent'>
+            <button
+            >Edit Profile</button>
+            </Link>
+            </div></>
         );
     } else {
         handleTags();
@@ -79,16 +93,8 @@ const ProfileComponent =()=>{
                 <MyTagContainer myTags={tags}/>
                 </div>
                 </div></>
-    
-    
-    
-    
         );
     }
-
-    
-
-    
 
 
 }

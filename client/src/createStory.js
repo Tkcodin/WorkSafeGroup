@@ -242,7 +242,7 @@ var date = new Date();
           <ReactSelect
             options={categoryOptions}
             isMulti={false}
-            closeMenuOnSelect={false}
+            closeMenuOnSelect={true}
             hideSelectedOptions={false}
             placeholder="Select Category"
             components={{
