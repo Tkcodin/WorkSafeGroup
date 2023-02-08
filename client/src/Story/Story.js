@@ -54,6 +54,7 @@ export default class Story extends React.Component{
 
         //PUT MYTAGS INTO MYTAGCONTAINER
         const readTags  = (s) =>{
+          console.log("READING TAGS FROM: " + s);
             s = s.substring(0, s.length - 1);
             if(s.length>0){
             // console.log("s for split: " + s)
@@ -81,7 +82,7 @@ export default class Story extends React.Component{
             
             // console.log(this.props.tagInfo),
             
-
+            console.log("scpre: " + this.props.Score),
             readTags(this.props.tagInfo),
             <div className={`Storydiv ${this.state.category === 'Question' ? 'Question' : 'Story'}`} onClick={() => handleCardClick(this.props.objectid)}>
 
@@ -102,6 +103,7 @@ export default class Story extends React.Component{
                     <h3 className="category">{this.state.category}</h3>
                     <h3 className="likes">Likes: {this.state.likes}</h3>
                     <h3 className="comments">Comments: {this.state.comments}</h3>
+                    <h3 className ="score">Score: {this.props.Score}</h3>
                 </div>
                 {/* <img src={R} className = "img" alt="Story.img"/> */}
             </div>
