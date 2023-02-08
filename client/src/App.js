@@ -29,6 +29,7 @@ function App() {
       <Route path='/editprofileComponent' element={<EditProfileComponent/>}></Route>
 
       <Route path='/LogIn' element= {<LogIn/>}></Route>
+      <Route path='/StoryContent' element= {<StoryContent/>}></Route>
 
     </Routes>
 
