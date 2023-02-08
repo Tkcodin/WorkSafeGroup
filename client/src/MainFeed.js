@@ -130,15 +130,12 @@ const MainFeed = () => {
     // window.location.href = `/readstory`+;
   }
 
-  
-
   return (
     
     <>
     <div className='container'>
       <NavigationBar />
       <div className='searchContainer'>
-        <button onClick={(e)=>tagClick(e)}>Only My Tags</button>
         <input
           className='searchInput'
           value={searchText}
@@ -163,6 +160,8 @@ const MainFeed = () => {
     
     </>
   );
+}
+  
 };
 
 export default MainFeed;
