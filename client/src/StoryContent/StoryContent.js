@@ -5,6 +5,10 @@ import lake from './lake.jpg';
 import axios from 'axios';
 import NavigationBar from '../navigationBar';
 import Comment from '../Comment/Comment.js'
+import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
+import MyTag from '../components-tom/MyTag/MyTag';
+
+
 
 
 

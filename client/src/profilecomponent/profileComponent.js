@@ -6,7 +6,9 @@ import profilepicture from './profilepic.jpg';
 import { useParams } from "react-router";
 import EditProfileComponent from "./editprofileComponent";
 import axios from 'axios';
-
+import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
+import MyTag from '../components-tom/MyTag/MyTag';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 const ProfileComponent =()=>{
@@ -21,7 +23,21 @@ const ProfileComponent =()=>{
     const [About, setAbout] = useState('');
     //Is it going to be an array or a string from the DB?
     const [Interests, setInterests] = useState('');
+    const tags = new Array();
 
+
+    function handleTags(){
+        let s = Interests;
+        s = s.substring(0, s.length - 1);
+        if(s.length>0){
+            let infos = s.split("-");
+            for (let i = 0; i<infos.length; i = i+2){
+                let c = infos[i];
+                let t = infos[i+1];
+                tags.push(<MyTag colour={c} text={t}/>);
+            }  
+        }
+    }
 
     useEffect(()=>{
         // let userID = localStorage.getItem('userID');
@@ -48,27 +64,37 @@ const ProfileComponent =()=>{
     if (selectedUserID === localStorage.getItem('userID')) {
         // console.log('in be edit');
         return (
-            <EditProfileComponent></EditProfileComponent>
+            <><></><NavigationBar /><div className="profileimage">
+            <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
+            <h1 className="Author">{firstname} {lastname}</h1><br></br>
+            <h2 classname="details">{Role} at {Employer}</h2><br></br>
+            <p className="About">About me: <br></br>{About}</p><br></br>
+            <label>My Interests: </label>
+            <div id="tagsInMiddle">
+            <MyTagContainer myTags={tags}/>
+            </div>
+            <br></br>
+            <Link to= '/editProfileComponent'>
+            <button
+            >Edit Profile</button>
+            </Link>
+            </div></>
         );
     } else {
+        handleTags();
         return (
             <><></><NavigationBar /><div className="profileimage">
                 <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
                 <h1 className="Author">{firstname} {lastname}</h1><br></br>
                 <h2 classname="details">{Role} at {Employer}</h2><br></br>
                 <p className="About">About me: <br></br>{About}</p><br></br>
-                <p classname ="details">Interests: {Interests}</p>
+                <label>My Interests: </label>
+                <div id="tagsInMiddle">
+                <MyTagContainer myTags={tags}/>
+                </div>
                 </div></>
-    
-    
-    
-    
         );
     }
-
-    
-
-    
 
 
 }

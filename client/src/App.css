@@ -26,6 +26,20 @@
   margin-top: 50px;
 }
 
+.MyTagContainer{
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: horizontal;
+  /* align-items: center; */
+}
+
+#tagsInMiddle{
+  display: flex;
+  justify-content: center;
+  flex-direction: horizontal;
+  align-items: center;
+}
+
 .MyTag{
   font-size: 15px;
   border-radius: 15px;
@@ -115,6 +129,12 @@
 }
 
 #multiSelectDiv {
+  width: 500px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+#singleSelectDiv {
   width: 500px;
   margin: auto;
   margin-top: 50px;

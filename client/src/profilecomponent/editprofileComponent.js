@@ -77,7 +77,7 @@ const EditProfileComponent =()=>{
           })
         }
 
-      });
+      },[]);
 
 
     return(
