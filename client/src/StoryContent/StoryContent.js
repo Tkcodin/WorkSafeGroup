@@ -10,6 +10,8 @@ import MyTag from '../components-tom/MyTag/MyTag';
 
 
 
+
+
 const StoryContent = () => {
   const  objectId  = useParams();
   const [Author, setAuthor] = useState('');
@@ -20,6 +22,8 @@ const StoryContent = () => {
   const[Tags,setTags] = useState('');
   const[Date,setDate]=useState('');
   const [likes, setLikes] = useState(0);  
+  const [comment, setComment] = useState("Please input your comment...");
+  const [comments, setComments] = useState([]);
   //const [liked, setLiked] = useState(false); 
   const [liked, setLiked] = useState(
     localStorage.getItem(`liked-${objectId.id}`) === 'true'
@@ -67,6 +71,21 @@ const StoryContent = () => {
         .catch(error => console.log(error));
       }
     };
+    const onChangeHandler = (e) => {
+      setComment(e.target.value);
+     
+    };
+    const onClickHandler = (e) => {
+
+      e.preventDefault();
+    //   const variables = {
+    //     responseTo: props.comment._id,
+    //     content: Comment
+    // }
+
+      setComments((comments) => [...comments, comment]);
+    };
+
 
     return (
       
@@ -103,7 +122,31 @@ const StoryContent = () => {
               {liked ? "I like it!" : "Like it?"}
               </button>
             </div>
-      </div><Comment/></>
+            <div className="main-container">
+        <div className="comment-flexbox">
+          <h3 className="comment-text">Comment</h3>
+          <textarea
+
+            value={comment}
+            // value={props.comment.content}
+            // key={index} 
+            onChange={onChangeHandler}
+            className="input-box"
+          />
+          <button onClick={onClickHandler} className="comment-button">
+            Submit
+          </button>
+          {comments.map((text) => (
+
+        <Comment text={text}/>
+
+          ))}
+          
+      </div></div>
+      
+      </div>
+      
+      </>
     );
   }
 
