@@ -40,15 +40,13 @@ const Settings = () => {
       // if(!submitting)
       
       // setSubmitting(true);
-
-      if(CBVChecked && CBHChecked){
-        setMyTags("violence heights");
+      setMyTags("");
+     
+      if(CBVChecked){
+        setMyTags(myTags + " violence");
       }
-      else if(CBVChecked){
-        setMyTags("violence");
-      }
-      else if(CBHChecked){
-        setMyTags("heights");
+      if(CBHChecked){
+        setMyTags(myTags + " heights");
       }
       
       localStorage.setItem("myTags", myTags);
