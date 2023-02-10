@@ -22,8 +22,12 @@ const ProfileComponent =()=>{
     const [Role, setRole] = useState('');
     const [Employer, setEmployer] = useState('');
     const [About, setAbout] = useState('');
+    const [Email, setEmail] = useState('');
     //Is it going to be an array or a string from the DB?
     const [Interests, setInterests] = useState('');
+    const [emailPrivate, setEmailPrivate] = useState(false);
+    const [rolePrivate, setRolePrivate] = useState(false);
+    const [employerPrivate, setEmployerPrivate] = useState(false);
     const tags = new Array();
 
     var modal = document.getElementById('createAccModal');
@@ -59,6 +63,10 @@ const ProfileComponent =()=>{
           setAbout(data.About);
           setInterests(data.Tags);
           setImage(data.Image);
+          setEmail(data.Email);
+          setEmailPrivate(data.EmailPrivate);
+          setRolePrivate(data.RolePrivate);
+          setEmployerPrivate(data.EmployerPrivate);
             })
         }
     });
@@ -84,13 +92,16 @@ const ProfileComponent =()=>{
             </div></>
         );
     } else {
+        console.log(emailPrivate);
         handleTags();
         return (
             <><></><NavigationBar /><div className="profileimage">
                 <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
                 <h1 className="Author">{firstname} {lastname}</h1><br></br>
-                <h2 classname="details">{Role} at {Employer}</h2><br></br>
+                <h2 classname="details">Role: {rolePrivate? "Role Hidden " : Role }</h2><br></br>
+                <h2 classname="details">Employer: {employerPrivate? "Employer Hidden": Employer }</h2><br></br>
                 <p className="About">About me: <br></br>{About}</p><br></br>
+                <p className="About">Contact Information: <br></br>{emailPrivate? "Email Hidden" : Email}</p><br></br>
                 <label>My Interests: </label>
                 <div id="tagsInMiddle">
                 <MyTagContainer myTags={tags}/>

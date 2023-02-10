@@ -97,8 +97,8 @@ const EditProfileComponent =()=>{
 
 
 
-       const onPost=()=>{
-        
+       const onPost=(e)=>{
+        e.preventDefault();
           const user = {
             firstName: firstname,
             lastName: lastname,
@@ -144,13 +144,14 @@ const EditProfileComponent =()=>{
 
           axios.post('http://localhost:3000/edituser/' + userID, formdata,config)
               .then((res) => {
-                  console.log(res.data)
+                console.log('Response status: ', res.status);
+                console.log('Response data: ', res.data);
                   if (res.status === 500) {
-                      alert('Sorry, there was an erorr creating your account');
+                      alert('Sorry, there was an erorr updating your account');
                   } else if (res.status === 200) {
-                      alert('Success! Your account has been created.');
+                      alert('Success! Your account has been updated.');
                       // window.location = '/MainFeed/'+this.state.email;
-                      window.location = '/MainFeed/';
+                      window.location = '/profileComponent/' + userID;
                       }
                       //if res code is 500, error. TODO: Write code to display to user
                       //if res code is 200 , success.TODO: Write code to display to user
@@ -159,6 +160,10 @@ const EditProfileComponent =()=>{
                       alert("The following error has occured: " + error);
                   });
 
+                  // window.location = '/profileComponent/' + localStorage.getItem('userID');
+                  // window.location = '/profileComponent/';
+
+                  // alert('test');
        }
 
       //Load existing values from the database 
