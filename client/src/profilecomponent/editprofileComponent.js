@@ -69,41 +69,29 @@ const EditProfileComponent =()=>{
       }
 
       const onChangeEmailPrivate =() => {
-        if (this.state.emailPrivate === false)
+        if (emailPrivate === false)
         {
-          this.setState ({
-            emailPrivate: true
-          })   
+          setEmailPrivate(true); 
         } else {
-          this.setState ({
-            emailPrivate: false
-          }) 
+          setEmailPrivate(false); 
         }      
       }
 
       const onChangeRolePrivate = () => {
-        if (this.state.rolePrivate === false)
+        if (rolePrivate === false)
         {
-          this.setState ({
-            rolePrivate: true
-          })   
+          setRolePrivate(true);  
         } else {
-          this.setState ({
-            rolePrivate: false
-          }) 
+          setRolePrivate(false);  
         }      
       }
 
       const onChangeEmployerPrivate = ()=>{
-        if (this.state.employerPrivate === false)
+        if (employerPrivate === false)
         {
-          this.setState ({
-            employerPrivate: true
-          })   
+          setEmployerPrivate(true);  
         } else {
-          this.setState ({
-            employerPrivate: false
-          }) 
+          setEmployerPrivate(false);   
         }      
       }
 
@@ -231,21 +219,79 @@ const EditProfileComponent =()=>{
         <p className="changeAuthor">First name:<input type="text" value={firstname} onChange={handleFirstNameChange} /></p><br></br>
         <p className="changeAuthor">Last name:<input type="text" value={lastname} onChange={handleLastNameChange} /></p><br></br>
         <p className="changeAuthor">Password:<input type="text" value={password} onChange={handlePasswordChange} /></p><br></br>
-        <p className="changeAuthor">Email:<input type="text" value={email} onChange={handleEmailChange} /></p><br></br>
+        
+        <label><b>Email Address:</b></label>
+        <div  className='checkBoxContainer'>  
+          <input type="text" placeholder="Enter Email Address"
+          value={email}
+          onChange={handleEmailChange}></input>
+          <div className='checkBoxContainer2'>
+            <p className='keepPrivate'> <b>Keep private?</b> </p>
+            <input type="checkbox" className='checkbox'
+            checked={ emailPrivate ? true : false }
+            value={emailPrivate}
+            onChange={onChangeEmailPrivate}/>
+          </div>
+        </div>
+        
+
+        {/* <p className="changeAuthor"> Email:</p>
+        <div  className='checkBoxContainer'>  
+        
+        
+        </div>
+      <input type="text" value={email} onChange={handleEmailChange} /><br></br>
         <input type="checkbox" className='checkbox'
         checked={ emailPrivate ? true : false }
         value={emailPrivate}
-        onChange={onChangeEmailPrivate}/>
-        <p classname="details">Role: <input type="text" value={Role} onChange={handleRoleChange} /></p><br></br>
+        onChange={onChangeEmailPrivate}/> */}
+
+
+
+        <label><b>Role:</b></label>
+        <div  className='checkBoxContainer'>  
+          <input type="text" placeholder="Enter Email Address"
+          value={Role}
+          onChange={handleRoleChange}></input>
+          <div className='checkBoxContainer2'>
+            <p className='keepPrivate'> <b>Keep private?</b> </p>
+            <input type="checkbox" className='checkbox'
+            checked={ rolePrivate ? true : false }
+            value={rolePrivate}
+            onChange={onChangeRolePrivate}/>
+          </div>
+        </div>
+
+        {/* <p classname="details">Role: <input type="text" value={Role} onChange={handleRoleChange} /></p><br></br>
         <input type="checkbox" className='checkbox'
         checked={ rolePrivate ? true : false }
         value={rolePrivate}
-        onChange={onChangeRolePrivate}/>
-        <p classname="details">Employer: <input type="text" value={Employer} onChange={handleEmployerChange} /></p><br></br>
+        onChange={onChangeRolePrivate}/> */}
+
+
+        <label><b>Employer:</b></label>
+        <div  className='checkBoxContainer'>  
+          <input type="text" placeholder="Enter Email Address"
+          value={Employer}
+          onChange={handleEmployerChange}></input>
+          <div className='checkBoxContainer2'>
+            <p className='keepPrivate'> <b>Keep private?</b> </p>
+            <input type="checkbox" className='checkbox'
+            checked={ employerPrivate ? true : false }
+            value={employerPrivate}
+            onChange={onChangeEmployerPrivate}/>
+          </div>
+        </div>
+        
+
+        {/* <p classname="details">Employer: <input type="text" value={Employer} onChange={handleEmployerChange} /></p><br></br>
         <input type="checkbox" className='checkbox'
         checked={ employerPrivate ? true : false }
         value={employerPrivate}
-        onChange={onChangeEmployerPrivate}/>
+        onChange={onChangeEmployerPrivate}/> */}
+
+
+
         <p className="About">About me: <br></br><textarea rows="10" cols="30" value={About} onChange={handleAboutChange} /></p><br></br>
         <p classname ="details">Interests: <input type="text" value={Interests} onChange={handleInterestsChange} /></p>
         
