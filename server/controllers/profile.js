@@ -79,59 +79,8 @@ const updatelikes = (req,res)=>{
 
     const editUser = (req,res)=>{
         console.log('inside edit user')
-        // users.findOne({
-        //     _id: req.params.userID
-        //   })
-        //     .then(user => {
-        //       // New values for the user
-        //       user.FirstName = req.body.FirstName;
-        //       user.LastName = req.body.LastName;
-        //       user.Password = req.body.Password;
-        //       user.Email = req.body.Email;
-        //       user.Role = req.body.Role;
-        //       user.Employer = req.body.Employer;
-        //       user.Tags = req.body.Tags;
-        //       user.About = req.body.About;
-        //       user.Image = path.normalize(req.file.path);
-        //       user.EmailPrivate = req.body.EmailPrivate;
-        //       user.RolePrivate = req.body.RolePrivate;
-        //       user.EmployerPrivate = req.body.EmployerPrivate;
-
-        //       console.log(user);
-        //       // Save the updated user
-        //       user.save()
-        //         .then(user => {
-        //           res.json({ success: true, msg: 'User updated' });
-        //         })
-        //         .catch(err => {
-        //           res.json({ success: false, msg: 'Failed to update user' });
-        //         });
-        //     })
-        //     .catch(err => {
-        //         console.log('inside catch');
-        //       res.json({ success: false, msg: 'User not found' });
-        //     });
-        
-        
-        
-        
         const id = req.params.userID;
         
-        // const editedUser = new users({
-        //     FirstName: req.body.FirstName,
-        //     LastName: req.body.LastName,
-        //     Password: req.body.Password,
-        //     Email: req.body.Email,
-        //     Role: req.body.Role,
-        //     Employer: req.body.Employer,
-        //     Tags: req.body.Tags,
-        //     About: req.body.About,
-        //     // Image: path.normalize(req.file.path),
-        //     Image : req.body.Image,
-        //     EmailPrivate: req.body.EmailPrivate,
-        //     RolePrivate: req.body.RolePrivate,
-        //     EmployerPrivate: req.body.EmployerPrivate
-        // });
         const updatedFields = {};
         
         if (req.file) {
@@ -156,33 +105,19 @@ const updatelikes = (req,res)=>{
         
         console.log(updatedFields.Image);
 
-        users.findOne({_id:id}, (error, foundContent) => {
-            if (error) {
-                return res.status(400).send({
-                    success: false,
-                    message: 'Error finding user.'
-                });
-            }
+        users.findByIdAndUpdate(id, { $set: updatedFields }, { new: true })
+        // .then((user) => {
+        //   res.json({ success: true, msg: 'User updated' });
+        // })
 
-            users.findByIdAndUpdate(id, { $set: updatedFields }, { new: true }, (error, updatedContent) => {
-                console.log('inside find update user')
-                console.log(foundContent);
-                console.log(updatedFields);
-                if (error) {
-                    console.log('Error updating content');
-                    return res.status(400).send({
-                    success: false,
-                    message: 'Error updating content.'
-                    });
-                }
-                console.log('successfully updated user');
-                return res.status(200).send({
-                    success: true,
-                    message: 'User updated successfully.',
-                    updatedContent
-                });
-            });
+        .then(result=>{  // Save the newContent object to the database
+            res.status(200).json(result);
+        })  
+        .catch((err) => {
+          console.error(err);
+          res.json({ success: false, msg: 'Failed to update user' });
         });
+     
     }
 
 // create a new "content" document in a MongoDB database using Mongoose
