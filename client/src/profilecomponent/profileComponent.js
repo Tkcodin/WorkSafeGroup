@@ -9,6 +9,7 @@ import axios from 'axios';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SignUp from '/Users/tuteredurie/WorkSafeGroup/client/src/signUp.js';
 
 
 const ProfileComponent =()=>{
@@ -25,6 +26,7 @@ const ProfileComponent =()=>{
     const [Interests, setInterests] = useState('');
     const tags = new Array();
 
+    var modal = document.getElementById('createAccModal');
 
     function handleTags(){
         let s = Interests;
@@ -78,6 +80,7 @@ const ProfileComponent =()=>{
             <button
             >Edit Profile</button>
             </Link>
+            <SignUp modal={modal}></SignUp>
             </div></>
         );
     } else {
