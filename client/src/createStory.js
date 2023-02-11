@@ -166,13 +166,16 @@ onPost(e) {
 
 console.log(post);
 
+var date = new Date();
+// console.log(date.toLocaleDateString('en-NZ') + ', ' + date.toLocaleTimeString('en-NZ', {hour: '2-digit', minute:'2-digit', hour12: true}));
+
   const formdata = new FormData();
   formdata.append('UserID',this.state.userID);
   formdata.append('Author',this.state.user);
   formdata.append('Title', this.state.title);
   formdata.append('Description',this.state.description);
   formdata.append('Content',this.state.text);
-  formdata.append('Date','22/01/2021');
+  formdata.append('Date',date.toLocaleDateString('en-NZ') + ', ' + date.toLocaleTimeString('en-NZ', {hour: '2-digit', minute:'2-digit', hour12: true}));
   formdata.append('Category', this.state.category.value);
    formdata.append('Image',this.state.image);
   formdata.append('Tags',tagsSelected);
@@ -258,7 +261,7 @@ console.log(post);
           <ReactSelect
             options={categoryOptions}
             isMulti={false}
-            closeMenuOnSelect={false}
+            closeMenuOnSelect={true}
             hideSelectedOptions={false}
             placeholder="Select Category"
             components={{

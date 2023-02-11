@@ -78,6 +78,49 @@ const updatelikes = (req,res)=>{
     });
     }
 
+    const editUser = (req,res)=>{
+        console.log('inside edit user')
+        const id = req.params.userID;
+        
+        const updatedFields = {};
+        
+        if (req.file) {
+            // console.log(path.normalize(req.file.path));
+            const img = path.normalize(req.file.path);
+            // console.log('Image = ' + img);
+            updatedFields.Image = img;
+        }
+        
+        if (req.body.FirstName) updatedFields.FirstName = req.body.FirstName;
+        if (req.body.LastName) updatedFields.LastName = req.body.LastName;
+        if (req.body.Password) updatedFields.Password = req.body.Password;
+        if (req.body.Email) updatedFields.Email = req.body.Email;
+        if (req.body.Role) updatedFields.Role = req.body.Role;
+        if (req.body.Employer) updatedFields.Employer = req.body.Employer;
+        if (req.body.Tags) updatedFields.Tags = req.body.Tags;
+        if (req.body.About) updatedFields.About = req.body.About;
+        if (req.body.Image) updatedFields.Image = req.body.Image;
+        if (req.body.EmailPrivate) updatedFields.EmailPrivate = req.body.EmailPrivate;
+        if (req.body.RolePrivate) updatedFields.RolePrivate = req.body.RolePrivate;
+        if (req.body.EmployerPrivate) updatedFields.EmployerPrivate = req.body.EmployerPrivate;
+        
+        console.log(updatedFields.Image);
+
+        users.findByIdAndUpdate(id, { $set: updatedFields }, { new: true })
+        // .then((user) => {
+        //   res.json({ success: true, msg: 'User updated' });
+        // })
+
+        .then(result=>{  // Save the newContent object to the database
+            res.status(200).json(result);
+        })  
+        .catch((err) => {
+          console.error(err);
+          res.json({ success: false, msg: 'Failed to update user' });
+        });
+     
+    }
+
 // create a new "content" document in a MongoDB database using Mongoose
 const newContent= (req,res)=>{
     // take in the body of the request (req.body) which contains information. These values are then assigned to a new "content" object which is created using the Mongoose "content" model. 
@@ -271,4 +314,7 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags};
+
+
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser};
+

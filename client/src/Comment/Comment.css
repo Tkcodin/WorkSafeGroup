@@ -60,3 +60,35 @@
   position:relative;
  
 }
+
+.img{
+  height: 25px;
+  width: 25px;
+  /* right: 0px; 
+  text-align: right;
+  float: right;  */
+}
+
+.heart{
+  display: inline-block;
+  float: right;
+}
+
+.count{
+  float: right;
+  font-size:smaller;
+  
+  
+}
+
+.reply{
+  border-style: none;
+  height: 20px;
+  width: 40px;
+  background-color:#E67E22;
+  border-radius: 5px;
+  color: white;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  cursor: pointer;
+}

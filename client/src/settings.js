@@ -32,7 +32,7 @@ const Settings = () => {
       localStorage.clear();
       const confirmLI = localStorage.getItem("loggedIn");
       console.log(confirmLI);
-      window.location = '/';
+      window.location = '/MainFeed';
     }
 
     const doChange = (event) => {
@@ -40,15 +40,13 @@ const Settings = () => {
       // if(!submitting)
       
       // setSubmitting(true);
-
-      if(CBVChecked && CBHChecked){
-        setMyTags("vh");
+      setMyTags("");
+     
+      if(CBVChecked){
+        setMyTags(myTags + " violence");
       }
-      else if(CBVChecked){
-        setMyTags("v");
-      }
-      else if(CBHChecked){
-        setMyTags("h");
+      if(CBHChecked){
+        setMyTags(myTags + " heights");
       }
       
       localStorage.setItem("myTags", myTags);
