@@ -21,7 +21,7 @@ const MainFeed = () => {
       console.log(cards);
       setTimeout(() => {
         assignCardsScores();
-      }, 20);
+      }, 1);
     })
     .catch(error => console.log(error));
   });
