@@ -251,6 +251,17 @@ const newContent= (req,res)=>{
     });
  };
 
+ const getTags=(req,res)=>{
+    tags.find({}, (err,tag)=>{
+        if(err){
+            res.status(500).send(err);
+        }
+        else{
+            res.status(200).json(tag);
+        }
+        });
+    }
+ 
 // const getContent=(req,res,next)=>{
 //     content.find({}, (err,people)=>{
 //         if(err){
@@ -260,4 +271,4 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags};
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags};

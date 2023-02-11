@@ -40,6 +40,7 @@ router.get('/getuser/:email',profileController.getUser)
  router.get('/getMyLikes/:id',profileController.getMyLikes)
  router.get('/getuserWithID/:userID',profileController.getUserWithID)
  router.post('/setTags',profileController.setTags)
+ router.get('/getTags',profileController.getTags)
 
 //5th step
 module.exports=router 
