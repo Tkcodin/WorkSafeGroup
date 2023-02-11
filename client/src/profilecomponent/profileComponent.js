@@ -9,7 +9,7 @@ import axios from 'axios';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import SignUp from '/Users/tuteredurie/WorkSafeGroup/client/src/signUp.js';
+import SignUp from '../signUp.js';
 
 
 const ProfileComponent =()=>{
