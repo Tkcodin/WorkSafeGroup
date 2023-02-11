@@ -1,3 +1,4 @@
+
 const content = require('../server.js').content;
 const comment = require('../server.js').comment;
 const tags = require('../server.js').tags;
@@ -262,17 +263,49 @@ const newContent= (req,res)=>{
     });
  };
 
- const newComment=(req,res)=>{
-    let newcomment = new comment(req.body);
-    newcomment.save((err,newcomment)=>{
-        if(err){
-            res.status(500).send(err);
-        }
-        else{
-            res.status(200).json(newcomment);
-        }
+//  const newComment=(req,res)=>{
+//     let newcomment = new comment(req.body);
+//     newcomment.save((err,newcomment)=>{
+//         if(err){
+//             res.status(500).send(err);
+//         }
+//         else{
+//             res.status(200).json(newcomment);
+//         }
+//     });
+//  };
+
+const newComment = (req, res) => {
+    
+    const contentId = req.params.id;
+    const newCommentData = req.body;
+    
+    const mycomment = new comment({
+      Text: newCommentData.Text,
+      User: newCommentData.User,
+      Date: newCommentData.Date
     });
- };
+  
+    mycomment.save((err, savedComment) => {
+      if (err) {
+        return res.status(500).send("Error: " + err);
+      }
+  
+      content.findByIdAndUpdate(
+        contentId,
+        { $push: { Comments: savedComment._id } },
+        { new: true },
+        (err, updatedContent) => {
+          if (err) {
+            return res.status(500).send("Error: " + err);
+          }
+  
+          return res.status(200).json(updatedContent);
+        }
+      );
+    });
+  };
+
 
  const setTags=(req,res)=>{
     
@@ -293,6 +326,7 @@ const newContent= (req,res)=>{
         }
     });
  };
+
 
  const getTags=(req,res)=>{
     tags.find({}, (err,tag)=>{
