@@ -9,6 +9,8 @@ import Settings from './settings.js'
 import StoryContent from './StoryContent/StoryContent.js';
 import ProfileComponent from './profilecomponent/profileComponent';
 import EditProfileComponent from './profilecomponent/editprofileComponent';
+import CommentPractice from './Comment/CommentPractice.js';
+
 
 import LogIn from './logIn.js';
 
@@ -30,7 +32,7 @@ function App() {
 
       <Route path='/LogIn' element= {<LogIn/>}></Route>
       <Route path='/StoryContent' element= {<StoryContent/>}></Route>
-
+      <Route path='/CP' element= {<CommentPractice/>}></Route>
     </Routes>
 
   );
