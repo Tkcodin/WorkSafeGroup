@@ -11,14 +11,22 @@ import axios from 'axios';
 
 //npm i react-select!!!!!!!!!
 
- const options = [
-    {value:"blue-violence", label : "violence"},
-    {value:"red-heights", label : "heights"},
-    {value:"green-agriculture", label : "agriculture"},
-    {value:"yellow-sickness", label : "sickness"},
-    {value:"purple-poison", label : "poison"},
-    {value:"silver-dragons", label : "dragons"}
-  ];
+//  const options = [
+    // {value:"blue-violence", label : "violence"},
+    // {value:"red-heights", label : "heights"},
+    // {value:"green-agriculture", label : "agriculture"},
+    // {value:"yellow-sickness", label : "sickness"},
+    // {value:"purple-poison", label : "poison"},
+    // {value:"silver-dragons", label : "dragons"}
+    // axios.get('http://localhost:3000/getTags')
+    //   .then(response => {
+    //     options = response.data;
+    //     console.log(data);
+    //     })
+      
+    //   .catch(error => {console.log(error);console.log(objectId.id)})
+    
+  // ];
 
 const categoryOptions = [
   {value:"Question", label:"Question"},
@@ -75,7 +83,8 @@ export default class  CreateStory extends Component {
       text:'',
       category: null,
       image: null,
-      userID: localStorage.getItem('userID')
+      userID: localStorage.getItem('userID'),
+      options: []
     };
   }
 
@@ -87,6 +96,16 @@ export default class  CreateStory extends Component {
   };
 
 componentDidMount () {
+  axios.get('http://localhost:3000/getTags')
+      .then(response => {
+        this.setState({
+          options: response.data
+        });
+        console.log(this.state.options);
+
+        })
+      
+      .catch(error => {console.log(error);})
   this.setState({
     user: localStorage.getItem('FirstName')
   });
@@ -129,7 +148,7 @@ onPost(e) {
   var tagsSelected="";
   this.state.optionSelected.forEach(element => {
     // tagsSelected.push(element.value);
-    tagsSelected= tagsSelected+element.value+"-";
+    tagsSelected= tagsSelected+element.value+", ";
   });
 
   var categorySelected=this.state.category.value;
@@ -256,7 +275,7 @@ console.log(post);
         <div id='multiSelectDiv'>
 
           <ReactSelect
-            options={options}
+           options={this.state.options.map(option => ({ value: option.Color+ ', '+option.Name, label: option.Name }))}
             isMulti
             closeMenuOnSelect={false}
             hideSelectedOptions={false}
