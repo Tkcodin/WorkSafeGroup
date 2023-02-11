@@ -206,9 +206,11 @@ const EditProfileComponent =()=>{
     return(
         <><></><NavigationBar /> <form onSubmit={onPost}>
             <div className="profileimage">
+
            
 
           {/* <img className="profilepic" id="pp" src={"http://localhost:3000/" + displayImage} alt="profilepic"></img>  */}
+
           <img className="profilepic" id="pp" src={displayImage} alt="profilepic"></img> 
           <br></br>
          <label id='imageLabel'>

@@ -45,6 +45,7 @@ mongoose
 
     const tagsschema = createTagsSchema(mongoose);
     const tags = mongoose.model('tags',tagsschema);
+    
 
 
 module.exports= {users,content,comment,tags};
@@ -199,8 +200,14 @@ function createCommentSchema(mongoose){
 function createTagsSchema(mongoose){
     const createtagschema = mongoose.Schema({
         Name:{
-            type:[String],
+            type:String,
             required:true
+        },
+        Group:{
+            type:String
+        },
+        Color:{
+            type:String
         }
     });
     return createtagschema;

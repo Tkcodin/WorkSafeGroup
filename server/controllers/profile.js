@@ -9,6 +9,7 @@ const { Server } = require('http');
 
 
 
+
 // newProfile function for post profile data
 const newProfile = (req, res, next) => {
     res.json({message: "Post new Profile"}); 
@@ -273,7 +274,37 @@ const newContent= (req,res)=>{
     });
  };
 
+ const setTags=(req,res)=>{
+    
+    const newtag = new tags({
+        Name:req.body.tags,
+        
+        Group:req.body.group});
 
+    newtag.save((err,newtag)=>{
+        if(err){
+  
+            res.status(500).send(err);
+            
+        }
+        else{
+        
+            res.status(200).json(newtag);
+        }
+    });
+ };
+
+ const getTags=(req,res)=>{
+    tags.find({}, (err,tag)=>{
+        if(err){
+            res.status(500).send(err);
+        }
+        else{
+            res.status(200).json(tag);
+        }
+        });
+    }
+ 
 // const getContent=(req,res,next)=>{
 //     content.find({}, (err,people)=>{
 //         if(err){
@@ -283,4 +314,7 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes, editUser};
+
+
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser};
+

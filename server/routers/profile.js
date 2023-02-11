@@ -39,7 +39,12 @@ router.get('/getuser/:email',profileController.getUser)
  router.post('/updatelikes/:id',profileController.updatelikes)
  router.get('/getMyLikes/:id',profileController.getMyLikes)
  router.get('/getuserWithID/:userID',profileController.getUserWithID)
+
  router.post('/edituser/:userID',upload.single('Image'),profileController.editUser)
+
+ router.post('/setTags',profileController.setTags)
+ router.get('/getTags',profileController.getTags)
+
 
 //5th step
 module.exports=router
