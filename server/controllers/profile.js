@@ -1,3 +1,4 @@
+
 const content = require('../server.js').content;
 const comment = require('../server.js').comment;
 const tags = require('../server.js').tags;
@@ -6,6 +7,7 @@ const e = require('express');
 const path = require('path');
 const { ObjectId } = require('mongodb');
 const { Server } = require('http');
+
 
 
 
@@ -218,18 +220,97 @@ const newContent= (req,res)=>{
     });
  };
 
- const newComment=(req,res)=>{
-    let newcomment = new comment(req.body);
-    newcomment.save((err,newcomment)=>{
-        if(err){
-            res.status(500).send(err);
-        }
-        else{
-            res.status(200).json(newcomment);
-        }
-    });
- };
+//  const newComment=(req,res)=>{
+//     let newcomment = new comment(req.body);
+//     newcomment.save((err,newcomment)=>{
+//         if(err){
+//             res.status(500).send(err);
+//         }
+//         else{
+//             res.status(200).json(newcomment);
+//         }
+//     });
+//  };
 
+const newComment = (req, res) => {
+    
+    const contentId = req.params.id;
+    const newCommentData = req.body;
+    
+    const mycomment = new comment({
+      Text: newCommentData.Text,
+      User: newCommentData.User,
+      Date: newCommentData.Date
+    });
+  
+    mycomment.save((err, savedComment) => {
+      if (err) {
+        return res.status(500).send("Error: " + err);
+      }
+  
+      content.findByIdAndUpdate(
+        contentId,
+        { $push: { Comments: savedComment._id } },
+        { new: true },
+        (err, updatedContent) => {
+          if (err) {
+            return res.status(500).send("Error: " + err);
+          }
+  
+          return res.status(200).json(updatedContent);
+        }
+      );
+    });
+  };
+
+// const newComment = (req, res) => {
+//     let newcomment = new Comment(req.body);
+//     newcomment.save((err, newcomment) => {
+//       if (err) {
+//         res.status(500).send("Error: " + err);
+//       } else {
+//         const objectid = req.params.id;
+  
+//         content.findByIdAndUpdate(
+//           objectid,
+//           { $push: { Comments: newcomment._id } },
+//           { new: true },
+//           (err, updatedStory) => {
+//             if (err) {
+//               res.status(500).send("Error: " + err);
+//             } else {
+//               res.status(200).json(updatedStory);
+//             }
+//           }
+//         );
+//       }
+//     });
+//   };
+
+//  const newComment=(req,res)=>{
+//     let newcomment = new comment(req.body);
+//     newcomment.save((err,newcomment)=>{
+//         if(err){
+//             res.status(500).send("abc: "+err);
+//         }
+//         else{
+//             const objectid = req.params.id;
+            
+//             content.findOneAndUpdate(
+//                 { _id: objectid },
+//                 { $push: { Comments: newcomment._id } },
+//                 { new: true },
+//                 (err, updatedStory) => {
+//                     if (err) {
+//                         res.status(500).send("ABC: "+err);
+//                     } else {
+//                         res.status(200).json(updatedStory);
+//                     }
+//                 }
+//             );
+//         }
+//     });
+// };
 
 // const getContent=(req,res,next)=>{
 //     content.find({}, (err,people)=>{
