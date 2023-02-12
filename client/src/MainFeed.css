@@ -1,47 +1,51 @@
-.container {
+.containerMain {
+  background-color: #F5F5F5;
   display: flex;
-  background-color: rgb(248, 249, 246);
   flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.searchAndButtonContainer {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin-bottom: 20px;
 }
 
 .searchContainer {
-  /* width: 95.5%; */
-  height: 40px;
-  margin: 10px;
-  background-color: #93d5e6;
-  border-color: #ccc;
-  position: relative;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .searchInput {
-  position: relative;
-  top: 0;
-  left: 0;
-  /* width: 100%; */
-  height: 100%;
-  border: 1px solid #ccc;
-  padding: 5px;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .scrollView {
-  width: 98%;
-  flex: 1;
-  background-color: rgb(248, 249, 246);
-  padding: 10px;
-}
-
-.card {
-  width: 98%;
-  height: auto;
-  margin-bottom: 10px;
-  /*padding: 10px;*/
-  /* border: 2px solid rgb(7, 7, 7); */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 70%; 
+  /* limit the width of the container */
 }
 
 #myTagsButton {
-  width: 150px;
   margin-top: 10px;
-  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #d6e26e;
+  color: #333;;
+  border: 0;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }

@@ -3,6 +3,7 @@ import './navigationBar.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SignUp from './signUp';
 import LogIn from './logIn';
+import logo from './workSafeLogo.png';
 
 
 const LoggedIn = () => {
@@ -68,6 +69,9 @@ if (localStorage.getItem('userID') != null) {
           <Link to="/">Home</Link>
         </nav>
       </div> */}
+       <div className="navbarElement">
+        <img src={logo} alt="Logo" id='logo'/>
+      </div>
       <div className="navbarElement">
         <nav className="nben">
           <Link to="/CreateStory">Create Story</Link>
@@ -91,11 +95,12 @@ if (localStorage.getItem('userID') != null) {
         </nav>
       </div>
       <div className="navbarElement">
-        <nav className="nben">
-          <Link to="/MainFeed"
-            onClick={logout}
-          >Logout</Link>
-        </nav>
+      <nav className="nben logout">
+        <Link to="/MainFeed"
+          className="logout-link"
+          onClick={logout}
+        >Logout</Link>
+      </nav>
       </div>
     </div>
 
@@ -109,6 +114,9 @@ if (localStorage.getItem('userID') != null) {
           <Link to="/">Home</Link>
         </nav>
       </div> */}
+      <div className="navbarElement">
+        <img src={logo} alt="Logo" id='logo'/>
+      </div>
       <div className="navbarElement">
         <nav className="nben">
           <Link to="#"
