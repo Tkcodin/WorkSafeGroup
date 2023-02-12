@@ -56,6 +56,7 @@ const NavigationBar = () => {
   function logout () {
     localStorage.clear();
     alert('You have now been logged out.');
+    window.location= '/MainFeed';
   }
 
 //to here I've added both my code and main's hopefully no fuck ups but if there are please check the above section
