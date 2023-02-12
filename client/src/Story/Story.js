@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import R from './R.jpg';
 import './StoryCSS.css';
+// import '/Users/tuteredurie/WorkSafeGroup/client/src/MainFeed.css';
 import ImageSelect from '../components-tom/ImageSelect.js';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
@@ -92,27 +93,32 @@ export default class Story extends React.Component{
             console.log("scpre: " + this.props.Score),
             readTags(this.props.tagInfo),
             <div className={`Storydiv ${this.state.category === 'Question' ? 'Question' : 'Story'}`} onClick={() => handleCardClick(this.props.objectid)}>
+
+              <div className="card-header">
+           
+
               
                 <MyTagContainer myTags={this.state.tags1}/>
-                <h3 className="title">{this.props.Storyname}</h3>
-                <h3 className="description">{this.props.Description}</h3>
 
-                <Link to={"/profileComponent/" + this.props.selectedUserID} onClick={this.handleAuthorClick}>
-                  {/* <div id='authorDiv' onClick={this.handleAuthorClick}>  */}
-                    {/* <h3 className="author">{this.props.Author}
-                    </h3> */}
-                  {/* </div>  */}
-                  {this.props.Author}
-                </Link>
-                <br></br>
-                <img src={this.props.Image} className = "img" alt="Story.img"/>
-                <div className="likes-and-comments-container">
-                    <h3 className="category">{this.state.category}</h3>
-                    <h3 className="likes">Likes: {this.state.likes}</h3>
-                    <h3 className="comments">Comments: {this.state.comments}</h3>
-                    <h3 className ="score">Score: {this.props.Score}</h3>
+                <h3 className="title">{this.props.Storyname}</h3>
+              </div>
+              <div className="card-body">
+                <p className="description">{this.props.Description}</p>
+                <div className="author"> <b>Author:{" "}</b>
+                  <Link to={"/profileComponent/" + this.props.selectedUserID} onClick={this.handleAuthorClick}>
+                    {this.props.Author}
+                  </Link>
                 </div>
-                {/* <img src={R} className = "img" alt="Story.img"/> */}
+                <img src={this.props.Image} className="img" alt="Story.img"/>
+              </div>
+              <div className="card-footer">
+                <div className="category">{this.state.category}</div>
+                <div className="likes-and-comments">
+                  <div className="likes">Likes: {this.state.likes}</div>
+                  <div className="comments">Comments: {this.state.comments}</div>
+                </div>
+                <div className="score">Score: {this.props.Score}</div>
+              </div>
             </div>
             
 

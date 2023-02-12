@@ -178,15 +178,18 @@ const MainFeed = () => {
   return (
     
     <>
-    <div className='container'>
+    <div className='containerMain'>
       <NavigationBar />
-      <div className='searchContainer'>
-        <input
-          className='searchInput'
-          value={searchText}
-          onChange={handleSearch}
-          placeholder="Search..."
-        />
+      <div className='searchAndButtonContainer'>
+        {(localStorage.getItem('userID') != null) ? <button id='myTagsButton' onClick={(e)=>tagClick(e)}>View Only My Tags</button> : null }
+        <div className='searchContainer'>
+          <input
+            className='searchInput'
+            value={searchText}
+            onChange={handleSearch}
+            placeholder="Search..."
+          />
+        </div>
       </div>
       <div className='scrollView'>
         {filteredScoredCards.length > 0 ?

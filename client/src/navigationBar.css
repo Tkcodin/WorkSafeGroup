@@ -1,21 +1,58 @@
-.navbar{
-    width: 92.8vw;
-    height: 6vh;
-    background-color: lightgrey;
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
-    flex-direction: horizontal;
-    margin: 10px;
+    justify-content: space-between;
+    background-color: #fff;
+    z-index: 1;
+    height: 75px;
+    border-bottom: 1px solid #ddd;
+    padding: 0 20px;
 }
 
-.navbarElement{
-   
-    height: 3vh;
-    background-color: lightgrey;
-    padding: 1vh;
-    width: 10vw;
-    margin: auto;
+.navbarElement {
+    display: flex;
+    align-items: center;
 }
 
-.nben{
-    
+.nben a {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    margin-right: 20px;
+    font-weight: bold;
 }
+
+#logo {
+    height: 70px;
+    /* margin-right: 50px; */
+  }
+
+#loginSettings {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    margin-right: 50px; 
+}
+
+#welcomeMessage {
+    font-size: 20px;
+    margin-right: 20px;
+    color: #333;
+}
+
+.nben.logout .logout-link {
+    background-color: #dc3e38;
+    border-color: #dc3e38;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 50px;
+    display: inline-block;
+  }
