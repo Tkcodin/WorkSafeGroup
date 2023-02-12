@@ -75,7 +75,7 @@ const Comment = (props) => {
              
             {props.text} <div className='count'>{count}</div>
             <div className='heart'> 
-            <img className="img" src={heart} onClick={()=>setCount(count+1)}></img>
+            <img className="img1" src={heart} onClick={()=>setCount(count+1)}></img>
 
             
 
