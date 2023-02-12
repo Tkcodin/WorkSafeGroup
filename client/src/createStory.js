@@ -40,7 +40,7 @@ const categoryOptions = [
           <input
             type="checkbox"
             checked={props.isSelected}
-            onChange={() => null} //below braces needed?
+            onChange={() => null} 
           />{" "}
           <label>{props.label}</label>
         </components.Option>
@@ -55,7 +55,7 @@ const categoryOptions = [
           <input
             type="checkbox"
             checked={props.isSelected}
-            onChange={() => null} //below braces needed?
+            onChange={() => null} 
           />{" "}
           <label>{props.label}</label>
         </components.Option>
@@ -88,10 +88,9 @@ export default class  CreateStory extends Component {
     };
   }
 
-  handleChange (selected) { //used for dropdown menu selection
-    // const NumberTags = this.state.tags.length;
+  handleChange (selected) { 
     this.setState({
-      optionSelected: selected //options selected keeps a list of all items
+      optionSelected: selected 
     });
   };
 
@@ -136,7 +135,7 @@ onChangeText (e) {
 }
 
 onChangeImage (e) {
-  // console.log(URL.createObjectURL(e.target.files[0]))
+  
   this.setState ({
     image: e.target.files[0]
   })
@@ -144,13 +143,18 @@ onChangeImage (e) {
 
 onPost(e) {
   e.preventDefault();
+
   // const tagsSelected = []
   // var tagsSelected=t;
   const tagsSelected =[];
+
   this.state.optionSelected.forEach(element => {
+
     // tagsSelected.push(element.value);
+
     // tagsSelected= tagsSelected+element.value+", ";
     tagsSelected.push(element.value);
+
   });
   
   var categorySelected=this.state.category.value;
@@ -169,7 +173,7 @@ onPost(e) {
 console.log(post);
 
 var date = new Date();
-// console.log(date.toLocaleDateString('en-NZ') + ', ' + date.toLocaleTimeString('en-NZ', {hour: '2-digit', minute:'2-digit', hour12: true}));
+
 
   const formdata = new FormData();
   formdata.append('UserID',this.state.userID);
@@ -197,8 +201,6 @@ var date = new Date();
                   alert('Success! Your story has been posted.');
                   window.location = '/MainFeed';
                 }
-                //if res code is 500, error. TODO: Write code to display to user
-                //if res code is 200 , success.TODO: Write code to display to user
             }).catch((error) => {
                 console.log(error)
                 alert("The following error has occured: " + error);
@@ -249,13 +251,9 @@ var date = new Date();
             </label>
           </div>
           
-          {/* </span> */}
+          {}
       
-  {/*     
-
-          <MyTag text="violence2" colour="green"/>
-          <MyTag text="heights" colour="blue"/>
-          <MyTag text="Air Toxins" colour="purple"/> */}
+  {}
       
 
         <div id='singleSelectDiv'>
@@ -275,7 +273,7 @@ var date = new Date();
           />
         </div>
           
-        {/* </span> */}
+        {}
 
         <div id='multiSelectDiv'>
 
@@ -305,4 +303,3 @@ var date = new Date();
   }
   
 }
-// export default CreateStory;
