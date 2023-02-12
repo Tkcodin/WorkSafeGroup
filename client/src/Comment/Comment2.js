@@ -51,7 +51,8 @@ const Comment = (props) => {
             bm = bm + comments.length*70;
         }
         if(babyComments > 0){
-            bm = bm + babyComments*70;
+            //DIRTY FIX DRITY FIX DRITY FIX
+            bm = bm + babyComments*35;
         }
         if(babyReplies>0){
             bm = bm + babyReplies*60;
@@ -138,7 +139,7 @@ const Comment = (props) => {
                         tellReplyOpen={{setBabyReplies}} dadsReplies={{babyReplies}}
                         updateDadsBabyComments={(n) => updateBabyComments(n)}
                         getDadsBabyComments={getBabyComments}
-                        comments = {tier < 2 ? comments : null}
+                        comments = {tier < 3 ? comments : null}
                         /> 
                     ))}
             </div>}
