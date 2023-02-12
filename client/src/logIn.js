@@ -9,7 +9,6 @@ const LogIn = (props) => {
 
     const [userName, setUserName] = useState('');
     const [password1, setPassword1] = useState('');
-    const [password2, setPassword2] = useState('');
     const [infoText, setInfoText] = useState('Log In Or Press Sign Up');
 
 
@@ -48,10 +47,6 @@ const LogIn = (props) => {
     const changePw1 = (e) => {
         setPassword1(e.target.value);
     }
-
-    const changePw2 = (e) => {
-        setPassword2(e.target.value);
-    }
     
     const changeIT = (s)  =>{
         setInfoText(s);
@@ -75,7 +70,7 @@ const LogIn = (props) => {
 
             console.log("doing log in");
             // e.preventDefault();
-            if(password1 != '' && password2 != '' && userName != '' && password1===password2 && password1===data.Password){
+            if(password1 != '' && userName != '' && password1===data.Password){
                 //check database here
                 const confirmLI = localStorage.getItem("loggedIn");
                 console.log(confirmLI);
@@ -90,12 +85,12 @@ const LogIn = (props) => {
                 console.log("Logged in");
                 closeSignUpNoButton();
                 window.location = "/Mainfeed";
-            } else if (password1 != data.Password || password2 != data.Password) {
+            } else if (password1 != data.Password) {
                 changeIT("Sorry, that username and password combination does not exist");
                 console.log("Sorry, that username and password combination doesn't exist");
                 localStorage.clear();
             }
-            else if(password1 != '' && password2 != '' && userName != ''){
+            else if(password1 != '' && userName != ''){
                 //communicate this to user
                 changeIT("Passwords must match!");
                 console.log("Passwords must match!");
@@ -170,11 +165,6 @@ const LogIn = (props) => {
                         value={password1}
                         onChange={changePw1}
                         ></input>
-
-                        <label><b>Confirm Password</b></label>
-                        <input type="password" placeholder="Enter Password"
-                        value={password2}
-                        onChange={changePw2}></input>
                         
                         <button type="submit" id='login'
                         onClick = {doLogIn}
