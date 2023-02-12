@@ -92,8 +92,25 @@ const StoryContent = () => {
     //     responseTo: props.comment._id,
     //     content: Comment
     // }
+    const newComment = {
+      Text: comment,
+      User:"user",
+      Date: new window.Date()
+      };
 
-      setComments((comments) => [...comments, comment]);
+      axios
+      .post('http://localhost:3000/newComment/' + objectId.id, newComment)
+      .then(response => {
+        console.log("id: "+objectId.id);
+        console.log("comment"+newComment);
+      console.log(response.data);
+      setComments([...comments, response.data]);
+      setComment("");
+      })
+      .catch(error => {
+      console.log(error);
+      });
+      //setComments((comments) => [...comments, comment]);
     };
 
 
@@ -124,6 +141,7 @@ const StoryContent = () => {
           </p>
           Tags: {tags1}
         </div>
+
             <div>
               <button
                 className="like-button"
@@ -146,11 +164,11 @@ const StoryContent = () => {
           <button onClick={onClickHandler} className="comment-button">
             Submit
           </button>
-          {comments.map((text) => (
+          {/* {comments.map((text) => (
 
         <Comment text={text}/>
 
-          ))}
+          ))} */}
           
       </div></div>
       
