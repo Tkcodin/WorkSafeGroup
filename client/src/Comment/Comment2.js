@@ -121,7 +121,7 @@ const Comment = (props) => {
         //className={replyVisible ? (commentsExist ?'with-reply comments' : 'with-reply') : (commentsExist ? 'comments' : '')}
         <div id="comment2" style={{ marginLeft: `${tier * 30}px`, marginBottom: bottomMargin}}> 
             <p className="comment2Comment">
-                {tier}
+                {comment}
             </p>
             <div id="comment2Bar">
                 <label id="comment2Author">{author}</label>
