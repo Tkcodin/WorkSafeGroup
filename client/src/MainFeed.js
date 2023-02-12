@@ -14,17 +14,58 @@ const MainFeed = () => {
   const [filteredScoredCards, setFilteredScoredCards] = useState([]);
 
 
+  // useEffect(() => {
+  //   // axios.get('http://localhost:3000/getcontent')
+  //   // .then(response => {
+  //   //   setCards(response.data); 
+  //   //   axios.get('http://localhost:3000/populatedTags/'+card._id)
+  //   //   .then(response=>{
+  //   //     card.tags = response.data;
+  //   //     console.log(response.data);
+  //   //     setTimeout(() => {
+  //   //       assignCardsScores();
+  //   //     }, 1);
+  //   //   })
+  //   //   .catch(error=>console.log(error));
+  //   //   console.log(cards);
+  //   //   setTimeout(() => {
+  //   //     assignCardsScores();
+  //   //   }, 1);
+  //   // })
+  //   // .catch(error => console.log(error));
+
+   
+      
+
+    
+  // });
   useEffect(() => {
     axios.get('http://localhost:3000/getcontent')
-    .then(response => {
-      setCards(response.data); 
-      console.log(cards);
-      setTimeout(() => {
-        assignCardsScores();
-      }, 1);
-    })
-    .catch(error => console.log(error));
-  });
+      .then(response => {
+        const fetchedCards = response.data;
+       
+        const promises = fetchedCards.map(card => (
+          axios.get('http://localhost:3000/populatedTags/'+card._id)
+            .then(response1 => {
+              
+              card.tags = response1.data;
+              console.log(card.tags);
+              return card;
+            })
+            .catch(error => console.log(error))
+        ));
+        
+        Promise.all(promises)
+          .then(updatedCards => {
+            setCards(updatedCards);
+            console.log(updatedCards);
+            setTimeout(() => {
+              assignCardsScores();
+            }, 1);
+          });
+      })
+      .catch(error => console.log(error));
+  }, [cards.length]);
 
   
 
@@ -58,7 +99,7 @@ const MainFeed = () => {
     let hh = window.parseInt(hhmmComponents[0]);
     let mm = window.parseInt(hhmmComponents[1]);
     let ampm = yearTimeComponents[1];
-    if(ampm==="pm" && hh !=12){
+    if(ampm==="pm" && hh !==12){
       hh = hh +12;
     }
     let dateFormat = new Date(yearY, month -1, day, hh, mm, 0);
@@ -71,12 +112,16 @@ const MainFeed = () => {
     let tags = card.tags;
     let matchingTagCount = 0;
     let myTags = localStorage.getItem("myTags");
-    if(myTags != null && myTags != '{"":""}' && myTags.length>0){
+    if(myTags !== null && myTags !== '{"":""}' && myTags.length>0){
       let myTagsSplit = myTags.split(" ");
       for(let s of myTagsSplit){
-        if(tags.includes(s)){
+       tags.map(tags=>{
+        console.log(tags.Name);
+        if(tags.Name.includes(s)){
           matchingTagCount++;
         }
+       })
+        
       }
     }
     let score = cl + matchingTagCount - diffHours;

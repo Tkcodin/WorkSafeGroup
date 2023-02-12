@@ -6,6 +6,7 @@ const e = require('express');
 const path = require('path');
 const { ObjectId } = require('mongodb');
 const { Server } = require('http');
+const mongoose = require('../server.js').mongoose
 
 
 
@@ -22,11 +23,16 @@ const getProfile=(req,res,next)=>{
 
 // retrieve all the content documents stored in the MongoDB database
 const getContent= (req,res)=>{
+    // content.find({}).populate('tags').exec(function(err, abc) {
+    //     if (err) {console.log(err);}
+    //     else{
+    //     abc.tags=tags; }// This will log an array of referenced order documents
+    //   });
     content.find({}, (err, content) => {
         if (err) {
           res.status(500).send(err);
         } else {
-        
+            // console.log('abc');
           res.status(200).json(content);
         }
  });
@@ -123,6 +129,8 @@ const updatelikes = (req,res)=>{
 
 // create a new "content" document in a MongoDB database using Mongoose
 const newContent= (req,res)=>{
+    const tags123 = JSON.parse(req.body.Tags);;
+    const tags1234 = tags123.map((id) => mongoose.Types.ObjectId(id));
     // take in the body of the request (req.body) which contains information. These values are then assigned to a new "content" object which is created using the Mongoose "content" model. 
     const newcontent = new content({
         UserID: req.body.UserID,
@@ -133,7 +141,7 @@ const newContent= (req,res)=>{
         Date: req.body.Date,
         Category: req.body.Category,
         Image:path.normalize(req.file.path),
-        tags: req.body.Tags
+        tags: tags1234
         
     });
     newcontent.save().then(result=>{  // Save the newContent object to the database
@@ -314,7 +322,16 @@ const newContent= (req,res)=>{
 //     } );
 // }
 
+const getPopulatedTags=(req,res)=>{
+    content.findOne({_id:ObjectId(req.params.id)}).populate('tags').exec(function(err, abc) {
+            if (err) {throw err;}
+            else{
+            
+            res.status(200).json(abc.tags);} // This will log an array of referenced order documents
+          });
+}
 
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser};
+
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser,getPopulatedTags};
 
