@@ -44,6 +44,7 @@ router.get('/getuser/:email',profileController.getUser)
 
  router.post('/setTags',profileController.setTags)
  router.get('/getTags',profileController.getTags)
+ router.get('/populatedTags/:id', profileController.getPopulatedTags)
 
 
 //5th step

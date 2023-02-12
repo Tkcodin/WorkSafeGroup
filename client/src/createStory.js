@@ -145,12 +145,14 @@ onChangeImage (e) {
 onPost(e) {
   e.preventDefault();
   // const tagsSelected = []
-  var tagsSelected="";
+  // var tagsSelected=t;
+  const tagsSelected =[];
   this.state.optionSelected.forEach(element => {
     // tagsSelected.push(element.value);
-    tagsSelected= tagsSelected+element.value+", ";
+    // tagsSelected= tagsSelected+element.value+", ";
+    tagsSelected.push(element.value);
   });
-
+  
   var categorySelected=this.state.category.value;
 
   const post = {
@@ -178,7 +180,7 @@ var date = new Date();
   formdata.append('Date',date.toLocaleDateString('en-NZ') + ', ' + date.toLocaleTimeString('en-NZ', {hour: '2-digit', minute:'2-digit', hour12: true}));
   formdata.append('Category', this.state.category.value);
    formdata.append('Image',this.state.image);
-  formdata.append('Tags',tagsSelected);
+  formdata.append('Tags',JSON.stringify(tagsSelected));
 
   const config = {
     headers: {
@@ -278,7 +280,7 @@ var date = new Date();
         <div id='multiSelectDiv'>
 
           <ReactSelect
-           options={this.state.options.map(option => ({ value: option.Color+ ', '+option.Name, label: option.Name }))}
+           options={this.state.options.map(option => ({ value: option._id, label: option.Name }))}
             isMulti
             closeMenuOnSelect={false}
             hideSelectedOptions={false}

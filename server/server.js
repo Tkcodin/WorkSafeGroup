@@ -48,7 +48,7 @@ mongoose
     
 
 
-module.exports= {users,content,comment,tags};
+module.exports= {users,content,comment,tags,mongoose};
 const profileRoutes=require('./routers/profile')
 
 app.use('/',profileRoutes)
@@ -150,11 +150,11 @@ function createContentSchema(mongoose){
         Image:{
             type:String
         },
-        tags:{
-            type: String,
-            required: true
+        tags:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'tags'
     
-        },
+        }],
         Category:{
             type: String,
             required: true

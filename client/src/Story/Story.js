@@ -19,7 +19,8 @@ export default class Story extends React.Component{
         this.state = {
           likes: 0,
           comments: -1,
-          category: ""
+          category: "",
+          tags1:""
         };
       }
 
@@ -54,20 +55,26 @@ export default class Story extends React.Component{
 
         //PUT MYTAGS INTO MYTAGCONTAINER
         const readTags  = (s) =>{
-          console.log("READING TAGS FROM: " + s);
-            s = s.substring(0, s.length - 1);
-            if(s.length>0){
-            // console.log("s for split: " + s)
-           let infos = s.split(",");
-           for (let i = 0; i<infos.length; i = i+2){
-            let c = infos[i];
-            let t = infos[i+1];
+          s.map(option=>{
+           
+            tags.push({id: {count}, tag: <MyTag colour={option.Color} text={option.Name}/>});
+                count++;
+          })
+          this.state.tags1=tags.map(tag=>tag.tag);
+          // console.log("READING TAGS FROM: " + s);
+          //   s = s.substring(0, s.length - 1);
+          //   if(s.length>0){
+          //   // console.log("s for split: " + s)
+          //  let infos = s.split(",");
+          //  for (let i = 0; i<infos.length; i = i+2){
+          //   let c = infos[i];
+          //   let t = infos[i+1];
             
-            // tags.push({id: {count}, tag: <MyTag colour={c} text={t}/>});
-            tags.push(<MyTag colour={c} text={t}/>);
-            count++;
-            }   
-        }
+          //   // tags.push({id: {count}, tag: <MyTag colour={c} text={t}/>});
+          //   tags.push(<MyTag colour={c} text={t}/>);
+         
+          //   }   
+        // }
         }
         const handleCardClick = (objectid) => {
             // code to run when the div is clicked
@@ -85,8 +92,8 @@ export default class Story extends React.Component{
             console.log("scpre: " + this.props.Score),
             readTags(this.props.tagInfo),
             <div className={`Storydiv ${this.state.category === 'Question' ? 'Question' : 'Story'}`} onClick={() => handleCardClick(this.props.objectid)}>
-
-                <MyTagContainer myTags={tags}/>
+              
+                <MyTagContainer myTags={this.state.tags1}/>
                 <h3 className="title">{this.props.Storyname}</h3>
                 <h3 className="description">{this.props.Description}</h3>
 

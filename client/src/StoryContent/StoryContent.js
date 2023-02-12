@@ -19,7 +19,7 @@ const StoryContent = () => {
   const [Description, setDescription] = useState('');
   const [Content, setContent] = useState('');
   const [Image, setImage] = useState('');
-  const[Tags,setTags] = useState('');
+  const[Tags,setTags] = useState([]);
   const[Date,setDate]=useState('');
   const [likes, setLikes] = useState(0);  
   const [comment, setComment] = useState("Please input your comment...");
@@ -46,12 +46,21 @@ const StoryContent = () => {
         setDescription(data.Description);
         setContent(data.Content);
         setImage(data.Image);
-        setTags(data.tags);
+
+        // setTags(data.tags);
         setDate(data.Date);
+        axios.get('http://localhost:3000/populatedTags/'+objectId.id)
+        .then(response => {
+          console.log(response.data)
+          setTags(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
         })
       
       .catch(error => {console.log(error);console.log(objectId.id)});
-    });
+    },[]);
    
     
     const handleLike = () => {
@@ -71,6 +80,7 @@ const StoryContent = () => {
         .catch(error => console.log(error));
       }
     };
+    const tags1 = Tags.map(tag=>', '+tag.Name);
     const onChangeHandler = (e) => {
       setComment(e.target.value);
      
@@ -112,7 +122,7 @@ const StoryContent = () => {
           <p className="StoryContentDesc">
             {Content}
           </p>
-          Tags: {Tags}
+          Tags: {tags1}
         </div>
             <div>
               <button
