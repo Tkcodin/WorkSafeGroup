@@ -10,12 +10,23 @@ const Comment = (props) => {
     const comments = props.comments;
     const author=props.author;
     const comment=props.text;
+   
     const [likeCount, setLikeCount] = useState(0);
     const [replyVisible, setReplyVisible] = useState(false);
     const [commentsExist, setCommentsExist] = useState(false);
     const [bottomMargin, setBottomMargin] = useState(false);
     const [babyReplies, setBabyReplies] = useState(0);
+    const [babyComments, setBabyComments] = useState(0);
     const [started, setStarted] = useState(false);
+    const [batchUpdate, setBatchUpdate] = useState([]);
+
+    useEffect(() => {
+        if (batchUpdate.length > 0) {
+            const totalUpdates = batchUpdate.reduce((acc, current) => acc + current, 0);
+            props.updateDadsBabyComments(totalUpdates);
+            setBatchUpdate([]);
+        }
+      }, [batchUpdate]);
 
     useEffect(() => {
         if (comments && comments.length > 0) {
@@ -34,6 +45,9 @@ const Comment = (props) => {
         if(commentsExist){
             bm = bm + comments.length*70;
         }
+        if(babyComments > 0){
+            bm = bm + babyComments*70;
+        }
         if(babyReplies>0){
             bm = bm + babyReplies*60;
         }
@@ -42,6 +56,46 @@ const Comment = (props) => {
         }
         setBottomMargin(bm);
     });
+
+    useEffect(() => {
+        // const doIt = async () => {
+            if(tier>0){
+            // Call the update function in the parent component
+            console.log("about to call props function");
+            let x = 0;
+            let cl = 0;
+            if(comments && comments.length >0){
+                cl = cl + comments.length;
+                x = x + comments.length;
+            }
+            // x = x + babyComments;
+            console.log("Im tier: " + tier + " with comments: " + cl + " and with BC: " + babyComments);
+            props.updateDadsBabyComments(x);
+            
+            console.log("just called the props function");
+            }
+        // }
+        // doIt();
+      },[comments]); 
+
+      useEffect(() => {
+        console.log("testRefresh");
+      },[babyComments]);
+
+    const updateBabyComments = (n) =>{
+        let x = babyComments + n;
+
+        console.log(babyComments + " + " + n + "---> " + x);
+        setBabyComments(x);
+        if(tier>0){
+            console.log("recursing");   
+            // props.updateDadsBabyComments(n); 
+            setBatchUpdate(prevBatchUpdate => [...prevBatchUpdate, n]);
+        }
+        
+    };
+
+    const getBabyComments = () => babyComments;
 
     function HeartClick(e){
         e.preventDefault();
@@ -61,23 +115,29 @@ const Comment = (props) => {
         //className={replyVisible ? (commentsExist ?'with-reply comments' : 'with-reply') : (commentsExist ? 'comments' : '')}
         <div id="comment2" style={{ marginLeft: `${tier * 30}px`, marginBottom: bottomMargin}}> 
             <p className="comment2Comment">
-                {comment}
+                {tier}
             </p>
             <div id="comment2Bar">
                 <label id="comment2Author">{author}</label>
                 <img id="comment2Heart" src ={heart} onClick={(e) => HeartClick(e)}></img>
                 <label>{likeCount}</label>
+                {commentsExist && <label>C: {comments.length}</label>}
+                <label>BC: {babyComments}</label>
                 <button id="comment2ReplyButton" onClick={(e) => ReplyClick(e)}>R</button>
             </div>
             {replyVisible && <Reply hide={{setReplyVisible}} />}
             <br></br>
             {commentsExist && <div id="c2TreeV">
                     {comments && comments.length > 0 && comments.map((comment, index) => (
-                        <Comment key = {index} author = {comment.author} text = {comment.text} tier={tier+1} tellReplyOpen={{setBabyReplies}} dadsReplies={{babyReplies}}/>
+                        <Comment key = {index} author = {comment.author} text = {comment.text} tier={tier+1} 
+                        tellReplyOpen={{setBabyReplies}} dadsReplies={{babyReplies}}
+                        updateDadsBabyComments={(n) => updateBabyComments(n)}
+                        getDadsBabyComments={getBabyComments}
+                        comments = {tier < 1 ? comments : null}
+                        /> 
                     ))}
             </div>}
         </div>
-       
     )
 }
 
