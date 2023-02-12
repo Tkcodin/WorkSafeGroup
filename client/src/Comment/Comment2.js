@@ -23,7 +23,11 @@ const Comment = (props) => {
     useEffect(() => {
         if (batchUpdate.length > 0) {
             const totalUpdates = batchUpdate.reduce((acc, current) => acc + current, 0);
-            props.updateDadsBabyComments(totalUpdates);
+            console.log(totalUpdates);
+            setBabyComments(babyComments+totalUpdates);
+            if(tier>0){
+                props.updateDadsBabyComments(totalUpdates);
+            }
             setBatchUpdate([]);
         }
       }, [batchUpdate]);
@@ -41,6 +45,7 @@ const Comment = (props) => {
       }, [replyVisible]);
 
     useEffect(() => {
+        
         let bm = 20;
         if(commentsExist){
             bm = bm + comments.length*70;
@@ -83,15 +88,9 @@ const Comment = (props) => {
       },[babyComments]);
 
     const updateBabyComments = (n) =>{
-        let x = babyComments + n;
 
-        console.log(babyComments + " + " + n + "---> " + x);
-        setBabyComments(x);
-        if(tier>0){
-            console.log("recursing");   
-            // props.updateDadsBabyComments(n); 
             setBatchUpdate(prevBatchUpdate => [...prevBatchUpdate, n]);
-        }
+        
         
     };
 
@@ -110,6 +109,12 @@ const Comment = (props) => {
             props.tellReplyOpen.setBabyReplies(props.dadsReplies.babyReplies + 1);
         }
     }
+
+    function addComment(a, t){
+        let ti = tier+1;
+        comments.push({author: a, text: t, tier: ti});
+        this.return();
+    }
    
     return(
         //className={replyVisible ? (commentsExist ?'with-reply comments' : 'with-reply') : (commentsExist ? 'comments' : '')}
@@ -125,7 +130,7 @@ const Comment = (props) => {
                 <label>BC: {babyComments}</label>
                 <button id="comment2ReplyButton" onClick={(e) => ReplyClick(e)}>R</button>
             </div>
-            {replyVisible && <Reply hide={{setReplyVisible}} />}
+            {replyVisible && <Reply addDadComment = {(a, t) => addComment(a, t)} hide={{setReplyVisible}} />} 
             <br></br>
             {commentsExist && <div id="c2TreeV">
                     {comments && comments.length > 0 && comments.map((comment, index) => (
@@ -133,7 +138,7 @@ const Comment = (props) => {
                         tellReplyOpen={{setBabyReplies}} dadsReplies={{babyReplies}}
                         updateDadsBabyComments={(n) => updateBabyComments(n)}
                         getDadsBabyComments={getBabyComments}
-                        comments = {tier < 1 ? comments : null}
+                        comments = {tier < 2 ? comments : null}
                         /> 
                     ))}
             </div>}
