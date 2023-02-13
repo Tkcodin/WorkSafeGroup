@@ -71,45 +71,40 @@ const ProfileComponent =()=>{
         }
     });
 
-    if (selectedUserID === localStorage.getItem('userID')) {
-        // console.log('in be edit');
-        return (
-            <><></><NavigationBar /><div className="profileimage">
-            <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
-            <h1 className="Author">{firstname} {lastname}</h1><br></br>
-            <h2 classname="details">{Role} at {Employer}</h2><br></br>
-            <p className="About">About me: <br></br>{About}</p><br></br>
-            <label>My Interests: </label>
-            <div id="tagsInMiddle">
-            <MyTagContainer myTags={tags}/>
-            </div>
-            <br></br>
-            <Link to= '/editProfileComponent'>
-            <button
-            >Edit Profile</button>
-            </Link>
-            <SignUp modal={modal}></SignUp>
-            </div></>
-        );
-    } else {
         console.log(emailPrivate);
         handleTags();
         return (
-            <><></><NavigationBar /><div className="profileimage">
-                <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
-                <h1 className="Author">{firstname} {lastname}</h1><br></br>
-                <h2 classname="details">Role: {rolePrivate? "Role Hidden " : Role }</h2><br></br>
-                <h2 classname="details">Employer: {employerPrivate? "Employer Hidden": Employer }</h2><br></br>
-                <p className="About">About me: <br></br>{About}</p><br></br>
-                <p className="About">Contact Information: <br></br>{emailPrivate? "Email Hidden" : Email}</p><br></br>
-                <label>My Interests: </label>
-                <div id="tagsInMiddle">
-                <MyTagContainer myTags={tags}/>
+            <div>
+              <NavigationBar />
+              <div className="overlay"></div>
+              <img className="profile-pic" src={"http://localhost:3000/" + Image} alt="Profile Pic" />
+              <div className="profile-container">
+                <div className="profile-info">
+                  <h1 className="author-name">{firstname} {lastname}</h1>
+                  <div className="section-container">
+                    <div className="section">
+                      <h2 className="section-title">Professional Details:</h2>
+                      <h3 className="role-title">Role:</h3>
+                      <p className="role-text">{rolePrivate ? "Role Hidden" : Role}</p>
+                      <h3 className="employer-title">Employer:</h3>
+                      <p className="employer-text">{employerPrivate ? "Employer Hidden" : Employer}</p>
+                      <h3 className="contact-info-title">Contact Information:</h3>
+                      <p className="contact-info-text">{emailPrivate ? "Email Hidden" : Email}</p>
+                    </div>
+                    <div className="section">
+                      <h2 className="section-title">Personal Interests:</h2>
+                      <h3 className="about-title">About Me:</h3>
+                      <p className="about-text">{About}</p>
+                      <h3 className="interests-title">My Interests:</h3>
+                      <div className="interests">
+                        <MyTagContainer myTags={tags} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                </div></>
-        );
+              </div>
+              {(selectedUserID === localStorage.getItem('userID')) ? <Link to= '/editProfileComponent' > <button className="editProfileButton">Edit Profile</button></Link> : null }
+            </div>
+          );     
     }
-
-
-}
 export default ProfileComponent;
