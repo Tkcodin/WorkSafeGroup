@@ -83,9 +83,10 @@ function createUserSchema(mongoose){
         Employer:{
             type:String,   
         },
-        Tags:{
-            type: String,
-        },
+        Tags:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'tags'
+        }],
         About:{
             type: String
         },

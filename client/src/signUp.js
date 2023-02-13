@@ -7,14 +7,14 @@ import axios from 'axios';
 
 
 
-const options = [
-    {value:"blue-violence", label : "violence"},
-    {value:"red-heights", label : "heights"},
-    {value:"green-agriculture", label : "agriculture"},
-    {value:"yellow-sickness", label : "sickness"},
-    {value:"purple-poison", label : "poison"},
-    {value:"silver-dragons", label : "dragons"}
-  ];
+// const options = [
+//     {value:"blue-violence", label : "violence"},
+//     {value:"red-heights", label : "heights"},
+//     {value:"green-agriculture", label : "agriculture"},
+//     {value:"yellow-sickness", label : "sickness"},
+//     {value:"purple-poison", label : "poison"},
+//     {value:"silver-dragons", label : "dragons"}
+//   ];
 
   const Option = (props) => {
     return (
@@ -62,7 +62,8 @@ export default class SignUp extends React.Component {
             image: null,
             emailPrivate: false,
             rolePrivate:false,
-            employerPrivate:false
+            employerPrivate:false,
+            options:[]
         };  
     }
 
@@ -81,6 +82,16 @@ export default class SignUp extends React.Component {
         localStorage.setItem('FirstName',data.FirstName);
         })
       }
+      axios.get('http://localhost:3000/getTags')
+      .then(response => {
+        this.setState({
+          options: response.data
+        });
+        console.log(this.state.options);
+
+        })
+      
+      .catch(error => {console.log(error);})
     }
 
     handleChange (selected) { //used for dropdown menu selection
@@ -187,10 +198,11 @@ export default class SignUp extends React.Component {
     onPost(e) {
         e.preventDefault();
 
-        var tagsSelected="";
+        const tagsSelected =[];
         this.state.optionSelected.forEach(element => {
-            // tagsSelected.push(element.value);
-            tagsSelected= tagsSelected+element.value+"-";
+          // tagsSelected.push(element.value);
+          // tagsSelected= tagsSelected+element.value+", ";
+          tagsSelected.push(element.value);
         });
 
         const user = {
@@ -219,7 +231,7 @@ export default class SignUp extends React.Component {
         formdata.append('Email',this.state.email);
         formdata.append('Role',this.state.role);
         formdata.append('Employer',this.state.employer);
-        formdata.append('Tags',tagsSelected);
+        formdata.append('Tags',JSON.stringify(tagsSelected));
         formdata.append('About',this.state.about);
         formdata.append('Image',this.state.image);
         formdata.append('EmailPrivate',this.state.emailPrivate);
@@ -320,7 +332,7 @@ export default class SignUp extends React.Component {
                         <div id='multiSelectDiv2'>
 
                             <ReactSelect id='createDropDown'
-                                options={options}
+                                options={this.state.options.map(option => ({ value: option._id, label: option.Name }))}
                                 isMulti
                                 closeMenuOnSelect={false}
                                 hideSelectedOptions={false}

@@ -224,7 +224,8 @@ const newContent= (req,res)=>{
 
  const newUser=(req,res)=>{
     // let newuser = new users(req.body);
-    
+    const tags123 = JSON.parse(req.body.Tags);;
+    const tags1234 = tags123.map((id) => mongoose.Types.ObjectId(id));
     const newuser = new users({
         FirstName: req.body.FirstName,
         LastName: req.body.LastName,
@@ -232,7 +233,7 @@ const newContent= (req,res)=>{
         Email: req.body.Email,
         Role: req.body.Role,
         Employer: req.body.Employer,
-        Tags: req.body.Tags,
+        Tags: tags1234,
         About: req.body.About,
         Image:path.normalize(req.file.path),
         EmailPrivate: req.body.EmailPrivate,
@@ -330,8 +331,16 @@ const getPopulatedTags=(req,res)=>{
             res.status(200).json(abc.tags);} // This will log an array of referenced order documents
           });
 }
+const getPopulatedTagsProfile=(req,res)=>{
+    users.findOne({_id:ObjectId(req.params.id)}).populate('Tags').exec(function(err, abc) {
+            if (err) {throw err;}
+            else{
+            
+            res.status(200).json(abc.Tags);} // This will log an array of referenced order documents
+          });
+}
 
 
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser,getPopulatedTags};
+module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser,getPopulatedTags,getPopulatedTagsProfile};
 
