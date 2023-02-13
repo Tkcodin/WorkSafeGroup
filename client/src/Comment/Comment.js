@@ -7,7 +7,7 @@ import ReplyComment from './ReplyComment.js'
 
 const Comment = (props) => {
 
-     const [comment, setComment] = useState("Please input your comment...");
+    const [comment, setComment] = useState("Please input your comment...");
     const [comments, setComments] = useState([]);
     // const [OpenReply, setOpenReply] = useState(false);
     const[count,setCount] = useState(0);
