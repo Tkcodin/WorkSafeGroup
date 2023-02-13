@@ -29,6 +29,7 @@ const StoryContent = () => {
     localStorage.getItem(`liked-${objectId.id}`) === 'true'
   );
   
+
   useEffect(() => {
     localStorage.setItem(`liked-${objectId.id}`, liked);
   }, [liked]);
@@ -46,7 +47,9 @@ const StoryContent = () => {
         setDescription(data.Description);
         setContent(data.Content);
         setImage(data.Image);
-
+        setComments(data.Comments);
+        console.log(data.Comments);
+        console.log(comments);
         // setTags(data.tags);
         setDate(data.Date);
         axios.get('http://localhost:3000/populatedTags/'+objectId.id)
@@ -88,6 +91,7 @@ const StoryContent = () => {
     const onClickHandler = (e) => {
 
       e.preventDefault();
+    
     //   const variables = {
     //     responseTo: props.comment._id,
     //     content: Comment
@@ -106,11 +110,14 @@ const StoryContent = () => {
       console.log(response.data);
       setComments([...comments, response.data]);
       setComment("");
+      window.location.reload();
       })
       .catch(error => {
       console.log(error);
+    
+      
       });
-      //setComments((comments) => [...comments, comment]);
+
     };
 
 
@@ -164,11 +171,16 @@ const StoryContent = () => {
           <button onClick={onClickHandler} className="comment-button">
             Submit
           </button>
-          {/* {comments.map((text) => (
 
-        <Comment text={text}/>
+          {comments.map((comment, index) => (
+            console.log(comments),
+            console.log(comment),
+            console.log(comment.Text),
+        <Comment key={index} text={comment.Text} />
+          ))}
 
-          ))} */}
+
+          
           
       </div></div>
       

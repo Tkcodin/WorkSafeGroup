@@ -160,7 +160,7 @@ function createContentSchema(mongoose){
             required: true
         },
         Comments:[{
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.Object,
             ref:'comment'
         }],
         Likes:{

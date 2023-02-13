@@ -301,7 +301,7 @@ const newComment = (req, res) => {
   
       content.findByIdAndUpdate(
         contentId,
-        { $push: { Comments: savedComment._id } },
+        { $push: { Comments: mycomment} },
         { new: true },
         (err, updatedContent) => {
           if (err) {
