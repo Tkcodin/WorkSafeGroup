@@ -7,8 +7,8 @@ import NavigationBar from '../navigationBar';
 import Comment from '../Comment/Comment.js'
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
-
-
+import CommentSection from '../Comment/commentSection';
+import CommentOnStory from '../Comment/commentOnStory';
 
 
 
@@ -28,7 +28,9 @@ const StoryContent = () => {
   const [liked, setLiked] = useState(
     localStorage.getItem(`liked-${objectId.id}`) === 'true'
   );
-  
+  const [OpenReply, setOpenReply] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+
   useEffect(() => {
     localStorage.setItem(`liked-${objectId.id}`, liked);
   }, [liked]);
@@ -46,7 +48,9 @@ const StoryContent = () => {
         setDescription(data.Description);
         setContent(data.Content);
         setImage(data.Image);
-
+        setComments(data.Comments);
+        console.log(data.Comments);
+        console.log(comments);
         // setTags(data.tags);
         setDate(data.Date);
         axios.get('http://localhost:3000/populatedTags/'+objectId.id)
@@ -85,17 +89,56 @@ const StoryContent = () => {
       setComment(e.target.value);
      
     };
+
+
+    const addComment = (t) => {
+      let a = localStorage.getItem("FirstName");
+      comments.push({author: a, text: t, tier: 0});
+    }
+
+    const handleButtonClick = () => {
+      setShowButton(false);
+    };
     const onClickHandler = (e) => {
 
       e.preventDefault();
+    
     //   const variables = {
     //     responseTo: props.comment._id,
     //     content: Comment
     // }
+    const newComment = {
+      Text: comment,
+      User:"user",
+      Date: new window.Date()
+      };
 
-      setComments((comments) => [...comments, comment]);
+      axios
+      .post('http://localhost:3000/newComment/' + objectId.id, newComment)
+      .then(response => {
+        console.log("id: "+objectId.id);
+        console.log("comment"+newComment);
+      console.log(response.data);
+      setComments([...comments, response.data]);
+      setComment("");
+      window.location.reload();
+      })
+      .catch(error => {
+      console.log(error);
+    
+      
+      });
+
     };
 
+    const openReply=()=> {
+      setOpenReply(!OpenReply)
+  }
+
+
+  const actions = [
+    <span onClick={openReply} key="comment-basic-reply-to">Reply to </span>
+]
 
     return (
       
@@ -124,6 +167,7 @@ const StoryContent = () => {
           </p>
           Tags: {tags1}
         </div>
+
             <div>
               <button
                 className="like-button"
@@ -132,8 +176,12 @@ const StoryContent = () => {
               {liked ? "I like it!" : "Like it?"}
               </button>
             </div>
-            <div className="main-container">
-        <div className="comment-flexbox">
+          <CommentOnStory addComment={(t)=>addComment(t)}/>
+          <CommentSection />
+
+
+            {/* <div className="main-container"> */}
+        {/* <div className="comment-flexbox">
           <h3 className="comment-text">Comment</h3>
           <textarea
 
@@ -145,14 +193,33 @@ const StoryContent = () => {
           />
           <button onClick={onClickHandler} className="comment-button">
             Submit
-          </button>
-          {comments.map((text) => (
+          </button> */}
 
-        <Comment text={text}/>
-
+          {/* {comments.map((comment, index) => (
+            console.log(comments),
+            console.log(comment),
+            console.log(comment.Text),
+        <>
+        <Comment key={index} text={comment.Text} />
+        <button className='reply' onClick={openReply}>reply</button>
+        </>
           ))}
+
+            {OpenReply &&
+                <form style={{ display: 'flex' }} onSubmit={onClickHandler}>
+                    <textArea
+                        style={{ width: '100%', borderRadius: '5px' }}
+                        onChange={onChangeHandler}
+                        value={comment}
+                        // placeholder="write some comments"
+                    />
+                    <br />
+                    <button style={{ width: '20%', height: '52px' }} onClick={onClickHandler}>Submit</button>
+                </form>
+            }    */}
           
-      </div></div>
+          
+      {/* </div></div> */}
       
       </div>
       

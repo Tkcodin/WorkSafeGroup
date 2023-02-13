@@ -161,7 +161,7 @@ function createContentSchema(mongoose){
             required: true
         },
         Comments:[{
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.Object,
             ref:'comment'
         }],
         Likes:{
@@ -191,8 +191,14 @@ function createCommentSchema(mongoose){
             ref:'content'
         },
         // Replies:[commentschema]
-
-        
+        Comments:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'comment'
+        }],
+        Likes:{
+            type: Number,
+            default: 0
+        }
     });
     commentschema.add({Replies:[commentschema]});
     return commentschema;
