@@ -71,27 +71,6 @@ const ProfileComponent =()=>{
         }
     });
 
-    if (selectedUserID === localStorage.getItem('userID')) {
-        // console.log('in be edit');
-        return (
-            <><></><NavigationBar /><div className="profileimage">
-            <img className="profilepic" src={"http://localhost:3000/" + Image} alt="profilepic"></img>
-            <h1 className="Author">{firstname} {lastname}</h1><br></br>
-            <h2 classname="details">{Role} at {Employer}</h2><br></br>
-            <p className="About">About me: <br></br>{About}</p><br></br>
-            <label>My Interests: </label>
-            <div id="tagsInMiddle">
-            <MyTagContainer myTags={tags}/>
-            </div>
-            <br></br>
-            <Link to= '/editProfileComponent'>
-            <button
-            >Edit Profile</button>
-            </Link>
-            <SignUp modal={modal}></SignUp>
-            </div></>
-        );
-    } else {
         console.log(emailPrivate);
         handleTags();
         return (
@@ -124,12 +103,8 @@ const ProfileComponent =()=>{
                   </div>
                 </div>
               </div>
+              {(selectedUserID === localStorage.getItem('userID')) ? <Link to= '/editProfileComponent' > <button className="editProfileButton">Edit Profile</button></Link> : null }
             </div>
-          );
-          
-          
+          );     
     }
-
-
-}
 export default ProfileComponent;
