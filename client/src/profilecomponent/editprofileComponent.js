@@ -6,6 +6,8 @@ import './profileComponent.css';
 import profilepicture from './profilepic.jpg';
 import ImageSelect from '../components-tom/ImageSelect2';
 import axios from 'axios';
+import { components } from "react-select";
+import { default as ReactSelect } from "react-select";
 
 const EditProfileComponent =()=>{
  //Once we have set up the backend we will use the url params to pass the object id and then use effect hook to grab the user details from DB.
@@ -21,10 +23,47 @@ const EditProfileComponent =()=>{
     const [Role, setRole] = useState('');
     const [Employer, setEmployer] = useState('');
     const [About, setAbout] = useState('');
-    const [Interests, setInterests] = useState('');
+    const [Interests, setInterests] = useState([]);
     const [emailPrivate, setEmailPrivate] = useState(false);
     const [rolePrivate, setRolePrivate] = useState(false);
     const [employerPrivate, setEmployerPrivate] = useState(false);
+    const[options,setOptions] = useState([]);
+    const[optionSelected,setOptionSelected] = useState();
+  
+
+    // const functiontofindindex=()=>{
+     
+    //   let count = 0;
+    //   options.map(op=>{
+    //     Interests.map(int=>{
+    //       if(int.Name === op.Name){
+    //         abc.push(count);
+    //       }
+    //     })
+    //     count++;
+    //   })
+    // }
+
+    const Option = (props) => {
+      return (
+        <div>
+          <components.Option {...props}>
+            <input
+              type="checkbox"
+              checked={props.isSelected}
+              onChange={() => null} 
+            />{" "}
+            <label>{props.label}</label>
+          </components.Option>
+        </div>
+      );
+    };
+
+   const handleChange= (selected)=> { 
+    
+       setOptionSelected(selected)
+     
+    };
 
     const handleImageChange = (event) =>{
   
@@ -98,7 +137,19 @@ const EditProfileComponent =()=>{
 
 
        const onPost=(e)=>{
+
         e.preventDefault();
+
+        const tagsSelected =[];
+
+    optionSelected.forEach(element => {
+
+    // tagsSelected.push(element.value);
+
+    // tagsSelected= tagsSelected+element.value+", ";
+    tagsSelected.push(element.value);
+
+  });
           const user = {
             firstName: firstname,
             lastName: lastname,
@@ -106,7 +157,7 @@ const EditProfileComponent =()=>{
             email: email,
             role: Role,
             employer:Employer,
-            tags: Interests,
+            tags: tagsSelected,
             about: About,
             image: Image,
             emailPrivate: emailPrivate,
@@ -126,7 +177,7 @@ const EditProfileComponent =()=>{
           formdata.append('Email',email);
           formdata.append('Role', Role);
           formdata.append('Employer',Employer);
-          formdata.append('Tags',Interests);
+          formdata.append('Tags',JSON.stringify(tagsSelected));
           formdata.append('About',About);
           formdata.append('Image',Image);
           formdata.append('EmailPrivate',emailPrivate);
@@ -171,11 +222,12 @@ const EditProfileComponent =()=>{
       useEffect(()=>{
         let userEmail = localStorage.getItem('userEmail');
         console.log(userEmail);
-  
+        
         if(userEmail != 'Email' && userEmail != null) {
           axios.get('http://localhost:3000/getuser/'+userEmail)
           .then(response => {
           const data = response.data;
+         
           console.log(data);
           console.log(data._id);
           localStorage.setItem('userID',data._id); //gets the id of current user and sets to local storage variable
@@ -190,15 +242,34 @@ const EditProfileComponent =()=>{
           setEmail(data.Email);
           setEmployer(data.Employer);
           setAbout(data.About);
-          setInterests(data.Tags);
+          // setInterests(data.Tags);
           setImage(data.Image);
           setDisplayImage(data.Image);
           setEmailPrivate(data.EmailPrivate);
           setRolePrivate(data.RolePrivate);
           setEmployerPrivate(data.EmployerPrivate);
+          axios.get('http://localhost:3000/populatedTagsProfile/'+data._id)
+          .then(response1 => {
+          setInterests(response1.data);
+          // console.log(Interests);
+          // const selected= Interests.map(int=>({value:int._id, label:int.Name}))  
+          // setOptionSelected(selected);
+          })
+        
 
           })
+         
+      .catch(error => {console.log(error);})
+      axios.get('http://localhost:3000/getTags')
+      .then(response1 => {
+      setOptions(response1.data);
+      })
+    
+    .catch(error => {console.log(error);})
+
+
         }
+
 
       },[]);
 
@@ -300,7 +371,23 @@ const EditProfileComponent =()=>{
 
 
         <p className="About">About me: <br></br><textarea rows="10" cols="30" value={About} onChange={handleAboutChange} /></p><br></br>
-        <p classname ="details">Interests: <input type="text" value={Interests} onChange={handleInterestsChange} /></p>
+        {/* <p classname ="details">Interests: <input type="text" value={Interests} onChange={handleInterestsChange} /></p> */}
+        <ReactSelect
+           options={options.map(option => ({ value: option._id, label: option.Name }))}
+            isMulti
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            // defaultValue = {}
+            placeholder="Select Story Tags"
+            components={{
+              Option
+            }}
+          
+            onChange={handleChange}
+
+            allowSelectAll={true}
+            value={optionSelected}
+            />
         
         <button type='submit' id='PostStoryButton'>submit</button>
         </div></form></>
