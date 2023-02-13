@@ -1,11 +1,15 @@
 import './Comment2.css';
 import React,{Component} from 'react';
 import { useState } from "react";
+import Comment from './Comment2';
 
 const Reply = (props) => {
-    
+
     function ReplyPost(e){
         e.preventDefault();
+        let a = "testAuthor"
+        let t = "testText"
+        props.addDadComment(a, t);
     }
 
     function ReplyCancel(e){
