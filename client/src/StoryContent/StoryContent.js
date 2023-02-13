@@ -28,7 +28,8 @@ const StoryContent = () => {
   const [liked, setLiked] = useState(
     localStorage.getItem(`liked-${objectId.id}`) === 'true'
   );
-  
+  const [OpenReply, setOpenReply] = useState(false);
+  const [showButton, setShowButton] = useState(true);
 
   useEffect(() => {
     localStorage.setItem(`liked-${objectId.id}`, liked);
@@ -88,6 +89,9 @@ const StoryContent = () => {
       setComment(e.target.value);
      
     };
+    const handleButtonClick = () => {
+      setShowButton(false);
+    };
     const onClickHandler = (e) => {
 
       e.preventDefault();
@@ -120,6 +124,14 @@ const StoryContent = () => {
 
     };
 
+    const openReply=()=> {
+      setOpenReply(!OpenReply)
+  }
+
+
+  const actions = [
+    <span onClick={openReply} key="comment-basic-reply-to">Reply to </span>
+]
 
     return (
       
@@ -176,10 +188,24 @@ const StoryContent = () => {
             console.log(comments),
             console.log(comment),
             console.log(comment.Text),
+        <>
         <Comment key={index} text={comment.Text} />
+        <button className='reply' onClick={openReply}>reply</button>
+        </>
           ))}
 
-
+            {OpenReply &&
+                <form style={{ display: 'flex' }} onSubmit={onClickHandler}>
+                    <textArea
+                        style={{ width: '100%', borderRadius: '5px' }}
+                        onChange={onChangeHandler}
+                        value={comment}
+                        // placeholder="write some comments"
+                    />
+                    <br />
+                    <button style={{ width: '20%', height: '52px' }} onClick={onClickHandler}>Submit</button>
+                </form>
+            }   
           
           
       </div></div>
