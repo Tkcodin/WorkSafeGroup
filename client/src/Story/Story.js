@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import R from './R.jpg';
 import './StoryCSS.css';
+// import '/Users/tuteredurie/WorkSafeGroup/client/src/MainFeed.css';
 import ImageSelect from '../components-tom/ImageSelect.js';
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
@@ -19,7 +20,8 @@ export default class Story extends React.Component{
         this.state = {
           likes: 0,
           comments: -1,
-          category: ""
+          category: "",
+          tags1:""
         };
       }
 
@@ -54,20 +56,26 @@ export default class Story extends React.Component{
 
         //PUT MYTAGS INTO MYTAGCONTAINER
         const readTags  = (s) =>{
-          console.log("READING TAGS FROM: " + s);
-            s = s.substring(0, s.length - 1);
-            if(s.length>0){
-            // console.log("s for split: " + s)
-           let infos = s.split("-");
-           for (let i = 0; i<infos.length; i = i+2){
-            let c = infos[i];
-            let t = infos[i+1];
+          s.map(option=>{
+           
+            tags.push({id: {count}, tag: <MyTag colour={option.Color} text={option.Name}/>});
+                count++;
+          })
+          this.state.tags1=tags.map(tag=>tag.tag);
+          // console.log("READING TAGS FROM: " + s);
+          //   s = s.substring(0, s.length - 1);
+          //   if(s.length>0){
+          //   // console.log("s for split: " + s)
+          //  let infos = s.split(",");
+          //  for (let i = 0; i<infos.length; i = i+2){
+          //   let c = infos[i];
+          //   let t = infos[i+1];
             
-            // tags.push({id: {count}, tag: <MyTag colour={c} text={t}/>});
-            tags.push(<MyTag colour={c} text={t}/>);
-            count++;
-            }   
-        }
+          //   // tags.push({id: {count}, tag: <MyTag colour={c} text={t}/>});
+          //   tags.push(<MyTag colour={c} text={t}/>);
+         
+          //   }   
+        // }
         }
         const handleCardClick = (objectid) => {
             // code to run when the div is clicked
@@ -86,26 +94,31 @@ export default class Story extends React.Component{
             readTags(this.props.tagInfo),
             <div className={`Storydiv ${this.state.category === 'Question' ? 'Question' : 'Story'}`} onClick={() => handleCardClick(this.props.objectid)}>
 
-                <MyTagContainer myTags={tags}/>
-                <h3 className="title">{this.props.Storyname}</h3>
-                <h3 className="description">{this.props.Description}</h3>
+              <div className="card-header">
+           
 
-                <Link to={"/profileComponent/" + this.props.selectedUserID} onClick={this.handleAuthorClick}>
-                  {/* <div id='authorDiv' onClick={this.handleAuthorClick}>  */}
-                    {/* <h3 className="author">{this.props.Author}
-                    </h3> */}
-                  {/* </div>  */}
-                  {this.props.Author}
-                </Link>
-                <br></br>
-                <img src={this.props.Image} className = "img" alt="Story.img"/>
-                <div className="likes-and-comments-container">
-                    <h3 className="category">{this.state.category}</h3>
-                    <h3 className="likes">Likes: {this.state.likes}</h3>
-                    <h3 className="comments">Comments: {this.state.comments}</h3>
-                    <h3 className ="score">Score: {this.props.Score}</h3>
+              
+                <MyTagContainer myTags={this.state.tags1}/>
+
+                <h3 className="title">{this.props.Storyname}</h3>
+              </div>
+              <div className="card-body">
+                <p className="description">{this.props.Description}</p>
+                <div className="author"> <b>Author:{" "}</b>
+                  <Link to={"/profileComponent/" + this.props.selectedUserID} onClick={this.handleAuthorClick}>
+                    {this.props.Author}
+                  </Link>
                 </div>
-                {/* <img src={R} className = "img" alt="Story.img"/> */}
+                <img src={this.props.Image} className="img" alt="Story.img"/>
+              </div>
+              <div className="card-footer">
+                <div className="category">{this.state.category}</div>
+                <div className="likes-and-comments">
+                  <div className="likes">Likes: {this.state.likes}</div>
+                  <div className="comments">Comments: {this.state.comments}</div>
+                </div>
+                <div className="score">Score: {this.props.Score}</div>
+              </div>
             </div>
             
 

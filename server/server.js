@@ -45,9 +45,10 @@ mongoose
 
     const tagsschema = createTagsSchema(mongoose);
     const tags = mongoose.model('tags',tagsschema);
+    
 
 
-module.exports= {users,content,comment,tags};
+module.exports= {users,content,comment,tags,mongoose};
 const profileRoutes=require('./routers/profile')
 
 app.use('/',profileRoutes)
@@ -149,17 +150,17 @@ function createContentSchema(mongoose){
         Image:{
             type:String
         },
-        tags:{
-            type: String,
-            required: true
+        tags:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'tags'
     
-        },
+        }],
         Category:{
             type: String,
             required: true
         },
         Comments:[{
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.Object,
             ref:'comment'
         }],
         Likes:{
@@ -189,8 +190,14 @@ function createCommentSchema(mongoose){
             ref:'content'
         },
         // Replies:[commentschema]
-
-        
+        Comments:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'comment'
+        }],
+        Likes:{
+            type: Number,
+            default: 0
+        }
     });
     commentschema.add({Replies:[commentschema]});
     return commentschema;
@@ -199,8 +206,14 @@ function createCommentSchema(mongoose){
 function createTagsSchema(mongoose){
     const createtagschema = mongoose.Schema({
         Name:{
-            type:[String],
+            type:String,
             required:true
+        },
+        Group:{
+            type:String
+        },
+        Color:{
+            type:String
         }
     });
     return createtagschema;

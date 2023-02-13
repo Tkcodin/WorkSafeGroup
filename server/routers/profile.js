@@ -31,7 +31,7 @@ router.post('/profile', profileController.newProfile)
 router.get('/profile', profileController.getProfile)
 router.post('/newcontent',upload.single('Image'),profileController.newContent)
 router.get('/getcontent',profileController.getContent)
-router.post('/newcomment',profileController.newComment)
+router.post('/newComment/:id',profileController.newComment)
 router.get('/getcomments',profileController.getComment)
 router.post('/newuser',upload.single('Image'),profileController.newUser)
 router.get('/getuser/:email',profileController.getUser)
@@ -40,5 +40,12 @@ router.get('/getuser/:email',profileController.getUser)
  router.get('/getMyLikes/:id',profileController.getMyLikes)
  router.get('/getuserWithID/:userID',profileController.getUserWithID)
 
+ router.post('/edituser/:userID',upload.single('Image'),profileController.editUser)
+
+ router.post('/setTags',profileController.setTags)
+ router.get('/getTags',profileController.getTags)
+ router.get('/populatedTags/:id', profileController.getPopulatedTags)
+
+
 //5th step
-module.exports=router 
+module.exports=router

@@ -11,14 +11,22 @@ import axios from 'axios';
 
 //npm i react-select!!!!!!!!!
 
- const options = [
-    {value:"blue-violence", label : "violence"},
-    {value:"red-heights", label : "heights"},
-    {value:"green-agriculture", label : "agriculture"},
-    {value:"yellow-sickness", label : "sickness"},
-    {value:"purple-poison", label : "poison"},
-    {value:"silver-dragons", label : "dragons"}
-  ];
+//  const options = [
+    // {value:"blue-violence", label : "violence"},
+    // {value:"red-heights", label : "heights"},
+    // {value:"green-agriculture", label : "agriculture"},
+    // {value:"yellow-sickness", label : "sickness"},
+    // {value:"purple-poison", label : "poison"},
+    // {value:"silver-dragons", label : "dragons"}
+    // axios.get('http://localhost:3000/getTags')
+    //   .then(response => {
+    //     options = response.data;
+    //     console.log(data);
+    //     })
+      
+    //   .catch(error => {console.log(error);console.log(objectId.id)})
+    
+  // ];
 
 const categoryOptions = [
   {value:"Question", label:"Question"},
@@ -32,7 +40,7 @@ const categoryOptions = [
           <input
             type="checkbox"
             checked={props.isSelected}
-            onChange={() => null} //below braces needed?
+            onChange={() => null} 
           />{" "}
           <label>{props.label}</label>
         </components.Option>
@@ -47,7 +55,7 @@ const categoryOptions = [
           <input
             type="checkbox"
             checked={props.isSelected}
-            onChange={() => null} //below braces needed?
+            onChange={() => null} 
           />{" "}
           <label>{props.label}</label>
         </components.Option>
@@ -75,18 +83,28 @@ export default class  CreateStory extends Component {
       text:'',
       category: null,
       image: null,
-      userID: localStorage.getItem('userID')
+      userID: localStorage.getItem('userID'),
+      options: []
     };
   }
 
-  handleChange (selected) { //used for dropdown menu selection
-    // const NumberTags = this.state.tags.length;
+  handleChange (selected) { 
     this.setState({
-      optionSelected: selected //options selected keeps a list of all items
+      optionSelected: selected 
     });
   };
 
 componentDidMount () {
+  axios.get('http://localhost:3000/getTags')
+      .then(response => {
+        this.setState({
+          options: response.data
+        });
+        console.log(this.state.options);
+
+        })
+      
+      .catch(error => {console.log(error);})
   this.setState({
     user: localStorage.getItem('FirstName')
   });
@@ -117,7 +135,7 @@ onChangeText (e) {
 }
 
 onChangeImage (e) {
-  // console.log(URL.createObjectURL(e.target.files[0]))
+  
   this.setState ({
     image: e.target.files[0]
   })
@@ -125,13 +143,20 @@ onChangeImage (e) {
 
 onPost(e) {
   e.preventDefault();
-  // const tagsSelected = []
-  var tagsSelected="";
-  this.state.optionSelected.forEach(element => {
-    // tagsSelected.push(element.value);
-    tagsSelected= tagsSelected+element.value+"-";
-  });
 
+  // const tagsSelected = []
+  // var tagsSelected=t;
+  const tagsSelected =[];
+
+  this.state.optionSelected.forEach(element => {
+
+    // tagsSelected.push(element.value);
+
+    // tagsSelected= tagsSelected+element.value+", ";
+    tagsSelected.push(element.value);
+
+  });
+  
   var categorySelected=this.state.category.value;
 
   const post = {
@@ -148,7 +173,7 @@ onPost(e) {
 console.log(post);
 
 var date = new Date();
-// console.log(date.toLocaleDateString('en-NZ') + ', ' + date.toLocaleTimeString('en-NZ', {hour: '2-digit', minute:'2-digit', hour12: true}));
+
 
   const formdata = new FormData();
   formdata.append('UserID',this.state.userID);
@@ -159,7 +184,7 @@ var date = new Date();
   formdata.append('Date',date.toLocaleDateString('en-NZ') + ', ' + date.toLocaleTimeString('en-NZ', {hour: '2-digit', minute:'2-digit', hour12: true}));
   formdata.append('Category', this.state.category.value);
    formdata.append('Image',this.state.image);
-  formdata.append('Tags',tagsSelected);
+  formdata.append('Tags',JSON.stringify(tagsSelected));
 
   const config = {
     headers: {
@@ -176,8 +201,6 @@ var date = new Date();
                   alert('Success! Your story has been posted.');
                   window.location = '/MainFeed';
                 }
-                //if res code is 500, error. TODO: Write code to display to user
-                //if res code is 200 , success.TODO: Write code to display to user
             }).catch((error) => {
                 console.log(error)
                 alert("The following error has occured: " + error);
@@ -228,13 +251,9 @@ var date = new Date();
             </label>
           </div>
           
-          {/* </span> */}
+          {}
       
-  {/*     
-
-          <MyTag text="violence2" colour="green"/>
-          <MyTag text="heights" colour="blue"/>
-          <MyTag text="Air Toxins" colour="purple"/> */}
+  {}
       
 
         <div id='singleSelectDiv'>
@@ -254,12 +273,12 @@ var date = new Date();
           />
         </div>
           
-        {/* </span> */}
+        {}
 
         <div id='multiSelectDiv'>
 
           <ReactSelect
-            options={options}
+           options={this.state.options.map(option => ({ value: option._id, label: option.Name }))}
             isMulti
             closeMenuOnSelect={false}
             hideSelectedOptions={false}
@@ -284,4 +303,3 @@ var date = new Date();
   }
   
 }
-// export default CreateStory;

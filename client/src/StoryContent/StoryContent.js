@@ -19,7 +19,7 @@ const StoryContent = () => {
   const [Description, setDescription] = useState('');
   const [Content, setContent] = useState('');
   const [Image, setImage] = useState('');
-  const[Tags,setTags] = useState('');
+  const[Tags,setTags] = useState([]);
   const[Date,setDate]=useState('');
   const [likes, setLikes] = useState(0);  
   const [comment, setComment] = useState("Please input your comment...");
@@ -31,6 +31,7 @@ const StoryContent = () => {
   const [OpenReply, setOpenReply] = useState(false);
   const [showButton, setShowButton] = useState(true);
   
+
   useEffect(() => {
     localStorage.setItem(`liked-${objectId.id}`, liked);
   }, [liked]);
@@ -48,12 +49,23 @@ const StoryContent = () => {
         setDescription(data.Description);
         setContent(data.Content);
         setImage(data.Image);
-        setTags(data.tags);
+        setComments(data.Comments);
+        console.log(data.Comments);
+        console.log(comments);
+        // setTags(data.tags);
         setDate(data.Date);
+        axios.get('http://localhost:3000/populatedTags/'+objectId.id)
+        .then(response => {
+          console.log(response.data)
+          setTags(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
         })
       
       .catch(error => {console.log(error);console.log(objectId.id)});
-    });
+    },[]);
    
     
     const handleLike = () => {
@@ -73,6 +85,7 @@ const StoryContent = () => {
         .catch(error => console.log(error));
       }
     };
+    const tags1 = Tags.map(tag=>', '+tag.Name);
     const onChangeHandler = (e) => {
       setComment(e.target.value);
      
@@ -83,6 +96,36 @@ const StoryContent = () => {
     const onClickHandler = (e) => {
 
       e.preventDefault();
+
+    
+    //   const variables = {
+    //     responseTo: props.comment._id,
+    //     content: Comment
+    // }
+    const newComment = {
+      Text: comment,
+      User:"user",
+      Date: new window.Date()
+      };
+
+      axios
+      .post('http://localhost:3000/newComment/' + objectId.id, newComment)
+      .then(response => {
+        console.log("id: "+objectId.id);
+        console.log("comment"+newComment);
+      console.log(response.data);
+      setComments([...comments, response.data]);
+      setComment("");
+      window.location.reload();
+      })
+      .catch(error => {
+      console.log(error);
+    
+      
+      });
+
+    };
+
       const variables = {
       
         content: Comment
@@ -100,6 +143,7 @@ const StoryContent = () => {
 ]
 
      
+
 
 
     return (
@@ -127,8 +171,9 @@ const StoryContent = () => {
           <p className="StoryContentDesc">
             {Content}
           </p>
-          Tags: {Tags}
+          Tags: {tags1}
         </div>
+
             <div>
               <button
                 className="like-button"
@@ -151,6 +196,7 @@ const StoryContent = () => {
           <button onClick={onClickHandler} className="comment-button">
             Submit
           </button>
+
          
           
 
@@ -159,7 +205,14 @@ const StoryContent = () => {
         <><><Comment text={text} /><button className='reply' onClick={openReply}>reply</button></></>
         
 
+
+          {comments.map((comment, index) => (
+            console.log(comments),
+            console.log(comment),
+            console.log(comment.Text),
+        <Comment key={index} text={comment.Text} />
           ))}
+
 
           {OpenReply &&
                 <form style={{ display: 'flex' }} onSubmit={onClickHandler}>
@@ -173,6 +226,7 @@ const StoryContent = () => {
                     <button style={{ width: '20%', height: '52px' }} onClick={onClickHandler}>Submit</button>
                 </form>
             }
+
           
       </div></div>
       
