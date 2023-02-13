@@ -6,8 +6,10 @@ import ReplyComment from './ReplyComment.js'
 
 
 const Comment = (props) => {
+
     // const[id,setId] = useState(props.id);
      const [comment, setComment] = useState("Please input your comment...");
+
     const [comments, setComments] = useState([]);
     const[count,setCount] = useState(0);
 
