@@ -75,7 +75,7 @@ if (localStorage.getItem('userID') != null) {
       </div>
       <div className="navbarElement">
         <nav className="nben">
-          <Link to="/CreateStory">Create Story</Link>
+          <Link to="/CreateStory">Create Post</Link>
         </nav>
       </div>
       <div className="navbarElement">
@@ -122,7 +122,7 @@ if (localStorage.getItem('userID') != null) {
         <nav className="nben">
           <Link to="#"
           onClick = {openLogIn}
-          >Create Story</Link>
+          >Create Post</Link>
         </nav>
       </div>
       <div className="navbarElement">
