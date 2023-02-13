@@ -45,14 +45,12 @@ const Comment = (props) => {
       }, [replyVisible]);
 
     useEffect(() => {
-        
         let bm = 20;
         if(commentsExist){
-            bm = bm + comments.length*70;
+            bm = bm + comments.length*120;
         }
         if(babyComments > 0){
-            //DIRTY FIX DRITY FIX DRITY FIX
-            bm = bm + babyComments*35;
+            bm = bm + babyComments*60;
         }
         if(babyReplies>0){
             bm = bm + babyReplies*60;
@@ -64,24 +62,19 @@ const Comment = (props) => {
     });
 
     useEffect(() => {
-        // const doIt = async () => {
             if(tier>0){
-            // Call the update function in the parent component
-            console.log("about to call props function");
-            let x = 0;
-            let cl = 0;
-            if(comments && comments.length >0){
-                cl = cl + comments.length;
-                x = x + comments.length;
+                console.log("about to call props function");
+                let x = 0;
+                let cl = 0;
+                if(comments && comments.length >0){
+                    cl = cl + comments.length;
+                    x = x + comments.length;
+                }
+                console.log("Im tier: " + tier + " with comments: " + cl + " and with BC: " + babyComments);
+                props.updateDadsBabyComments(x);
+                
+                console.log("just called the props function");
             }
-            // x = x + babyComments;
-            console.log("Im tier: " + tier + " with comments: " + cl + " and with BC: " + babyComments);
-            props.updateDadsBabyComments(x);
-            
-            console.log("just called the props function");
-            }
-        // }
-        // doIt();
       },[comments]); 
 
       useEffect(() => {
