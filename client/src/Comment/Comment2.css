@@ -1,24 +1,20 @@
 #comment2{
+    font-size: 20;
     background-color: aquamarine;
-    width: 200px;
-    height: 50px;
+    width: 400px;
+    height: 100px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
-   
+
 }
   
-/* #comment2.with-reply{
-    margin-bottom: 70px;
+#commentTreeHolder{
+    width: 80vw;
+    height: auto;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    background-color: dimgray;
 }
-
-#comment2.comments{
-    margin-bottom: 100px;
-}
-
-#comment2.with-reply.comments{
-    margin-bottom: 170px;
-} */
 
 #c2TreeV{
     width: 100vw;
@@ -49,11 +45,12 @@
 
 #c2Reply{
     background-color: chocolate;
-    width: 200px;
+    width: 400px;
     height: 50px;
     display: flex;
     flex-direction: row;
     position: relative;
+    font-size: 20;
 }
 
 #c2RInput{

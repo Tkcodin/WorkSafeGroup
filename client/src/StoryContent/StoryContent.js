@@ -7,8 +7,8 @@ import NavigationBar from '../navigationBar';
 import Comment from '../Comment/Comment.js'
 import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
-
-
+import CommentSection from '../Comment/commentSection';
+import CommentOnStory from '../Comment/commentOnStory';
 
 
 
@@ -89,6 +89,13 @@ const StoryContent = () => {
       setComment(e.target.value);
      
     };
+
+
+    const addComment = (t) => {
+      let a = localStorage.getItem("FirstName");
+      comments.push({author: a, text: t, tier: 0});
+    }
+
     const handleButtonClick = () => {
       setShowButton(false);
     };
@@ -169,8 +176,12 @@ const StoryContent = () => {
               {liked ? "I like it!" : "Like it?"}
               </button>
             </div>
-            <div className="main-container">
-        <div className="comment-flexbox">
+          <CommentOnStory addComment={(t)=>addComment(t)}/>
+          <CommentSection />
+
+
+            {/* <div className="main-container"> */}
+        {/* <div className="comment-flexbox">
           <h3 className="comment-text">Comment</h3>
           <textarea
 
@@ -182,9 +193,9 @@ const StoryContent = () => {
           />
           <button onClick={onClickHandler} className="comment-button">
             Submit
-          </button>
+          </button> */}
 
-          {comments.map((comment, index) => (
+          {/* {comments.map((comment, index) => (
             console.log(comments),
             console.log(comment),
             console.log(comment.Text),
@@ -205,10 +216,10 @@ const StoryContent = () => {
                     <br />
                     <button style={{ width: '20%', height: '52px' }} onClick={onClickHandler}>Submit</button>
                 </form>
-            }   
+            }    */}
           
           
-      </div></div>
+      {/* </div></div> */}
       
       </div>
       
