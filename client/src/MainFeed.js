@@ -143,7 +143,7 @@ const MainFeed = () => {
       });
 
       setFilteredScoredCards(myFilteredScoredCards);
-      setOnlyMyTags(true);
+      setOnlyQuestions(true);
     }
   }
 
@@ -172,7 +172,7 @@ const MainFeed = () => {
       });
 
       setFilteredScoredCards(myFilteredScoredCards);
-      setOnlyMyTags(true);
+      setOnlyStories(true);
     }
   }
 
