@@ -92,7 +92,7 @@ const ProfileComponent =()=>{
         console.log(emailPrivate);
         handleTags();
         return (
-            <div>
+            <div className="MainProfileContainer">
               <NavigationBar />
               <div className="overlay"></div>
               <img className="profile-pic" src={"http://localhost:3000/" + Image} alt="Profile Pic" />
