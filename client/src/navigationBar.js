@@ -44,8 +44,8 @@ const NavigationBar = () => {
     modal2.style.display ='block';
   }
   
-  function openSettings () {
-    window.location= '/Settings';
+  function openMyProfile () {
+    window.location= '/profileComponent/' + localStorage.getItem('userID');
   }
 
   
@@ -86,8 +86,8 @@ if (localStorage.getItem('userID') != null) {
       <div className="navbarElement">
         <nav className="nben">
           <button id ='loginSettings' 
-          onClick = {openSettings}     
-          >Settings</button>
+          onClick = {openMyProfile}     
+          >My Profile </button>
         </nav>
       </div>
       <div className="navbarElement">

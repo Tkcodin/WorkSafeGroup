@@ -10,6 +10,7 @@ const MainFeed = () => {
   const BigNumber = require('bignumber.js');
   const [searchText, setSearchText] = useState('');
   const [onlyMyTags, setOnlyMyTags] = useState(false);
+  const[mytags,setMytags] = useState([])
   const [cards, setCards] = useState([]);
   const [filteredScoredCards, setFilteredScoredCards] = useState([]);
 
@@ -65,17 +66,87 @@ const MainFeed = () => {
           });
       })
       .catch(error => console.log(error));
+
+      axios.get('http://localhost:3000/populatedTagsProfile/' + localStorage.getItem('userID'))
+      .then(response2 => {
+        console.log(response2.data);
+        const tagsArray = [];
+        for (let i = 0; i<response2.data.length; i++) {
+          tagsArray.push(response2.data[i].Name)
+        }
+
+        setMytags(tagsArray);
+      })
+
   }, [cards.length]);
 
   
 
   function tagClick() {
+
+    // console.log(filteredScoredCards);
+    // console.log(filteredScoredCards[0]);
+    console.log(cards);
     setOnlyMyTags(!onlyMyTags);
+
+    if (onlyMyTags === true) {
+      setOnlyMyTags(false)
+      assignCardsScores();
+    } else {
+
+      const filteredCards = cards.filter((card) => {
+        if (mytags === null || mytags === '{"":""}') {
+          // only filter by tags if tags linked to account
+          return true;
+        }
+        const matchingTags = card.tags.filter((tag) =>
+          mytags.includes(tag.Name)
+        );
+        return matchingTags.length > 0;
+      });
+
+      let myFilteredScoredCards = filteredCards.map((card, index) => {
+        return [index, card, scoreCard(card)]
+      })
+
+      myFilteredScoredCards.sort((a, b) => {
+        return b[2] - a[2];
+      });
+
+      setFilteredScoredCards(myFilteredScoredCards);
+      setOnlyMyTags(true);
+    }
   }
 
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchText(e.target.value);
+
+    const filteredCards = cards.filter((card) => {
+      const title = card.Title.toLowerCase();
+      const description = card.Description.toLowerCase();
+      const author = card.Author.toLowerCase();
+      const tags = card.tags.map((tag) => tag.Name.toLowerCase()).join(' ');
+      const searchText = e.target.value.toLowerCase();
+      return (
+        title.includes(searchText) ||
+        description.includes(searchText) ||
+        author.includes(searchText) ||
+        tags.includes(searchText)
+      );
+    });
+  
+    let myFilteredScoredCards = filteredCards.map((card, index) => {
+      return [index, card, scoreCard(card)];
+    });
+  
+    myFilteredScoredCards.sort((a, b) => {
+      return b[2] - a[2];
+    });
+  
+    setFilteredScoredCards(myFilteredScoredCards);
+
+
   }
 
 
