@@ -16,6 +16,10 @@
   margin-bottom: 20px;
 }
 
+.buttonsContainer {
+  display: flex;
+}
+
 .searchContainer {
   margin-top: 10px;
   width: 100%;
@@ -39,8 +43,9 @@
   /* limit the width of the container */
 }
 
-#myTagsButton {
+.myTagsButton {
   margin-top: 10px;
+  margin-right: 20px;
   padding: 10px 20px;
   background-color: #d6e26e;
   color: #333;;

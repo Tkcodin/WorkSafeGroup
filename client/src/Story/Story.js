@@ -92,7 +92,7 @@ export default class Story extends React.Component{
             
             console.log("scpre: " + this.props.Score),
             readTags(this.props.tagInfo),
-            <div className={`Storydiv ${this.state.category === 'Question' ? 'Question' : 'Story'}`} onClick={() => handleCardClick(this.props.objectid)}>
+            <div className={`Storydiv ${this.props.Category === 'Question' ? 'Question' : 'Story'}`} onClick={() => handleCardClick(this.props.objectid)}>
 
               <div className="card-header">
            
@@ -112,9 +112,9 @@ export default class Story extends React.Component{
                 <img src={this.props.Image} className="img" alt="Story.img"/>
               </div>
               <div className="card-footer">
-                <div className="category">{this.state.category}</div>
+                <div className="category">{this.props.Category}</div>
                 <div className="likes-and-comments">
-                  <div className="likes">Likes: {this.state.likes}</div>
+                  <div className="likes">Likes: {this.props.Likes}</div>
                   <div className="comments">Comments: {this.state.comments}</div>
                 </div>
                 <div className="score">Score: {this.props.Score}</div>

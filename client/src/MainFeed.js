@@ -10,6 +10,8 @@ const MainFeed = () => {
   const BigNumber = require('bignumber.js');
   const [searchText, setSearchText] = useState('');
   const [onlyMyTags, setOnlyMyTags] = useState(false);
+  const [onlyStories, setOnlyStories] = useState(false);
+  const [onlyQuestions, setOnlyQuestions] = useState(false);
   const[mytags,setMytags] = useState([])
   const [cards, setCards] = useState([]);
   const [filteredScoredCards, setFilteredScoredCards] = useState([]);
@@ -117,6 +119,64 @@ const MainFeed = () => {
       setOnlyMyTags(true);
     }
   }
+
+  function questionsClick() {
+
+    console.log(cards);
+    setOnlyQuestions(!onlyQuestions);
+
+    if (onlyQuestions === true) {
+      setOnlyQuestions(false)
+      assignCardsScores();
+    } else {
+
+      const filteredCards = cards.filter((card) => {
+        return card.Category.includes('Question');
+      });
+
+      let myFilteredScoredCards = filteredCards.map((card, index) => {
+        return [index, card, scoreCard(card)]
+      })
+
+      myFilteredScoredCards.sort((a, b) => {
+        return b[2] - a[2];
+      });
+
+      setFilteredScoredCards(myFilteredScoredCards);
+      setOnlyMyTags(true);
+    }
+  }
+
+  function storiesClick() {
+
+    // console.log(filteredScoredCards);
+    // console.log(filteredScoredCards[0]);
+    console.log(cards);
+    setOnlyStories(!onlyStories);
+
+    if (onlyStories === true) {
+      setOnlyStories(false)
+      assignCardsScores();
+    } else {
+
+      const filteredCards = cards.filter((card) => {
+        return card.Category.includes('Story');
+      });
+
+      let myFilteredScoredCards = filteredCards.map((card, index) => {
+        return [index, card, scoreCard(card)]
+      })
+
+      myFilteredScoredCards.sort((a, b) => {
+        return b[2] - a[2];
+      });
+
+      setFilteredScoredCards(myFilteredScoredCards);
+      setOnlyMyTags(true);
+    }
+  }
+
+
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -252,7 +312,11 @@ const MainFeed = () => {
     <div className='containerMain'>
       <NavigationBar />
       <div className='searchAndButtonContainer'>
-        {(localStorage.getItem('userID') != null) ? <button id='myTagsButton' onClick={(e)=>tagClick(e)}>View Only My Tags</button> : null }
+        <div className='buttonsContainer'>
+          {(localStorage.getItem('userID') != null) ? <button className='myTagsButton' onClick={(e)=>tagClick(e)}>View Only My Tags</button> : null }
+          <button className='myTagsButton' onClick={(e)=>questionsClick(e)}>View Questions</button>
+          <button className='myTagsButton' onClick={(e)=>storiesClick(e)}>View Stories</button>
+        </div>
         <div className='searchContainer'>
           <input
             className='searchInput'
