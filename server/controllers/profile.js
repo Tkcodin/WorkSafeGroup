@@ -86,8 +86,9 @@ const updatelikes = (req,res)=>{
     }
 
     const editUser = (req,res)=>{
-        const tags123 = JSON.parse(req.body.Tags);;
-        const tags1234 = tags123.map((id) => mongoose.Types.ObjectId(id));
+        const tags123 = JSON.parse(req.body.Tags);
+        
+         const tags1234 = tags123.map((id) => mongoose.Types.ObjectId(id));
         console.log('inside edit user')
         const id = req.params.userID;
         
