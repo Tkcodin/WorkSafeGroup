@@ -9,13 +9,13 @@ const CommentOnStory = (props) => {
 
 function ReplyPost(e){
     e.preventDefault();
-    let t = document.getElementById("c2RInput").value;
+    let t = document.getElementById("commentOnStory").value;
+    console.log("message: " +t)
     props.addComment(t);
 }
-
       return (
         <div id="cos">
-            <input type="text" id="c2RInput"></input>
+            <input type="text" id="commentOnStory"></input>
             <button id="c2RPost" onClick={(e) => ReplyPost(e)}>Post</button>
         </div>
       );

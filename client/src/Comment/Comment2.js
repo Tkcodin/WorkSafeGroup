@@ -2,12 +2,13 @@ import React,{Component} from 'react';
 import { useState, useEffect } from "react";
 import './Comment2.css';
 import heart from './heart.png';
-import Reply from './c2Reply.js'
+import Reply from './c2Reply.js';
+import axios from 'axios';
 
 const Comment = (props) => {
-
+    const id = props.id;
     const tier = props.tier;
-    const comments = props.comments;
+    // const comments = props.comments;
     const author=props.author;
     const comment=props.text;
    
@@ -19,11 +20,23 @@ const Comment = (props) => {
     const [babyComments, setBabyComments] = useState(0);
     const [started, setStarted] = useState(false);
     const [batchUpdate, setBatchUpdate] = useState([]);
+    const [commentCall, setCommentCall] = useState([]);
+
+    useEffect(()=> {
+        console.log(comment + " id: " + props.id);
+        axios.get('http://localhost:3000/populatedComments/'+props.id)
+        
+        .then(response => {
+            console.log("im in response");
+            setCommentCall(response.data);
+            console.log(response.data);
+        });
+    },[])
 
     useEffect(() => {
         if (batchUpdate.length > 0) {
             const totalUpdates = batchUpdate.reduce((acc, current) => acc + current, 0);
-            console.log(totalUpdates);
+           // console.log(totalUpdates);
             setBabyComments(babyComments+totalUpdates);
             if(tier>0){
                 props.updateDadsBabyComments(totalUpdates);
@@ -33,7 +46,7 @@ const Comment = (props) => {
       }, [batchUpdate]);
 
     useEffect(() => {
-        if (comments && comments.length > 0) {
+        if (commentCall && commentCall.length > 0) {
             setCommentsExist(true);
         }
     }, []);
@@ -47,7 +60,7 @@ const Comment = (props) => {
     useEffect(() => {
         let bm = 20;
         if(commentsExist){
-            bm = bm + comments.length*120;
+            bm = bm + commentCall.length*120;
         }
         if(babyComments > 0){
             bm = bm + babyComments*60;
@@ -63,29 +76,28 @@ const Comment = (props) => {
 
     useEffect(() => {
             if(tier>0){
-                console.log("about to call props function");
+                // console.log("about to call props function");
                 let x = 0;
                 let cl = 0;
-                if(comments && comments.length >0){
-                    cl = cl + comments.length;
-                    x = x + comments.length;
+                if(commentCall && commentCall.length >0){
+                    cl = cl + commentCall.length;
+                    x = x + commentCall.length;
                 }
-                console.log("Im tier: " + tier + " with comments: " + cl + " and with BC: " + babyComments);
+                //console.log("Im tier: " + tier + " with comments: " + cl + " and with BC: " + babyComments);
                 props.updateDadsBabyComments(x);
                 
-                console.log("just called the props function");
+                //console.log("just called the props function");
             }
-      },[comments]); 
+      },[commentCall]); 
 
       useEffect(() => {
-        console.log("testRefresh");
+        //console.log("testRefresh");
       },[babyComments]);
 
     const updateBabyComments = (n) =>{
 
             setBatchUpdate(prevBatchUpdate => [...prevBatchUpdate, n]);
-        
-        
+
     };
 
     const getBabyComments = () => babyComments;
@@ -104,12 +116,8 @@ const Comment = (props) => {
         }
     }
 
-    function addComment(a, t){
-        let ti = tier+1;
-        comments.push({author: a, text: t, tier: ti});
-        this.return();
-    }
    
+
     return(
         //className={replyVisible ? (commentsExist ?'with-reply comments' : 'with-reply') : (commentsExist ? 'comments' : '')}
         <div id="comment2" style={{ marginLeft: `${tier * 30}px`, marginBottom: bottomMargin}}> 
@@ -120,19 +128,19 @@ const Comment = (props) => {
                 <label id="comment2Author">{author}</label>
                 <img id="comment2Heart" src ={heart} onClick={(e) => HeartClick(e)}></img>
                 <label>{likeCount}</label>
-                {commentsExist && <label>C: {comments.length}</label>}
+                {commentsExist && <label>C: {commentCall.length}</label>}
                 <label>BC: {babyComments}</label>
                 <button id="comment2ReplyButton" onClick={(e) => ReplyClick(e)}>R</button>
             </div>
-            {replyVisible && <Reply addDadComment = {(a, t) => addComment(a, t)} hide={{setReplyVisible}} />} 
+            {replyVisible && <Reply tier={tier} commentID={id} hide={{setReplyVisible}} />} 
             <br></br>
             {commentsExist && <div id="c2TreeV">
-                    {comments && comments.length > 0 && comments.map((comment, index) => (
-                        <Comment key = {index} author = {comment.author} text = {comment.text} tier={tier+1} 
+                    {commentCall && commentCall.length > 0 && commentCall.map((comment, index) => (
+                        <Comment key = {index} id={comment._id} author = {comment.User} text = {comment.Text} tier={tier+1} 
                         tellReplyOpen={{setBabyReplies}} dadsReplies={{babyReplies}}
                         updateDadsBabyComments={(n) => updateBabyComments(n)}
                         getDadsBabyComments={getBabyComments}
-                        comments = {tier < 3 ? comments : null}
+                        // comments = {commentCall}
                         /> 
                     ))}
             </div>}
