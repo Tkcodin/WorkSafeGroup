@@ -121,6 +121,32 @@ const MainFeed = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchText(e.target.value);
+
+    const filteredCards = cards.filter((card) => {
+      const title = card.Title.toLowerCase();
+      const description = card.Description.toLowerCase();
+      const author = card.Author.toLowerCase();
+      const tags = card.tags.map((tag) => tag.Name.toLowerCase()).join(' ');
+      const searchText = e.target.value.toLowerCase();
+      return (
+        title.includes(searchText) ||
+        description.includes(searchText) ||
+        author.includes(searchText) ||
+        tags.includes(searchText)
+      );
+    });
+  
+    let myFilteredScoredCards = filteredCards.map((card, index) => {
+      return [index, card, scoreCard(card)];
+    });
+  
+    myFilteredScoredCards.sort((a, b) => {
+      return b[2] - a[2];
+    });
+  
+    setFilteredScoredCards(myFilteredScoredCards);
+
+
   }
 
 
