@@ -23,6 +23,7 @@ const Comment = (props) => {
     const [commentCall, setCommentCall] = useState([]);
 
     useEffect(()=> {
+        if(props.id!=null){
         console.log(comment + " id: " + props.id);
         axios.get('http://localhost:3000/populatedComments/'+props.id)
         
@@ -30,7 +31,11 @@ const Comment = (props) => {
             console.log("im in response");
             setCommentCall(response.data);
             console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
         });
+    }
     },[])
 
     useEffect(() => {
