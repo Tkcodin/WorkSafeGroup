@@ -62,7 +62,7 @@ const EditProfileComponent =()=>{
    const handleChange= (selected)=> { 
     
        setOptionSelected(selected)
-     
+       
     };
 
     const handleImageChange = (event) =>{
@@ -248,10 +248,21 @@ const EditProfileComponent =()=>{
           setEmailPrivate(data.EmailPrivate);
           setRolePrivate(data.RolePrivate);
           setEmployerPrivate(data.EmployerPrivate);
+          
           axios.get('http://localhost:3000/populatedTagsProfile/'+data._id)
           .then(response1 => {
-          setInterests(response1.data);
+          // setInterests(response1.data);
           // console.log(Interests);
+          console.log(response1.data);
+          // response1.forEach(element => {
+          //   handleChange(element);
+          // });
+          const helper = [];
+          for (let i = 0; i<response1.data.length;i++) {
+            const obj = {value: response1.data[i]._id , label: response1.data[i].Name};
+            helper.push(obj);
+          }
+          handleChange(helper);
           // const selected= Interests.map(int=>({value:int._id, label:int.Name}))  
           // setOptionSelected(selected);
           })
