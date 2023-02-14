@@ -113,7 +113,7 @@ const ProfileComponent =()=>{
                       <h2 className="section-title">Personal Interests:</h2>
                       <h3 className="about-title">About Me:</h3>
                       <p className="about-text">{About}</p>
-                      <h3 className="interests-title">My Interests:</h3>
+                      <h3 className="interests-title">My Interests/Tags:</h3>
                       <div className="interests">
                         <MyTagContainer myTags={tags} />
                       </div>
