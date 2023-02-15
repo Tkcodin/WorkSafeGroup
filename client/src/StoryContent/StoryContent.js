@@ -116,7 +116,7 @@ const StoryContent = () => {
         console.log(response.data);
         setComments([...comments, response.data]);
         setComment("");
-        window.location.reload();
+        // window.location.reload();
         })
         .catch(error => {
         console.log(error);

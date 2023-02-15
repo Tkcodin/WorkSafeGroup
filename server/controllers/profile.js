@@ -405,8 +405,8 @@ const getPopulatedComments=(req,res)=>{
     comment.findOne({_id:ObjectId(req.params.id)}).populate('Comments').exec(function(err, abc) {
             if (err) {throw err;}
             else{
-            if(abc.Comments){
-            res.status(200).json(abc.Comments);}
+            // if(abc.Comments!=null){
+                res.status(200).json(abc);
         
         } // This will log an array of referenced order documents
           });

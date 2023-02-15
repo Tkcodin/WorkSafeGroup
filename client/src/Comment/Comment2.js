@@ -22,21 +22,52 @@ const Comment = (props) => {
     const [batchUpdate, setBatchUpdate] = useState([]);
     const [commentCall, setCommentCall] = useState([]);
 
+    
+
     useEffect(()=> {
-        if(props.id!=null){
-        console.log(comment + " id: " + props.id);
-        axios.get('http://localhost:3000/populatedComments/'+props.id)
-        
-        .then(response => {
-            console.log("im in response");
-            setCommentCall(response.data);
+
+        async function fetchData(){
+            if(props.id!=null){
+                const response = await axios.get('http://localhost:3000/populatedComments/'+props.id);
+                console.log("i am in response");
+                setCommentCall(response.data.Comments);
+               
+                // response.data.Comments.map((b) => {
+                //     commentCall.push(b) 
+                //     setCommentsExist(true);
+                // });
+            console.log("response data");
             console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+            console.log("rcommentcall: ");
+            console.log(commentCall);
+            }
+        }
+        fetchData();
+            
     },[])
+
+    //     if(props.id!=null){
+    //     console.log(comment + " id: " + props.id);
+    //     axios.get('http://localhost:3000/populatedComments/'+props.id)
+        
+    //     .then(response => {
+    //         console.log("im in response");
+    //         response.data.Comments.map((b) => {
+    //             console.log("ADDING COMMENT TO COMMET CALL")
+    //             commentCall.push(b) 
+    //     });
+    //         console.log("response data");
+    //         console.log(response.data);
+    //         console.log("rcommentcall: ");
+    //         console.log(commentCall);
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // }
+    // },[])
+
+
 
     useEffect(() => {
         if (batchUpdate.length > 0) {
@@ -48,20 +79,35 @@ const Comment = (props) => {
             }
             setBatchUpdate([]);
         }
-      }, [batchUpdate]);
+      });
 
     useEffect(() => {
         if (commentCall && commentCall.length > 0) {
             setCommentsExist(true);
         }
-    }, []);
+    });
 
+    
+
+
+      //how to spread out comments 
     useEffect(() => {
-        if (!replyVisible && started && tier>0) {
-            props.tellReplyOpen.setBabyReplies(props.dadsReplies.babyReplies - 1);
+        if(tier>0){
+            // console.log("about to call props function");
+            let x = 0;
+            let cl = 0;
+            if(commentCall && commentCall.length >0){
+                cl = cl + commentCall.length;
+                x = x + commentCall.length;
+            }
+            //console.log("Im tier: " + tier + " with comments: " + cl + " and with BC: " + babyComments);
+            props.updateDadsBabyComments(x);
+            
+            //console.log("just called the props function");
         }
-      }, [replyVisible]);
+  },[commentCall]); 
 
+      //how to spread out comments
     useEffect(() => {
         let bm = 20;
         if(commentsExist){
@@ -79,25 +125,14 @@ const Comment = (props) => {
         setBottomMargin(bm);
     });
 
-    useEffect(() => {
-            if(tier>0){
-                // console.log("about to call props function");
-                let x = 0;
-                let cl = 0;
-                if(commentCall && commentCall.length >0){
-                    cl = cl + commentCall.length;
-                    x = x + commentCall.length;
-                }
-                //console.log("Im tier: " + tier + " with comments: " + cl + " and with BC: " + babyComments);
-                props.updateDadsBabyComments(x);
-                
-                //console.log("just called the props function");
-            }
-      },[commentCall]); 
 
-      useEffect(() => {
-        //console.log("testRefresh");
-      },[babyComments]);
+    useEffect(() => {
+        if (!replyVisible && started && tier>0) {
+            props.tellReplyOpen.setBabyReplies(props.dadsReplies.babyReplies - 1);
+        }
+      });
+
+    
 
     const updateBabyComments = (n) =>{
 
