@@ -193,7 +193,7 @@ function createCommentSchema(mongoose){
         // Replies:[commentschema]
         Comments:[{
             type: mongoose.Schema.Types.ObjectId,
-            ref:'comment'
+            ref:'comments'
         }],
         Likes:{
             type: Number,

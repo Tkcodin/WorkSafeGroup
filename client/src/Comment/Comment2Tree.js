@@ -5,11 +5,13 @@ const CommentTree = (props) => {
 
     const comments = props.comments;
 
+    console.log(comments);
+
     return(
         <div id="c2TreeV">
              {comments.map((comment, index) => (
                
-                    <Comment tier={0} comments={comments} key = {index} author = {comment.author} text = {comment.text} />
+                    <Comment tier={0} id={comment._id} comments={comment.Comments} key = {index} author = {comment.User} text = {comment.Text} />
             
             ))}
         </div>

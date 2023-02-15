@@ -9,25 +9,6 @@ import { components } from "react-select";
 import ImageSelect from './components-tom/ImageSelect.js';
 import axios from 'axios';
 
-//npm i react-select!!!!!!!!!
-
-//  const options = [
-    // {value:"blue-violence", label : "violence"},
-    // {value:"red-heights", label : "heights"},
-    // {value:"green-agriculture", label : "agriculture"},
-    // {value:"yellow-sickness", label : "sickness"},
-    // {value:"purple-poison", label : "poison"},
-    // {value:"silver-dragons", label : "dragons"}
-    // axios.get('http://localhost:3000/getTags')
-    //   .then(response => {
-    //     options = response.data;
-    //     console.log(data);
-    //     })
-      
-    //   .catch(error => {console.log(error);console.log(objectId.id)})
-    
-  // ];
-
 const categoryOptions = [
   {value:"Question", label:"Question"},
   {value:"Story", label:"Story"}
@@ -214,31 +195,36 @@ var date = new Date();
     return(
       <div className="App">
         <NavigationBar />
+        <div className='createStoryDiv'>
         <form onSubmit={this.onPost}>
 
           <header id='createStoryHeader'>
-            Create a new story
+            Create a New Post
           </header>
           
           <div id='TitleInputDiv'>
-            <label className='createStoryLabel'>
-              Enter your story Title:
               <input type="text" placeholder='Add a Title'
               value={this.state.title}
               onChange={this.onChangeTitle}
               id='titleInput'
               />
-            </label> 
-
           </div>
          
-          
-          <MyTextBox prompt="Enter a brief description of your story: " height="50px" inst="Story description..."
-          value={this.state.description}
-          onChange={this.onChangeDescription}/>
-          <MyTextBox prompt="Enter story content here: " height="200px" inst="Story text..."
-          value={this.state.text}
-          onChange={this.onChangeText}/>
+         <div id='DescriptionInputDiv'>
+              <textarea type="text" placeholder='Enter a brief description'
+              value={this.state.description}
+              onChange={this.onChangeDescription}
+              id='descriptionInput'
+              />
+          </div>
+
+          <div id='ContentInputDiv'>
+              <textarea type="text" placeholder='Enter text for your post here'
+              value={this.state.text}
+              onChange={this.onChangeText}
+              id='contentInput'
+              />
+          </div>
           
           <div id='TitleInputDiv'> 
             <label id='imageLabel'>
@@ -255,7 +241,6 @@ var date = new Date();
       
   {}
       
-
         <div id='singleSelectDiv'>
 
           <ReactSelect
@@ -293,11 +278,11 @@ var date = new Date();
         </div>  
       
           <br></br>
-          <button type='submit' id='PostStoryButton'>Post Story</button>
+          <button type='submit' id='PostStoryButton'>Submit Post</button>
 
         </form>
         
-
+      </div>
     </div>
     );
   }

@@ -62,10 +62,16 @@ const LogIn = (props) => {
           
           if(userEmail != 'Email' && userEmail != null) {
             axios.get('http://localhost:3000/getuser/'+userEmail)
+        
             .then(response => {
+            
+            if (response.data === null) {
+                changeIT("Sorry, that password and email combination does not exist.");
+            } else {
             const data = response.data;
             console.log(data);
             console.log(data._id);
+
           
 
             console.log("doing log in");
@@ -103,7 +109,7 @@ const LogIn = (props) => {
                 localStorage.clear();
             }
 
-            })
+            }})
           }
          
     }
@@ -155,13 +161,13 @@ const LogIn = (props) => {
                         <br></br>
                         
                         <label><b>Email</b></label>
-                        <input type="text" placeholder="Enter First name" 
+                        <input type="text" placeholder="Enter Email" 
                         value={userName}
                         onChange={changeUN}
                         ></input>
 
                         <label><b>Password</b></label>
-                        <input type="password" placeholder="Enter Last Name"
+                        <input type="password" placeholder="Enter Password"
                         value={password1}
                         onChange={changePw1}
                         ></input>

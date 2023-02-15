@@ -22,7 +22,7 @@ const StoryContent = () => {
   const[Tags,setTags] = useState([]);
   const[Date,setDate]=useState('');
   const [likes, setLikes] = useState(0);  
-  const [comment, setComment] = useState("Please input your comment...");
+  const [comment, setComment] = useState("Please input your comment...33");
   const [comments, setComments] = useState([]);
   //const [liked, setLiked] = useState(false); 
   const [liked, setLiked] = useState(
@@ -30,6 +30,8 @@ const StoryContent = () => {
   );
   const [OpenReply, setOpenReply] = useState(false);
   const [showButton, setShowButton] = useState(true);
+
+  var modal2 = document.getElementById('logInModal');
 
   useEffect(() => {
     localStorage.setItem(`liked-${objectId.id}`, liked);
@@ -68,23 +70,30 @@ const StoryContent = () => {
    
     
     const handleLike = () => {
-      if (liked) {
-        setLiked(false);
-        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
-        likes: -1
-      })
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
+      if (localStorage.getItem('userID') !== null) {
+        if (liked) {
+          setLiked(false);
+          axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+          likes: -1
+        })
+          .then(res => console.log(res.data))
+          .catch(error => console.log(error));
+        } else {
+          setLiked(true);
+          axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+          likes: 1
+        })
+          .then(res => console.log(res.data))
+          .catch(error => console.log(error));
+        }
       } else {
-        setLiked(true);
-        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
-        likes: 1
-      })
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
+        modal2.style.display ='block';
       }
+      
     };
-    const tags1 = Tags.map(tag=>', '+tag.Name);
+    
+    const tags1 = Tags.map(tag => tag.Name).join(', ');
+
     const onChangeHandler = (e) => {
       setComment(e.target.value);
      
@@ -92,44 +101,54 @@ const StoryContent = () => {
 
 
     const addComment = (t) => {
-      let a = localStorage.getItem("FirstName");
-      comments.push({author: a, text: t, tier: 0});
-    }
-
-    const handleButtonClick = () => {
-      setShowButton(false);
-    };
-    const onClickHandler = (e) => {
-
-      e.preventDefault();
+      // let te = document.getElementById("commentOnStory").value;
+      console.log(t);
+      setComment(t);
+      
+    //   addCommentPartTwo();
+    // }
+     
+    // const addCommentPartTwo = () =>{
+      console.log("comment: " + comment);
+      const newComment = {
+        // setComment(t),
+        Text: t,
+        User: localStorage.getItem("FirstName"),
+        Date: new window.Date()
+        };
+  
+        axios
+        .post('http://localhost:3000/newComment/' + objectId.id, newComment)
+        .then(response => {
+          console.log("id: "+objectId.id);
+          console.log("comment"+newComment);
+        console.log(response.data);
+        setComments([...comments, response.data]);
+        setComment("");
+        // window.location.reload();
+        })
+        .catch(error => {
+        console.log(error);
     
-    //   const variables = {
+    });
+  }
+    // const handleButtonClick = () => {
+    //   setShowButton(false);
+    // };
+    // const onClickHandler = (e) => {
+
+    //   e.preventDefault();
+    //       const variables = {
     //     responseTo: props.comment._id,
     //     content: Comment
     // }
-    const newComment = {
-      Text: comment,
-      User:"user",
-      Date: new window.Date()
-      };
-
-      axios
-      .post('http://localhost:3000/newComment/' + objectId.id, newComment)
-      .then(response => {
-        console.log("id: "+objectId.id);
-        console.log("comment"+newComment);
-      console.log(response.data);
-      setComments([...comments, response.data]);
-      setComment("");
-      window.location.reload();
-      })
-      .catch(error => {
-      console.log(error);
+    
+    
     
       
-      });
+    //   });
 
-    };
+    // };
 
     const openReply=()=> {
       setOpenReply(!OpenReply)
@@ -140,91 +159,53 @@ const StoryContent = () => {
     <span onClick={openReply} key="comment-basic-reply-to">Reply to </span>
 ]
 
-    return (
-      
-
-      <><NavigationBar /><div className="StoryContent">
-
-        <div className="StoryContentWrapper">
-          <img
-            className="StoryContentImg"
-            src={"http://localhost:3000/" + Image}
-            alt="image" />
-          <h1 className="StoryContentTitle">
+return (
+  <>
+      <NavigationBar />
+      <div className="story-page">
+        <div className="story-page-wrapper">
+          <div className="story-page-title">
             {Title}
-          </h1>
-          <div className="StoryContentInfo">
-            <span>
-              Author:
-              <b className="StoryContentAuthor">
-                {Author}
-              </b>
-            </span>
-            <span>{Date}</span>
           </div>
-          <p className="StoryContentDesc">
-            {Content}
-          </p>
-          Tags: {tags1}
-        </div>
-
-            <div>
-              <button
-                className="like-button"
-                onClick={handleLike}
-              >
-              {liked ? "I like it!" : "Like it?"}
-              </button>
+          <div className="story-page-info">
+            Posted by <span className="story-page-author">{Author}</span> on {Date}
+          </div>
+          <div className="story-page-content">
+            <div className="story-page-image">
+              <img
+                src={"http://localhost:3000/" + Image}
+                alt="image" />
             </div>
-          <CommentOnStory addComment={(t)=>addComment(t)}/>
-          <CommentSection />
-
-
-            {/* <div className="main-container"> */}
-        {/* <div className="comment-flexbox">
-          <h3 className="comment-text">Comment</h3>
-          <textarea
-
-            value={comment}
-            // value={props.comment.content}
-            // key={index} 
-            onChange={onChangeHandler}
-            className="input-box"
-          />
-          <button onClick={onClickHandler} className="comment-button">
-            Submit
-          </button> */}
-
-          {/* {comments.map((comment, index) => (
-            console.log(comments),
-            console.log(comment),
-            console.log(comment.Text),
-        <>
-        <Comment key={index} text={comment.Text} />
-        <button className='reply' onClick={openReply}>reply</button>
-        </>
-          ))}
-
-            {OpenReply &&
-                <form style={{ display: 'flex' }} onSubmit={onClickHandler}>
-                    <textArea
-                        style={{ width: '100%', borderRadius: '5px' }}
-                        onChange={onChangeHandler}
-                        value={comment}
-                        // placeholder="write some comments"
-                    />
-                    <br />
-                    <button style={{ width: '20%', height: '52px' }} onClick={onClickHandler}>Submit</button>
-                </form>
-            }    */}
-          
-          
-      {/* </div></div> */}
-      
+            <div className="story-page-text">
+              {Content}
+            </div>
+          </div>
+          <div className="story-page-tags">
+            <span className="story-page-tags-label">Tags:</span> {tags1}
+          </div>
+          <div className="story-page-actions">
+            {liked ?
+              <button
+                className="story-page-button like-button"
+                onClick={handleLike}
+              > I Like it! </button>
+              :
+              <button
+                className="story-page-button2 like-button"
+                onClick={handleLike}
+              > Like it? </button>}
+          </div>
+          <CommentOnStory addComment={(t) => addComment(t)} />
+          <div className="story-page-comments">
+            <div className="story-page-comments-title">
+              Comments
+            </div>
+            <CommentSection comments={comments}/>
+          </div>
+        </div>
       </div>
-      
-      </>
-    );
+    </>
+);
   }
 
   export default StoryContent;
