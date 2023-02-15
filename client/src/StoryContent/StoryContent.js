@@ -9,11 +9,12 @@ import MyTagContainer from '../components-tom/MyTag/MyTagContainer';
 import MyTag from '../components-tom/MyTag/MyTag';
 import CommentSection from '../Comment/commentSection';
 import CommentOnStory from '../Comment/commentOnStory';
-
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 const StoryContent = () => {
   const  objectId  = useParams();
+  const [UserID, setUserID] = useState('');
   const [Author, setAuthor] = useState('');
   const [Title, setTitle] = useState('');
   const [Description, setDescription] = useState('');
@@ -44,7 +45,7 @@ const StoryContent = () => {
       .then(response => {
         const data = response.data;
         console.log(data);
-        
+        setUserID(data.UserID);
         setAuthor(data.Author);
         setTitle(data.Title);
         setDescription(data.Description);
@@ -159,6 +160,8 @@ const StoryContent = () => {
     <span onClick={openReply} key="comment-basic-reply-to">Reply to </span>
 ]
 
+
+
 return (
   <>
       <NavigationBar />
@@ -168,7 +171,11 @@ return (
             {Title}
           </div>
           <div className="story-page-info">
-            Posted by <span className="story-page-author">{Author}</span> on {Date}
+            Posted by <span className="story-page-author">
+                  <Link to={"/profileComponent/" + UserID} >
+                        {Author}
+                  </Link>
+              </span> on {Date}
           </div>
           <div className="story-page-content">
             <div className="story-page-image">
