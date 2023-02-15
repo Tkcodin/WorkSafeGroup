@@ -200,7 +200,7 @@ return (
             <div className="story-page-comments-title">
               Comments
             </div>
-            <CommentSection />
+            <CommentSection comments={comments}/>
           </div>
         </div>
       </div>

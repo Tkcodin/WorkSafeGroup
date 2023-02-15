@@ -1,8 +1,8 @@
 import CommentTree from './Comment2Tree.js';
 import Comment from './Comment2';
-// import './Comment2.css';
+import './Comment2.css';
 import { useState, useEffect } from "react";
-import user from '/Users/tuteredurie/WorkSafeGroup/client/src/user.png';
+// import user from '/Users/tuteredurie/WorkSafeGroup/client/src/user.png';
 
 const CommentOnStory = (props) => {
 
@@ -20,7 +20,7 @@ function ReplyPost(e){
     
 }
 
-}
+
       return (
         // <div id="cos">
         //     <input type="text" id="c2RInput"></input>
