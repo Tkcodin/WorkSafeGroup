@@ -24,25 +24,32 @@ const ProfileComponent =()=>{
     const [About, setAbout] = useState('');
     const [Email, setEmail] = useState('');
     //Is it going to be an array or a string from the DB?
-    const [Interests, setInterests] = useState('');
+    const [Interests, setInterests] = useState([]);
     const [emailPrivate, setEmailPrivate] = useState(false);
     const [rolePrivate, setRolePrivate] = useState(false);
     const [employerPrivate, setEmployerPrivate] = useState(false);
     const tags = new Array();
+   
 
     var modal = document.getElementById('createAccModal');
 
     function handleTags(){
-        let s = Interests;
-        s = s.substring(0, s.length - 1);
-        if(s.length>0){
-            let infos = s.split("-");
-            for (let i = 0; i<infos.length; i = i+2){
-                let c = infos[i];
-                let t = infos[i+1];
-                tags.push(<MyTag colour={c} text={t}/>);
-            }  
-        }
+        // let s = Interests;
+        // s = s.substring(0, s.length - 1);
+        // if(s.length>0){
+        //     let infos = s.split(" ");
+        //     for (let i = 0; i<infos.length; i = i+2){
+        //         let c = infos[i];
+        //         let t = infos[i+1];
+        //         tags.push(<MyTag colour={c} text={t}/>);
+        //     }  
+        // }
+        console.log(Interests);
+        Interests.forEach(element => {
+            tags.push(<MyTag colour={element.Color} text={element.Name}/>);
+        });
+         
+         
     }
 
     useEffect(()=>{
@@ -61,20 +68,31 @@ const ProfileComponent =()=>{
           setRole(data.Role);
           setEmployer(data.Employer)
           setAbout(data.About);
-          setInterests(data.Tags);
+        //   setInterests(data.Tags);
           setImage(data.Image);
           setEmail(data.Email);
           setEmailPrivate(data.EmailPrivate);
           setRolePrivate(data.RolePrivate);
           setEmployerPrivate(data.EmployerPrivate);
+          axios.get('http://localhost:3000/populatedTagsProfile/'+data._id)
+          .then(response1=>{
+            const data1 = response1.data;
+            // let str = '';
+            // data1.map(data=>{
+            //     str=str +" "+data.Name;
+            // })
+            setInterests(data1);
+          })
+
             })
         }
-    });
+    },[]);
+
 
         console.log(emailPrivate);
         handleTags();
         return (
-            <div>
+            <div className="MainProfileContainer">
               <NavigationBar />
               <div className="overlay"></div>
               <img className="profile-pic" src={"http://localhost:3000/" + Image} alt="Profile Pic" />
@@ -95,7 +113,7 @@ const ProfileComponent =()=>{
                       <h2 className="section-title">Personal Interests:</h2>
                       <h3 className="about-title">About Me:</h3>
                       <p className="about-text">{About}</p>
-                      <h3 className="interests-title">My Interests:</h3>
+                      <h3 className="interests-title">My Interests/Tags:</h3>
                       <div className="interests">
                         <MyTagContainer myTags={tags} />
                       </div>

@@ -31,6 +31,8 @@ const StoryContent = () => {
   const [OpenReply, setOpenReply] = useState(false);
   const [showButton, setShowButton] = useState(true);
 
+  var modal2 = document.getElementById('logInModal');
+
   useEffect(() => {
     localStorage.setItem(`liked-${objectId.id}`, liked);
   }, [liked]);
@@ -68,22 +70,28 @@ const StoryContent = () => {
    
     
     const handleLike = () => {
-      if (liked) {
-        setLiked(false);
-        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
-        likes: -1
-      })
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
+      if (localStorage.getItem('userID') !== null) {
+        if (liked) {
+          setLiked(false);
+          axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+          likes: -1
+        })
+          .then(res => console.log(res.data))
+          .catch(error => console.log(error));
+        } else {
+          setLiked(true);
+          axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
+          likes: 1
+        })
+          .then(res => console.log(res.data))
+          .catch(error => console.log(error));
+        }
       } else {
-        setLiked(true);
-        axios.post('http://localhost:3000/updatelikes/' + objectId.id, {
-        likes: 1
-      })
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error));
+        modal2.style.display ='block';
       }
+      
     };
+    
     const tags1 = Tags.map(tag=>', '+tag.Name);
     const onChangeHandler = (e) => {
       setComment(e.target.value);

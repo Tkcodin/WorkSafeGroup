@@ -46,7 +46,12 @@ router.get('/getuser/:email',profileController.getUser)
  router.post('/setTags',profileController.setTags)
  router.get('/getTags',profileController.getTags)
  router.get('/populatedTags/:id', profileController.getPopulatedTags)
+
  router.get('/populatedComments/:id', profileController.getPopulatedComments)
+
+ router.get('/populatedTagsProfile/:id', profileController.getPopulatedTagsProfile)
+
+
 
 //5th step
 module.exports=router

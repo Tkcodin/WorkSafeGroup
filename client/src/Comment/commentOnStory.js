@@ -6,12 +6,15 @@ import { useState, useEffect } from "react";
 const CommentOnStory = (props) => {
 
 // const [comment, setComment] = useState("Please input your comment...");
+var modal2 = document.getElementById('logInModal');
 
 function ReplyPost(e){
     e.preventDefault();
+
     let t = document.getElementById("commentOnStory").value;
     console.log("message: " +t)
     props.addComment(t);
+
 }
       return (
         <div id="cos">

@@ -86,6 +86,8 @@ const updatelikes = (req,res)=>{
     }
 
     const editUser = (req,res)=>{
+        const tags123 = JSON.parse(req.body.Tags);;
+        const tags1234 = tags123.map((id) => mongoose.Types.ObjectId(id));
         console.log('inside edit user')
         const id = req.params.userID;
         
@@ -104,7 +106,7 @@ const updatelikes = (req,res)=>{
         if (req.body.Email) updatedFields.Email = req.body.Email;
         if (req.body.Role) updatedFields.Role = req.body.Role;
         if (req.body.Employer) updatedFields.Employer = req.body.Employer;
-        if (req.body.Tags) updatedFields.Tags = req.body.Tags;
+        if (req.body.Tags) updatedFields.Tags = tags1234;
         if (req.body.About) updatedFields.About = req.body.About;
         if (req.body.Image) updatedFields.Image = req.body.Image;
         if (req.body.EmailPrivate) updatedFields.EmailPrivate = req.body.EmailPrivate;
@@ -225,7 +227,8 @@ const newContent= (req,res)=>{
 
  const newUser=(req,res)=>{
     // let newuser = new users(req.body);
-    
+    const tags123 = JSON.parse(req.body.Tags);;
+    const tags1234 = tags123.map((id) => mongoose.Types.ObjectId(id));
     const newuser = new users({
         FirstName: req.body.FirstName,
         LastName: req.body.LastName,
@@ -233,7 +236,7 @@ const newContent= (req,res)=>{
         Email: req.body.Email,
         Role: req.body.Role,
         Employer: req.body.Employer,
-        Tags: req.body.Tags,
+        Tags: tags1234,
         About: req.body.About,
         Image:path.normalize(req.file.path),
         EmailPrivate: req.body.EmailPrivate,
@@ -400,6 +403,14 @@ const getPopulatedTags=(req,res)=>{
             res.status(200).json(abc.tags);} // This will log an array of referenced order documents
           });
 }
+const getPopulatedTagsProfile=(req,res)=>{
+    users.findOne({_id:ObjectId(req.params.id)}).populate('Tags').exec(function(err, abc) {
+            if (err) {throw err;}
+            else{
+            
+            res.status(200).json(abc.Tags);} // This will log an array of referenced order documents
+          });
+}
 
 const getPopulatedComments=(req,res)=>{
     comment.findOne({_id:ObjectId(req.params.id)}).populate('Comments').exec(function(err, abc) {
@@ -413,5 +424,7 @@ const getPopulatedComments=(req,res)=>{
 }
 
 
-module.exports = {newProfile,getProfile,newContent,newComment2,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser,getPopulatedTags,getPopulatedComments};
+
+module.exports = {newProfile,getProfile,newContent,newComment2,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser,getPopulatedTags,getPopulatedComments, getPopulatedTagsProfile};
+
 
