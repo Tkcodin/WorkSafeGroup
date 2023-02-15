@@ -17,6 +17,7 @@ function ReplyPost(e){
     } else {
       modal2.style.display ='block';
     }  
+    window.location.reload();
     
 }
 
