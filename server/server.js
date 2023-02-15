@@ -162,7 +162,7 @@ function createContentSchema(mongoose){
         },
         Comments:[{
             type: mongoose.Schema.Types.Object,
-            ref:'comment'
+            ref:'comments'
         }],
         Likes:{
             type: Number,
