@@ -110,15 +110,15 @@ const Comment = (props) => {
 
       //how to spread out comments
     useEffect(() => {
-        let bm = (commentSpace/7);
+        let bm = (commentSpace/4);
         if(commentsExist){
-            bm = bm + commentCall.length*(commentSpace/4*5);
+            bm = bm + commentCall.length*(commentSpace);
         }
         if(babyComments > 0){
-            bm = bm + babyComments*(commentSpace/1.8);
+            bm = bm + babyComments*(commentSpace/2);
         }
         if(babyReplies>0){
-            bm = bm + babyReplies*(commentSpace/1.8);
+            bm = bm + babyReplies*(commentSpace/2.05);
         }
         if(replyVisible){
             bm = bm + (commentSpace/2);
@@ -162,16 +162,20 @@ const Comment = (props) => {
     return(
         //className={replyVisible ? (commentsExist ?'with-reply comments' : 'with-reply') : (commentsExist ? 'comments' : '')}
         <div id="comment2" style={{ marginLeft: `${tier * 30}px`, marginBottom: bottomMargin}}> 
-            <p className="comment2Comment">
-                {comment}
-            </p>
-            <div id="comment2Bar">
-                <label id="comment2Author">{author}</label>
-                <img id="comment2Heart" src ={heart} onClick={(e) => HeartClick(e)}></img>
-                <label>{likeCount}</label>
-                {/* {commentsExist && <label>C: {commentCall.length}</label>}
-                <label>BC: {babyComments}</label> */}
-                <button id="comment2ReplyButton" onClick={(e) => ReplyClick(e)}>R</button>
+            <div id="commentMain">
+                <p className="comment2Comment">
+                    {comment}
+                </p>
+                <div id="comment2Bar">
+                    <label id="comment2Author">{author}</label>
+                    <div id="littlebits">
+                        <img id="comment2Heart" src ={heart} onClick={(e) => HeartClick(e)}></img>
+                        <label id="likelabel">{likeCount}</label>
+                        {/* {commentsExist && <label>C: {commentCall.length}</label>}
+                        <label>BC: {babyComments}</label> */}
+                        <button id="comment2ReplyButton" onClick={(e) => ReplyClick(e)}>R</button>
+                    </div>
+                </div>
             </div>
             {replyVisible && <Reply tier={tier} commentID={id} hide={{setReplyVisible}} />} 
             <br></br>
