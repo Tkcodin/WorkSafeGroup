@@ -155,13 +155,13 @@ const LogIn = (props) => {
                         <br></br>
                         
                         <label><b>Email</b></label>
-                        <input type="text" placeholder="Enter First name" 
+                        <input type="text" placeholder="Enter Email" 
                         value={userName}
                         onChange={changeUN}
                         ></input>
 
                         <label><b>Password</b></label>
-                        <input type="password" placeholder="Enter Last Name"
+                        <input type="password" placeholder="Enter Password"
                         value={password1}
                         onChange={changePw1}
                         ></input>
