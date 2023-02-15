@@ -10,18 +10,15 @@ var modal2 = document.getElementById('logInModal');
 
 function ReplyPost(e){
     e.preventDefault();
-    if (localStorage.getItem('userID') !== null) {
-      let t = document.getElementById("c2RInput").value;
-      props.addComment(t);
-    } else {
-      modal2.style.display ='block';
-    }
-    
-}
 
+    let t = document.getElementById("commentOnStory").value;
+    console.log("message: " +t)
+    props.addComment(t);
+
+}
       return (
         <div id="cos">
-            <input type="text" id="c2RInput"></input>
+            <input type="text" id="commentOnStory"></input>
             <button id="c2RPost" onClick={(e) => ReplyPost(e)}>Post</button>
         </div>
       );

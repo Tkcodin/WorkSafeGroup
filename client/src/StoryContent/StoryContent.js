@@ -22,7 +22,7 @@ const StoryContent = () => {
   const[Tags,setTags] = useState([]);
   const[Date,setDate]=useState('');
   const [likes, setLikes] = useState(0);  
-  const [comment, setComment] = useState("Please input your comment...");
+  const [comment, setComment] = useState("Please input your comment...33");
   const [comments, setComments] = useState([]);
   //const [liked, setLiked] = useState(false); 
   const [liked, setLiked] = useState(
@@ -100,44 +100,54 @@ const StoryContent = () => {
 
 
     const addComment = (t) => {
-      let a = localStorage.getItem("FirstName");
-      comments.push({author: a, text: t, tier: 0});
-    }
-
-    const handleButtonClick = () => {
-      setShowButton(false);
-    };
-    const onClickHandler = (e) => {
-
-      e.preventDefault();
+      // let te = document.getElementById("commentOnStory").value;
+      console.log(t);
+      setComment(t);
+      
+    //   addCommentPartTwo();
+    // }
+     
+    // const addCommentPartTwo = () =>{
+      console.log("comment: " + comment);
+      const newComment = {
+        // setComment(t),
+        Text: t,
+        User: localStorage.getItem("FirstName"),
+        Date: new window.Date()
+        };
+  
+        axios
+        .post('http://localhost:3000/newComment/' + objectId.id, newComment)
+        .then(response => {
+          console.log("id: "+objectId.id);
+          console.log("comment"+newComment);
+        console.log(response.data);
+        setComments([...comments, response.data]);
+        setComment("");
+        // window.location.reload();
+        })
+        .catch(error => {
+        console.log(error);
     
-    //   const variables = {
+    });
+  }
+    // const handleButtonClick = () => {
+    //   setShowButton(false);
+    // };
+    // const onClickHandler = (e) => {
+
+    //   e.preventDefault();
+    //       const variables = {
     //     responseTo: props.comment._id,
     //     content: Comment
     // }
-    const newComment = {
-      Text: comment,
-      User:"user",
-      Date: new window.Date()
-      };
-
-      axios
-      .post('http://localhost:3000/newComment/' + objectId.id, newComment)
-      .then(response => {
-        console.log("id: "+objectId.id);
-        console.log("comment"+newComment);
-      console.log(response.data);
-      setComments([...comments, response.data]);
-      setComment("");
-      window.location.reload();
-      })
-      .catch(error => {
-      console.log(error);
+    
+    
     
       
-      });
+    //   });
 
-    };
+    // };
 
     const openReply=()=> {
       setOpenReply(!OpenReply)
@@ -184,8 +194,8 @@ const StoryContent = () => {
               {liked ? "I like it!" : "Like it?"}
               </button>
             </div>
-          <CommentOnStory addComment={(t)=>addComment(t)}/>
-          <CommentSection />
+          <CommentOnStory addComment={(t) => addComment(t)}/>
+          <CommentSection comments={comments}/>
 
 
             {/* <div className="main-container"> */}
