@@ -183,6 +183,7 @@ const MainFeed = () => {
     setSearchText(e.target.value);
 
     const filteredCards = cards.filter((card) => {
+      
       const title = card.Title.toLowerCase();
       const description = card.Description.toLowerCase();
       const author = card.Author.toLowerCase();
@@ -230,6 +231,7 @@ const MainFeed = () => {
     let hh = window.parseInt(hhmmComponents[0]);
     let mm = window.parseInt(hhmmComponents[1]);
     let ampm = yearTimeComponents[1];
+    let comments = card.Comments.length;
     if(ampm==="pm" && hh !==12){
       hh = hh +12;
     }
@@ -251,13 +253,12 @@ const MainFeed = () => {
         if(tags.Name.includes(s)){
           matchingTagCount++;
         }
-       })
-        
+       }) 
       }
     }
-    let score = cl + matchingTagCount - diffHours;
+    let score = cl + matchingTagCount*2 + comments - diffHours;
     
-    console.log(card.Title + " --> likes: " + cl + " tagCount: " + matchingTagCount + " timediffhours: " +diffHours + " score: " + score);
+    console.log(card.Title + " --> likes: " + cl + " tagCount: " + matchingTagCount + "c0mments: " + comments + " timediffhours: " +diffHours + " score: " + score);
     return score;
   }
 

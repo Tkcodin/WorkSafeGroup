@@ -119,8 +119,10 @@
 }
 
 #imageSelected {
-  width: 300px;
+  width: 200px;
   height: 200px;
+  border-radius: 100px;
+  margin-bottom: 20px;
 } 
 
 /***CREATE STORY PAGE *****/
