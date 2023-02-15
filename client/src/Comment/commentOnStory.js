@@ -16,10 +16,11 @@ function ReplyPost(e){
       props.addComment(t);
     } else {
       modal2.style.display ='block';
-    }
+    }  
     
 }
 
+}
       return (
         // <div id="cos">
         //     <input type="text" id="c2RInput"></input>

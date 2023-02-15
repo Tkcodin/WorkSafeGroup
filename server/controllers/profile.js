@@ -318,6 +318,42 @@ const newComment = (req, res) => {
   };
 
 
+  const newComment2 = (req, res) => {
+    console.log("im here 1");
+    const commentId = req.params.id;
+    const newCommentData = req.body;
+    
+    const mycomment = new comment({
+      Text: newCommentData.Text,
+      User: newCommentData.User,
+      Date: newCommentData.Date
+    });
+
+    
+  
+    mycomment.save((err, savedComment) => {
+        console.log("im here 2");
+      if (err) {
+        
+        return res.status(500).send("Error: " + err);
+      }
+      console.log(commentId);
+      comment.findByIdAndUpdate(
+       
+        commentId,
+        { $push: { Comments: mycomment} },
+        { new: true },
+        (err, updatedContent) => {
+          if (err) {
+            return res.status(500).send("Error: " + err);
+          }
+  
+          return res.status(200).json(updatedContent);
+        }
+      );
+    });
+  };
+
  const setTags=(req,res)=>{
     
     const newtag = new tags({
@@ -376,7 +412,19 @@ const getPopulatedTagsProfile=(req,res)=>{
           });
 }
 
+const getPopulatedComments=(req,res)=>{
+    comment.findOne({_id:ObjectId(req.params.id)}).populate('Comments').exec(function(err, abc) {
+            if (err) {throw err;}
+            else{
+            // if(abc.Comments!=null){
+                res.status(200).json(abc);
+        
+        } // This will log an array of referenced order documents
+          });
+}
 
 
-module.exports = {newProfile,getProfile,newContent,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser,getPopulatedTags,getPopulatedTagsProfile};
+
+module.exports = {newProfile,getProfile,newContent,newComment2,getContent,newUser,getUser, getUserWithID,newComment,getComment,getMyContent,updatelikes,getMyLikes,setTags,getTags,editUser,getPopulatedTags,getPopulatedComments, getPopulatedTagsProfile};
+
 
