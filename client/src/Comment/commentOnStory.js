@@ -14,10 +14,11 @@ function ReplyPost(e){
     if (localStorage.getItem('userID') !== null) {
       let t = document.getElementById("commentInput").value;
       props.addComment(t);
+      window.location.reload();
     } else {
       modal2.style.display ='block';
     }  
-    window.location.reload();
+    
     
 }
 
