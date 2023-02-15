@@ -11,7 +11,7 @@ const Comment = (props) => {
     // const comments = props.comments;
     const author=props.author;
     const comment=props.text;
-   
+    const commentSpace = 140;
     const [likeCount, setLikeCount] = useState(0);
     const [replyVisible, setReplyVisible] = useState(false);
     const [commentsExist, setCommentsExist] = useState(false);
@@ -84,6 +84,7 @@ const Comment = (props) => {
     useEffect(() => {
         if (commentCall && commentCall.length > 0) {
             setCommentsExist(true);
+            // console.log("comment: " + comment);
         }
     });
 
@@ -109,18 +110,18 @@ const Comment = (props) => {
 
       //how to spread out comments
     useEffect(() => {
-        let bm = 20;
+        let bm = (commentSpace/7);
         if(commentsExist){
-            bm = bm + commentCall.length*120;
+            bm = bm + commentCall.length*(commentSpace/4*5);
         }
         if(babyComments > 0){
-            bm = bm + babyComments*60;
+            bm = bm + babyComments*(commentSpace/1.8);
         }
         if(babyReplies>0){
-            bm = bm + babyReplies*60;
+            bm = bm + babyReplies*(commentSpace/1.8);
         }
         if(replyVisible){
-            bm = bm + 60;
+            bm = bm + (commentSpace/2);
         }
         setBottomMargin(bm);
     });
@@ -168,8 +169,8 @@ const Comment = (props) => {
                 <label id="comment2Author">{author}</label>
                 <img id="comment2Heart" src ={heart} onClick={(e) => HeartClick(e)}></img>
                 <label>{likeCount}</label>
-                {commentsExist && <label>C: {commentCall.length}</label>}
-                <label>BC: {babyComments}</label>
+                {/* {commentsExist && <label>C: {commentCall.length}</label>}
+                <label>BC: {babyComments}</label> */}
                 <button id="comment2ReplyButton" onClick={(e) => ReplyClick(e)}>R</button>
             </div>
             {replyVisible && <Reply tier={tier} commentID={id} hide={{setReplyVisible}} />} 
