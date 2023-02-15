@@ -84,17 +84,19 @@
 }
 
 #commentInput {
-  width: 300px;
+  width: 700px;
+  height:40px;
   margin-right: 15px;
   background-color: #F0F0F0;
 }
 
 #postCommentButton {
-  width: 50px;
+  width: 60px;
+  height: 40px;
 }
 
 #commentBox {
-  padding: 5px;
+  /* padding: 5px; */
   background-color: white;
   
 }
