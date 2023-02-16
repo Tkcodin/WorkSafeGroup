@@ -13,7 +13,7 @@ const MyTag = (props) => {
     
     return (
          visible && <div className="MyTag" style={{ backgroundColor: props.colour }}> 
-            <button onClick={removeTag} className="TagCloseB" style={{ backgroundColor: props.colour }}> <span>x</span></button>
+            {/* <button onClick={removeTag} className="TagCloseB" style={{ backgroundColor: props.colour }}> <span>x</span></button> */}
             <div>{props.text}</div>
         </div> 
     )
