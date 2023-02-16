@@ -97,6 +97,7 @@ const MainFeed = () => {
     } else {
 
       const filteredCards = cards.filter((card) => {
+        
         if (mytags === null || mytags === '{"":""}') {
           // only filter by tags if tags linked to account
           return true;
@@ -214,6 +215,7 @@ const MainFeed = () => {
   function scoreCard(card){
     //adjust story card to show why (lots of likes // lots of comments) it is there
 
+   
 
 
     let cl = card.Likes;
@@ -244,18 +246,33 @@ const MainFeed = () => {
     let diffHours = Math.floor(BigNumber(diff/(60*60*1000)));
     let tags = card.tags;
     let matchingTagCount = 0;
-    let myTags = localStorage.getItem("myTags");
-    if(myTags !== null && myTags !== '{"":""}' && myTags.length>0){
-      let myTagsSplit = myTags.split(" ");
-      for(let s of myTagsSplit){
+    // let myTags = localStorage.getItem("mytags");
+    console.log("my tags: " +mytags);
+    if(mytags !== null && mytags !== '{"":""}' && mytags.length>0){
+      // let myTagsSplit = mytags.split(",");
+      // for(let s of myTagsSplit){
+      //   console.log("checking tag s: " + s);
+
+      mytags.map(tag =>{
+
+      
        tags.map(tags=>{
-        console.log(tags.Name);
-        if(tags.Name.includes(s)){
+        console.log("sapan log: " + tags.Name);
+        if(tags.Name ===tag){
           matchingTagCount++;
         }
        }) 
-      }
+      })
+      
     }
+
+
+    // console.log("my tags: " + mytags);
+    // card.tags.forEach(x => {
+    //   if
+    //   console.log("card tags: " + x.Name);
+    // }
+    // )
     let score = cl + matchingTagCount*2 + comments - diffHours;
     
     console.log(card.Title + " --> likes: " + cl + " tagCount: " + matchingTagCount + "c0mments: " + comments + " timediffhours: " +diffHours + " score: " + score);
