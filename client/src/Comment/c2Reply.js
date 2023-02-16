@@ -17,7 +17,7 @@ const Reply = (props) => {
             
             // setComment(t),
             Text: t,
-            User: 'sam', //localStorage.getItem("FirstName"),
+            User: localStorage.getItem("FirstName"),
             Date: new window.Date()
             };
       
