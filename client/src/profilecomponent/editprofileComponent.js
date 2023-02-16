@@ -164,7 +164,7 @@ const EditProfileComponent =()=>{
             rolePrivate: rolePrivate,
             employerPrivate: employerPrivate
           }
-
+          localStorage.setItem("myTags", )
           console.log(user);
           console.log(Image);
           // localStorage.setItem('userEmail', this.state.email);
