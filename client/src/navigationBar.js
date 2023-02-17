@@ -59,8 +59,6 @@ const NavigationBar = () => {
     window.location= '/MainFeed';
   }
 
-//to here I've added both my code and main's hopefully no fuck ups but if there are please check the above section
-
 if (localStorage.getItem('userID') != null) {
   return (
     // console.log("logged in: " + amIloggedin),

@@ -10,8 +10,6 @@ import { components } from "react-select";
 import { default as ReactSelect } from "react-select";
 
 const EditProfileComponent =()=>{
- //Once we have set up the backend we will use the url params to pass the object id and then use effect hook to grab the user details from DB.
-    //const  objectId  = useParams();
     //new image will be sent to the server to update the image on the server side
     const [Image,setImage] = useState('');
     //This is just to display image on the client side. profilepicture would be replaced by image retrieved from DB
@@ -30,19 +28,6 @@ const EditProfileComponent =()=>{
     const[options,setOptions] = useState([]);
     const[optionSelected,setOptionSelected] = useState();
   
-
-    // const functiontofindindex=()=>{
-     
-    //   let count = 0;
-    //   options.map(op=>{
-    //     Interests.map(int=>{
-    //       if(int.Name === op.Name){
-    //         abc.push(count);
-    //       }
-    //     })
-    //     count++;
-    //   })
-    // }
 
     const Option = (props) => {
       return (
@@ -102,7 +87,6 @@ const EditProfileComponent =()=>{
       const handleAboutChange = (event) => {
         setAbout(event.target.value);
       }
-      //This will change as we know if it is passed as an array or string?
       const handleInterestsChange = (event) => {
         setInterests(event.target.value);
       }
@@ -144,9 +128,7 @@ const EditProfileComponent =()=>{
 
     optionSelected.forEach(element => {
 
-    // tagsSelected.push(element.value);
 
-    // tagsSelected= tagsSelected+element.value+", ";
     tagsSelected.push(element.value);
 
   });
